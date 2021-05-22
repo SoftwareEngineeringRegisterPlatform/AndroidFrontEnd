@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.component.main.MainActivity">
+
+        <Button
+            android:id="@+id/to_detail_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="To detail page"
+            app:layout_constraintBottom_toTopOf="@id/to_list_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/to_list_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="To list page"
+            app:layout_constraintBottom_toTopOf="@id/to_submit_button"
+            app:layout_constraintEnd_toEndOf="@id/to_detail_button"
+            app:layout_constraintStart_toStartOf="@id/to_detail_button"
+            app:layout_constraintTop_toBottomOf="@id/to_detail_button" />
+
+        <Button
+            android:id="@+id/to_submit_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="To submit page"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/to_list_button"
+            app:layout_constraintStart_toStartOf="@id/to_list_button"
+            app:layout_constraintTop_toBottomOf="@id/to_list_button" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
