@@ -5,9 +5,11 @@
     <string name="title_empty" />
     <string name="title_profile">我的</string>
     <string name="title_activity_login">LoginActivity</string>
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Sign in or register</string>
+    <string name="prompt_email">手机号或用户名</string>
+    <string name="prompt_password">密码</string>
+    <string name="prompt_verification_code">验证码</string>
+    <string name="send_verification_code">发送验证码</string>
+    <string name="action_sign_in">登录或注册</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="welcome">"Welcome !"</string>
     <string name="invalid_username">Not a valid username</string>
