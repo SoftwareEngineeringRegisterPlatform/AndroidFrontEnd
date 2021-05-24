@@ -1,34 +1,37 @@
 package cn.hospital.registerplatform.ui.component.main
 
 import android.os.Bundle
-import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
+import cn.hospital.registerplatform.R
 import cn.hospital.registerplatform.databinding.ActivityMainBinding
-import cn.hospital.registerplatform.ui.base.BaseActivity
-import cn.hospital.registerplatform.ui.component.comment.CommentListActivity
-import cn.hospital.registerplatform.ui.component.comment.SubmitCommentActivity
-import cn.hospital.registerplatform.ui.component.hospital.HospitalDetailActivity
-import com.hi.dhl.jdatabinding.binding
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.hi.dhl.binding.databind
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : BaseActivity() {
+class MainActivity : AppCompatActivity() {
 
-    private val mViewModel: MainViewModel by viewModels()
-    private val mBinding: ActivityMainBinding by binding()
+    private val binding: ActivityMainBinding by databind(R.layout.activity_main)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mBinding.apply {
-            toDetailButton.setOnClickListener {
-                startActivity(HospitalDetailActivity.newIntent(this@MainActivity, 0))
-            }
-            toListButton.setOnClickListener {
-                startActivity(CommentListActivity.newIntent(this@MainActivity, 0))
-            }
-            toSubmitButton.setOnClickListener {
-                startActivity(SubmitCommentActivity.newIntent(this@MainActivity, 0))
-            }
-        }
-    }
 
+        setContentView(binding.root)
+
+        val navView: BottomNavigationView = binding.navView
+
+        val navController = findNavController(R.id.nav_host_fragment_activity_main)
+        val appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.navigation_home, R.id.navigation_empty, R.id.navigation_profile
+            )
+        )
+        setupActionBarWithNavController(navController, appBarConfiguration)
+        navView.setupWithNavController(navController)
+        navView.menu.getItem(1).isEnabled = false
+    }
 }

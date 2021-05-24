@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.core.view.children
 import androidx.lifecycle.lifecycleScope
+import cn.hospital.registerplatform.R
 import cn.hospital.registerplatform.api.Resource
 import cn.hospital.registerplatform.data.dto.UploadComment
 import cn.hospital.registerplatform.databinding.ActivitySubmitCommentBinding
@@ -13,7 +14,7 @@ import cn.hospital.registerplatform.ui.base.BaseActivity
 import cn.hospital.registerplatform.ui.component.main.MainActivity
 import cn.hospital.registerplatform.utils.ToastUtils
 import com.google.android.material.chip.Chip
-import com.hi.dhl.jdatabinding.binding
+import com.hi.dhl.binding.databind
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -21,7 +22,7 @@ import kotlin.properties.Delegates
 
 @AndroidEntryPoint
 class SubmitCommentActivity : BaseActivity() {
-    private val mBinding: ActivitySubmitCommentBinding by binding()
+    private val mBinding: ActivitySubmitCommentBinding by databind(R.layout.activity_submit_comment)
     private val mViewModel: CommentViewModel by viewModels()
 
     private var hospitalId by Delegates.notNull<Int>()

@@ -5,12 +5,13 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
+import cn.hospital.registerplatform.R
 import cn.hospital.registerplatform.databinding.ActivityHospitalDetailBinding
 import cn.hospital.registerplatform.ui.base.BaseActivity
 import cn.hospital.registerplatform.ui.component.comment.CommentListActivity
 import cn.hospital.registerplatform.ui.component.comment.CommentListAdapter
 import cn.hospital.registerplatform.ui.component.comment.CommentViewModel
-import com.hi.dhl.jdatabinding.binding
+import com.hi.dhl.binding.databind
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
@@ -19,7 +20,7 @@ import kotlin.properties.Delegates
 
 @AndroidEntryPoint
 class HospitalDetailActivity : BaseActivity() {
-    private val mBinding: ActivityHospitalDetailBinding by binding()
+    private val mBinding: ActivityHospitalDetailBinding by databind(R.layout.activity_hospital_detail)
     private val mViewModel: CommentViewModel by viewModels()
 
     private lateinit var commentListAdapter: CommentListAdapter

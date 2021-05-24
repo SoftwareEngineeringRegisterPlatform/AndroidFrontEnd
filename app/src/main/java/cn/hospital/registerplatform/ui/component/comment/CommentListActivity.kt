@@ -5,9 +5,10 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
+import cn.hospital.registerplatform.R
 import cn.hospital.registerplatform.databinding.ActivityCommentListBinding
 import cn.hospital.registerplatform.ui.base.BaseActivity
-import com.hi.dhl.jdatabinding.binding
+import com.hi.dhl.binding.databind
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
@@ -18,7 +19,7 @@ import kotlin.properties.Delegates
 @AndroidEntryPoint
 class CommentListActivity : BaseActivity() {
 
-    private val mBinding: ActivityCommentListBinding by binding()
+    private val mBinding: ActivityCommentListBinding by databind(R.layout.activity_comment_list)
     private val mViewModel: CommentViewModel by viewModels()
 
     private lateinit var commentListAdapter: CommentListAdapter

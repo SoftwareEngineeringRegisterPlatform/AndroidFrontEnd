@@ -15,16 +15,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RegisterPlatform"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.component.hospital.HospitalDetailActivity"></activity>
-        <activity android:name=".ui.component.comment.SubmitCommentActivity" />
-        <activity android:name=".ui.component.comment.CommentListActivity" />
-        <activity android:name=".ui.component.main.MainActivity">
+        <activity
+            android:name=".ui.component.main.MainActivity"
+            android:label="@string/title_activity_main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.component.hospital.HospitalListActivity" />
+        <activity android:name=".ui.component.hospital.HospitalDetailActivity" />
+        <activity android:name=".ui.component.comment.SubmitCommentActivity" />
+        <activity android:name=".ui.component.comment.CommentListActivity" />
     </application>
 
 </manifest>

@@ -47,18 +47,21 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     //kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
-    implementation 'androidx.core:core-ktx:1.3.2'
+    implementation "androidx.core:core-ktx:$kotlinVersion"
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
-    implementation "androidx.annotation:annotation:$appcompatVersion"
+    implementation "androidx.annotation:annotation:$annotationVersion"
     implementation "io.coil-kt:coil:$coilVersion"
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$livedata_ktx"
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion"
+    implementation "androidx.constraintlayout:constraintlayout:$constranintLayoutVersion"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion"
+    implementation "androidx.navigation:navigation-fragment-ktx:$navigationVersion"
+    implementation "androidx.navigation:navigation-ui-ktx:$navigationVersion"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     androidTestImplementation "androidx.test.ext:junit-ktx:$androidXJunitVersion"
-    implementation "androidx.datastore:datastore-preferences:1.0.0-beta01"
-    implementation 'com.hi-dhl:jdatabinding:1.0.4'
-    implementation 'androidx.paging:paging-runtime-ktx:3.0.0-rc01'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.3'
-    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+    implementation 'com.hi-dhl:binding:1.1.3'
+    implementation "androidx.paging:paging-runtime-ktx:$pagingVersion"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:$swipeRefreshLayoutVersion"
     /**-------------------testing libs------------------------------------------**/
     //UI Testing , AndroidJUnitRunner and JUnit Rules &Espresso dependencies
     //junit 5
@@ -79,14 +82,14 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-scalars:$retrofitVersion"
     implementation "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0"
     implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1'
-    implementation 'com.google.code.gson:gson:2.8.6'
+    implementation "com.google.code.gson:gson:$gsonVersion"
     implementation "com.squareup.okhttp3:okhttp:$okhttpVersion"
     implementation "com.squareup.okhttp3:logging-interceptor:$okhttpVersion"
     implementation "androidx.fragment:fragment-ktx:$fragmentVersion"
     implementation "androidx.activity:activity-ktx:$activityKtxVersion"
     // Hilt
     implementation "com.google.dagger:hilt-android:$hiltVersion"
-    implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hilt_viewmodels"
+    implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hiltViewmodelVersion"
     kapt "com.google.dagger:hilt-compiler:$hiltVersion"
     androidTestImplementation "com.google.dagger:hilt-android-testing:$hiltVersion"
     kaptAndroidTest "com.google.dagger:hilt-android-compiler:$hiltVersion"
