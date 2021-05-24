@@ -11,15 +11,15 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 @HiltViewModel
-class CommentViewModel @Inject constructor(private val repository: CommentRepository) :
+class CommentViewModel @Inject constructor(private val commentRepository: CommentRepository) :
     BaseViewModel() {
     fun getCommentList(hospitalId: Int): Flow<PagingData<SingleComment>> {
-        return repository.getComment(hospitalId)
+        return commentRepository.getComment(hospitalId)
     }
 
     fun submitComment(
         hospitalId: Int,
         uploadComment: UploadComment
-    ) = repository.createComment(hospitalId, uploadComment).asLiveData()
+    ) = commentRepository.createComment(hospitalId, uploadComment).asLiveData()
 
 }

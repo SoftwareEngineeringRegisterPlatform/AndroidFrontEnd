@@ -16,8 +16,12 @@
         android:theme="@style/Theme.RegisterPlatform"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ui.component.login.LoginActivity"
+            android:label="@string/title_activity_login" />
+        <activity
             android:name=".ui.component.main.MainActivity"
-            android:label="@string/title_activity_main">
+            android:label="@string/title_activity_main"
+            android:theme="@style/NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

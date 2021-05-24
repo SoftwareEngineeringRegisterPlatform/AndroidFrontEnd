@@ -3,7 +3,6 @@ package cn.hospital.registerplatform.di
 import cn.hospital.registerplatform.api.interfaces.CommentApi
 import cn.hospital.registerplatform.data.UserPreference
 import cn.hospital.registerplatform.data.repository.CommentRepository
-import cn.hospital.registerplatform.data.repository.RepositoryFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,8 +14,11 @@ import javax.inject.Singleton
 class RepositoryModule {
     @Singleton
     @Provides
-    fun provideRepository(
+    fun provideCommentRepository(
         commentApi: CommentApi,
         userPreference: UserPreference
-    ): CommentRepository = RepositoryFactory.makeRepository(commentApi, userPreference)
+    ): CommentRepository = CommentRepository(
+        commentApi,
+        userPreference
+    )
 }

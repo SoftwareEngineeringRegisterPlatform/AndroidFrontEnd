@@ -1,6 +1,9 @@
 package cn.hospital.registerplatform.utils
 
 import android.widget.ImageView
+import android.widget.TextView
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.databinding.BindingAdapter
 import cn.hospital.registerplatform.R
 import coil.load
@@ -17,6 +20,14 @@ fun loadImage(view: ImageView, url: String) {
     }
 }
 
+@BindingAdapter("loadImage")
+fun loadImage(view: ImageView, @DrawableRes res: Int) {
+    view.load(res) {
+        crossfade(true)
+        transformations(CircleCropTransformation())
+    }
+}
+
 @BindingAdapter("loadStringChips")
 fun loadStringChips(view: ChipGroup, chips: List<String>) {
     view.removeAllViews()
@@ -29,5 +40,9 @@ fun loadStringChips(view: ChipGroup, chips: List<String>) {
             }
         )
     }
+}
 
+@BindingAdapter("loadText")
+fun loadText(view: TextView, @StringRes res: Int) {
+    view.text = view.context.getString(res)
 }

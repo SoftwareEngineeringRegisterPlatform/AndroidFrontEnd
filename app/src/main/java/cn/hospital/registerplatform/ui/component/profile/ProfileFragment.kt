@@ -5,7 +5,9 @@ import androidx.fragment.app.viewModels
 import cn.hospital.registerplatform.R
 import cn.hospital.registerplatform.databinding.FragmentProfileBinding
 import com.hi.dhl.binding.databind
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
     private val mBinding: FragmentProfileBinding by databind()
