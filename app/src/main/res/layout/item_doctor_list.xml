@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="cn.hospital.registerplatform.data.dto.DoctorListItem" />
+
+        <import type="android.view.View.OnClickListener" />
+
+        <variable
+            name="item"
+            type="DoctorListItem" />
+
+        <variable
+            name="onClick"
+            type="OnClickListener" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="@{onClick}">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/doctor_avatar"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            app:loadImage="@{item.picture}"
+            android:scaleType="fitCenter"
+            android:layout_margin="18dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/doctor_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:text="@{item.name}"
+            app:layout_constraintStart_toEndOf="@id/doctor_avatar"
+            app:layout_constraintTop_toTopOf="@id/doctor_avatar" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/doctor_hospital"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:text="@{item.hospital_name}"
+            app:layout_constraintTop_toBottomOf="@id/doctor_name"
+            app:layout_constraintStart_toStartOf="@id/doctor_name" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/doctor_department"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:text="@{item.department_name}"
+            app:layout_constraintTop_toBottomOf="@id/doctor_hospital"
+            app:layout_constraintStart_toStartOf="@id/doctor_name" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

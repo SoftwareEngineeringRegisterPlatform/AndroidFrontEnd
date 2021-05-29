@@ -72,10 +72,10 @@ data class DoctorListItem(
     override val id: Int,
     @SerializedName("name")
     val name: String,
-    @SerializedName("hospital")
-    val hospital: Int,
-    @SerializedName("department")
-    val department: Int,
+    @SerializedName("hospital__name")
+    val hospital_name: String,
+    @SerializedName("department__name")
+    val department_name: String,
     @SerializedName("picture")
     val picture: String,
 ) : Parcelable, ListItem
@@ -86,10 +86,10 @@ data class DoctorInfo(
     val id: Int,
     @SerializedName("name")
     val name: String,
-    @SerializedName("hospital")
-    val hospital: Int,
-    @SerializedName("department")
-    val department: Int,
+    @SerializedName("hospital_name")
+    val hospital_name: String,
+    @SerializedName("department_name")
+    val department_name: String,
     @SerializedName("introduction")
     val introduction: String,
     @SerializedName("picture")

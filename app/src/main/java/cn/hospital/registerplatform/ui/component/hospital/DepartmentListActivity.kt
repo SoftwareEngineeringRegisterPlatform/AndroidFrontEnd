@@ -49,7 +49,7 @@ class DepartmentListActivity : AppCompatActivity() {
         departmentAdapter = HospitalListAdapter(R.layout.item_department_list) { binding, data ->
             binding.item = data
             binding.onClick = View.OnClickListener {
-
+                startActivity(DoctorListActivity.newIntent(this, data.id))
             }
         }
         mBinding.apply {

@@ -20,18 +20,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mBinding.apply {
-            root.setOnClickListener {
-                activity?.findViewById<ExtendedFloatingActionButton>(R.id.fab)?.shrink()
-            }
             buttonContainer.apply {
                 layoutManager = GridLayoutManager(requireContext(), 2)
                 adapter = HomeAdapter(mViewModel.buttonList)
-                addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                    override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                        super.onScrollStateChanged(recyclerView, newState)
-                        activity?.findViewById<ExtendedFloatingActionButton>(R.id.fab)?.shrink()
-                    }
-                })
             }
             mainViewModel = mViewModel
             lifecycleOwner = this@HomeFragment
