@@ -4,7 +4,6 @@
     <string name="title_home">首页</string>
     <string name="title_empty"/>
     <string name="title_profile">我的</string>
-    <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">手机号或用户名</string>
     <string name="prompt_password">密码</string>
     <string name="prompt_verification_code">验证码</string>
@@ -20,4 +19,5 @@
     <string name="profile_button_advisory">咨询记录</string>
     <string name="profile_button_doctor">我的医生</string>
     <string name="profile_button_hospital">我的医院</string>
+    <string name="home_fab_text">挂号</string>
 </resources>

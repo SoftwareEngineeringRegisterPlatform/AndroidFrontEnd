@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import cn.hospital.registerplatform.R
 import cn.hospital.registerplatform.databinding.FragmentProfileBinding
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.hi.dhl.binding.databind
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -17,6 +18,11 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        mBinding.apply {
+            root.setOnClickListener {
+                activity?.findViewById<ExtendedFloatingActionButton>(R.id.fab)?.shrink()
+            }
+            lifecycleOwner = this@ProfileFragment
+        }
     }
 }

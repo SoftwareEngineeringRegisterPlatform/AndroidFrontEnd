@@ -1,7 +1,6 @@
 package cn.hospital.registerplatform.ui.component.main
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import cn.hospital.registerplatform.R
@@ -19,6 +18,12 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
 
         setContentView(binding.root)
+
+        binding.fab.shrink()
+
+        binding.fab.setOnClickListener {
+            binding.fab.extend()
+        }
 
         binding.navView.apply {
             setupWithNavController(findNavController(R.id.nav_host_fragment_activity_main))
