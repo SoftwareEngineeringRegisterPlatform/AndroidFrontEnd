@@ -29,7 +29,6 @@ class LoginActivity : BaseActivity() {
         val username = binding.username
         val password = binding.password
         val login = binding.login
-        val loading = binding.loading
 
         loginViewModel.loginFormState.observe(this@LoginActivity, Observer {
             val loginState = it ?: return@Observer
@@ -71,7 +70,6 @@ class LoginActivity : BaseActivity() {
             }
 
             login.setOnClickListener {
-                loading.visibility = View.VISIBLE
                 loginViewModel.login(username.text.toString(), password.text.toString())
             }
         }
