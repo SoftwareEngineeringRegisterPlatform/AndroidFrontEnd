@@ -3,6 +3,7 @@ package cn.hospital.registerplatform.di
 
 import cn.hospital.registerplatform.BuildConfig
 import cn.hospital.registerplatform.api.interfaces.CommentApi
+import cn.hospital.registerplatform.api.interfaces.HospitalApi
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
@@ -22,7 +23,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 class ApiModule {
 
-    private val baseUrl = "https://ali.borealin.cn:5000/"
+    private val baseUrl = "http://172.81.234.9:8000/"
 
     @Provides
     @Singleton
@@ -66,7 +67,11 @@ class ApiModule {
 
     @Provides
     @Singleton
-    fun provideSportService(retrofit: Retrofit): CommentApi =
+    fun provideCommentApi(retrofit: Retrofit): CommentApi =
         retrofit.create(CommentApi::class.java)
 
+    @Provides
+    @Singleton
+    fun provideHospitalApi(retrofit: Retrofit): HospitalApi =
+        retrofit.create(HospitalApi::class.java)
 }

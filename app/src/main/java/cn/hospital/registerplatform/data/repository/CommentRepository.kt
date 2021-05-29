@@ -17,17 +17,9 @@ import kotlinx.coroutines.flow.flowOn
 
 class CommentRepository(
     private val commentApi: CommentApi,
-    private val userPreference: UserPreference
+    private val userPreference: UserPreference,
+    private val pagingConfig: PagingConfig
 ) {
-    private val pagingConfig = PagingConfig(
-        pageSize = 20,
-
-        enablePlaceholders = true,
-
-        prefetchDistance = 4,
-
-        initialLoadSize = 20
-    )
 
     fun getComment(
         hospitalId: Int

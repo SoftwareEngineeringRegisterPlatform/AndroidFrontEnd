@@ -1,8 +1,11 @@
 package cn.hospital.registerplatform.di
 
+import androidx.paging.PagingConfig
 import cn.hospital.registerplatform.api.interfaces.CommentApi
+import cn.hospital.registerplatform.api.interfaces.HospitalApi
 import cn.hospital.registerplatform.data.UserPreference
 import cn.hospital.registerplatform.data.repository.CommentRepository
+import cn.hospital.registerplatform.data.repository.HospitalRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,11 +17,34 @@ import javax.inject.Singleton
 class RepositoryModule {
     @Singleton
     @Provides
+    fun providePagingConfig(): PagingConfig = PagingConfig(
+        pageSize = 20,
+        enablePlaceholders = true,
+        prefetchDistance = 4,
+        initialLoadSize = 20
+    )
+
+    @Singleton
+    @Provides
     fun provideCommentRepository(
         commentApi: CommentApi,
-        userPreference: UserPreference
+        userPreference: UserPreference,
+        pagingConfig: PagingConfig
     ): CommentRepository = CommentRepository(
         commentApi,
-        userPreference
+        userPreference,
+        pagingConfig
+    )
+
+    @Singleton
+    @Provides
+    fun provideHospitalRepository(
+        hospitalApi: HospitalApi,
+        userPreference: UserPreference,
+        pagingConfig: PagingConfig
+    ): HospitalRepository = HospitalRepository(
+        hospitalApi,
+        userPreference,
+        pagingConfig
     )
 }
