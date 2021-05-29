@@ -1,7 +1,7 @@
 package cn.hospital.registerplatform.ui.component.main
 
 import android.os.Bundle
-import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import cn.hospital.registerplatform.R
 import cn.hospital.registerplatform.databinding.ActivityMainBinding
@@ -26,7 +26,7 @@ class MainActivity : BaseActivity() {
         }
 
         binding.navView.apply {
-            setupWithNavController(findNavController(R.id.nav_host_fragment_activity_main))
+            setupWithNavController((supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment).navController)
             menu.getItem(1).isEnabled = false
         }
     }
