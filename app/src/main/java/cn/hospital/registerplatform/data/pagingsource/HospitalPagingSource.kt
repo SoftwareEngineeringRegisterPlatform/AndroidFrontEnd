@@ -11,7 +11,7 @@ class HospitalPagingSource<T : Any>(
     }
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, T> {
-        val position = params.key ?: 1
+        val position = params.key ?: 0
         val res = loadResult(position, params.loadSize)
         return LoadResult.Page(
             data = res,

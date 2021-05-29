@@ -7,7 +7,7 @@ import retrofit2.http.Query
 interface HospitalApi {
     @GET("Hospital/HospitalList")
     suspend fun getHospitalList(
-        @Query("countType") countType: CountType = CountType.ALL,
+        @Query("loadType") LoadType: LoadType,
         @Query("page") page: Int,
         @Query("size") size: Int
     ): RawResult<List<HospitalListItem>>
@@ -20,7 +20,7 @@ interface HospitalApi {
     @GET("Hospital/DepartmentList")
     suspend fun getDepartmentList(
         @Query("hospital_id") hospitalId: Int,
-        @Query("countType") countType: CountType = CountType.ALL,
+        @Query("loadType") LoadType: LoadType,
         @Query("page") page: Int,
         @Query("size") size: Int
     ): RawResult<List<DepartmentListItem>>
@@ -33,7 +33,7 @@ interface HospitalApi {
     @GET("Hospital/DoctorList")
     suspend fun getDoctorList(
         @Query("department_id") departmentId: Int,
-        @Query("countType") countType: CountType = CountType.ALL,
+        @Query("loadType") LoadType: LoadType,
         @Query("page") page: Int,
         @Query("size") size: Int
     ): RawResult<List<DoctorListItem>>

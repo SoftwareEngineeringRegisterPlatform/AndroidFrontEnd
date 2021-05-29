@@ -6,7 +6,7 @@ import androidx.paging.PagingData
 import cn.hospital.registerplatform.api.Resource
 import cn.hospital.registerplatform.api.interfaces.HospitalApi
 import cn.hospital.registerplatform.data.UserPreference
-import cn.hospital.registerplatform.data.dto.CountType
+import cn.hospital.registerplatform.data.dto.LoadType
 import cn.hospital.registerplatform.data.dto.RawResult
 import cn.hospital.registerplatform.data.pagingsource.HospitalPagingSource
 import kotlinx.coroutines.Dispatchers
@@ -32,14 +32,14 @@ class HospitalRepository(
     }
 
     private fun <T : Any> getList(
-        getListFromApi: suspend (CountType, page: Int, size: Int) -> RawResult<List<T>>
+        getListFromApi: suspend (LoadType, page: Int, size: Int) -> RawResult<List<T>>
     ): Flow<PagingData<T>> {
         return Pager(
             config = pagingConfig,
             pagingSourceFactory = {
                 HospitalPagingSource { page: Int, size: Int ->
                     try {
-                        val rawResult = getListFromApi(CountType.PAGE, page, size)
+                        val rawResult = getListFromApi(LoadType.PAGE, page, size)
                         if (rawResult.success) rawResult.content else listOf()
                     } catch (e: Exception) {
                         e.printStackTrace()

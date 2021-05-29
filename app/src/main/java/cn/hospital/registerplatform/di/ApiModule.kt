@@ -23,7 +23,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 class ApiModule {
 
-    private val baseUrl = "http://172.81.234.9:8000/"
+    private val baseUrl = "http://172.81.234.9:8000/Registion/"
 
     @Provides
     @Singleton
