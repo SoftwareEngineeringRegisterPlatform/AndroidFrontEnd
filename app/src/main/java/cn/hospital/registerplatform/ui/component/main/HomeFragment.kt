@@ -23,14 +23,16 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             root.setOnClickListener {
                 activity?.findViewById<ExtendedFloatingActionButton>(R.id.fab)?.shrink()
             }
-            buttonContainer.layoutManager = GridLayoutManager(requireContext(), 2)
-            buttonContainer.adapter = HomeAdapter(mViewModel.buttonList)
-            buttonContainer.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    super.onScrolled(recyclerView, dx, dy)
-                    activity?.findViewById<ExtendedFloatingActionButton>(R.id.fab)?.shrink()
-                }
-            })
+            buttonContainer.apply {
+                layoutManager = GridLayoutManager(requireContext(), 2)
+                adapter = HomeAdapter(mViewModel.buttonList)
+                addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                    override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                        super.onScrolled(recyclerView, dx, dy)
+                        activity?.findViewById<ExtendedFloatingActionButton>(R.id.fab)?.shrink()
+                    }
+                })
+            }
             mainViewModel = mViewModel
             lifecycleOwner = this@HomeFragment
         }

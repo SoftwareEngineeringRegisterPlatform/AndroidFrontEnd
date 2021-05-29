@@ -17,17 +17,17 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(binding.root)
-
-        binding.fab.shrink()
-
-        binding.fab.setOnClickListener {
-            binding.fab.extend()
-        }
-
-        binding.navView.apply {
-            setupWithNavController((supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment).navController)
-            menu.getItem(1).isEnabled = false
+        binding.apply {
+            fab.apply {
+                shrink()
+                setOnClickListener {
+                    extend()
+                }
+            }
+            navView.apply {
+                setupWithNavController((supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment).navController)
+                menu.getItem(1).isEnabled = false
+            }
         }
     }
 }

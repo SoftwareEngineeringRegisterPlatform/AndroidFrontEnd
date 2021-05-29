@@ -47,7 +47,7 @@ class SubmitCommentActivity : BaseActivity() {
                             (it as Chip).text.toString()
                         }.toList()
                     )
-                ).observe(this@SubmitCommentActivity, { res ->
+                ).observe(this@SubmitCommentActivity) { res ->
                     if (res is Resource.Success && res.value.success) {
                         ToastUtils.show(this@SubmitCommentActivity, "上传成功，2秒后返回主页")
                         lifecycleScope.launch {
@@ -62,7 +62,7 @@ class SubmitCommentActivity : BaseActivity() {
                     } else {
                         ToastUtils.show(this@SubmitCommentActivity, "上传失败")
                     }
-                })
+                }
             }
         }
     }
