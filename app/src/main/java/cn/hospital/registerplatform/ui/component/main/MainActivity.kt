@@ -6,6 +6,7 @@ import androidx.navigation.ui.setupWithNavController
 import cn.hospital.registerplatform.R
 import cn.hospital.registerplatform.databinding.ActivityMainBinding
 import cn.hospital.registerplatform.ui.base.BaseActivity
+import cn.hospital.registerplatform.ui.component.hospital.HospitalListActivity
 import com.hi.dhl.binding.databind
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -19,9 +20,12 @@ class MainActivity : BaseActivity() {
 
         binding.apply {
             fab.apply {
-                shrink()
                 setOnClickListener {
-                    extend()
+                    if (this.isExtended) {
+                        startActivity(HospitalListActivity.newIntent(this@MainActivity))
+                    } else {
+                        extend()
+                    }
                 }
             }
             navView.apply {

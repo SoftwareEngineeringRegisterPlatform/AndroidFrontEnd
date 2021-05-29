@@ -15,7 +15,7 @@ class HospitalPagingSource<T : Any>(
         val res = loadResult(position, params.loadSize)
         return LoadResult.Page(
             data = res,
-            prevKey = if (position == 1) null else position - 1,
+            prevKey = if (position == 0) null else position - 1,
             nextKey = if (res.isEmpty()) null else position + 1
         )
     }

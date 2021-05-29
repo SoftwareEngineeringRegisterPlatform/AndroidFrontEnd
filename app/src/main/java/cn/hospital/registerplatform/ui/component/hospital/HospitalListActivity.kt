@@ -3,6 +3,7 @@ package cn.hospital.registerplatform.ui.component.hospital
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import cn.hospital.registerplatform.R
@@ -44,6 +45,14 @@ class HospitalListActivity : BaseActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         hospitalAdapter = HospitalListAdapter(R.layout.item_hospital_list) { binding, data ->
             binding.item = data
+            binding.onClick = View.OnClickListener {
+                startActivity(
+                    HospitalDetailActivity.newIntent(
+                        this@HospitalListActivity,
+                        data.id
+                    )
+                )
+            }
         }
         mBinding.apply {
             lifecycleOwner = this@HospitalListActivity

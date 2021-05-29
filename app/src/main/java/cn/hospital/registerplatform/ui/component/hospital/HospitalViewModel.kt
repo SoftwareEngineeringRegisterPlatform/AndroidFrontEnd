@@ -14,4 +14,10 @@ class HospitalViewModel @Inject constructor(private val hospitalRepository: Hosp
     fun getDepartmentList(hospitalId: Int) = hospitalRepository.getDepartmentList(hospitalId)
 
     fun getDoctorList(departmentId: Int) = hospitalRepository.getDoctorList(departmentId)
+
+    fun getHospitalInfo(hospitalId: Int) = hospitalRepository.getHospitalInfo(hospitalId).asLiveData()
+
+    fun getDepartmentInfo(departmentId: Int) = hospitalRepository.getDepartmentInfo(departmentId).asLiveData()
+
+    fun getDoctorInfo(doctorId: Int) = hospitalRepository.getDoctorInfo(doctorId).asLiveData()
 }

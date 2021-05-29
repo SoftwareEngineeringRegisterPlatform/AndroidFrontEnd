@@ -33,6 +33,8 @@ data class HospitalInfo(
     val introduction: String,
     @SerializedName("picture")
     val picture: String,
+    @SerializedName("type")
+    val type: String,
 ) : Parcelable
 
 @Parcelize

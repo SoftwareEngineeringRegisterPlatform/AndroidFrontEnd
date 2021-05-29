@@ -12,17 +12,21 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(private val userPreference: UserPreference) :
     BaseViewModel() {
     val buttonList = listOf(
+        HomeCardData(R.string.home_register_button, R.drawable.ic_baseline_calendar_today_24) {
+            it.context.apply {
+                startActivity(HospitalListActivity.newIntent(this))
+            }
+        },
         HomeCardData(R.string.home_hospital_button, R.drawable.ic_baseline_add_box_24) {
             it.context.apply {
                 startActivity(HospitalListActivity.newIntent(this))
             }
         },
-        HomeCardData(R.string.title_home, R.drawable.ic_baseline_add_box_24) {},
-        HomeCardData(R.string.title_home, R.drawable.ic_baseline_add_box_24) {},
-        HomeCardData(R.string.title_home, R.drawable.ic_baseline_add_box_24) {},
-        HomeCardData(R.string.title_home, R.drawable.ic_baseline_add_box_24) {},
-        HomeCardData(R.string.title_home, R.drawable.ic_baseline_add_box_24) {},
-        HomeCardData(R.string.title_home, R.drawable.ic_baseline_add_box_24) {},
+//        HomeCardData(R.string.title_home, R.drawable.ic_baseline_add_box_24) {},
+//        HomeCardData(R.string.title_home, R.drawable.ic_baseline_add_box_24) {},
+//        HomeCardData(R.string.title_home, R.drawable.ic_baseline_add_box_24) {},
+//        HomeCardData(R.string.title_home, R.drawable.ic_baseline_add_box_24) {},
+//        HomeCardData(R.string.title_home, R.drawable.ic_baseline_add_box_24) {},
     )
 
     val city = liveData {

@@ -4,49 +4,60 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.lifecycle.lifecycleScope
 import cn.hospital.registerplatform.R
+import cn.hospital.registerplatform.api.doSuccess
 import cn.hospital.registerplatform.databinding.ActivityHospitalDetailBinding
 import cn.hospital.registerplatform.ui.base.BaseActivity
-import cn.hospital.registerplatform.ui.component.comment.CommentListActivity
-import cn.hospital.registerplatform.ui.component.comment.CommentListAdapter
 import cn.hospital.registerplatform.ui.component.comment.CommentViewModel
 import com.hi.dhl.binding.databind
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 import kotlin.properties.Delegates
 
 @AndroidEntryPoint
 class HospitalDetailActivity : BaseActivity() {
     private val mBinding: ActivityHospitalDetailBinding by databind(R.layout.activity_hospital_detail)
-    private val mViewModel: CommentViewModel by viewModels()
+    private val commentViewModel: CommentViewModel by viewModels()
+    private val hospitalViewModel: HospitalViewModel by viewModels()
 
-    private lateinit var commentListAdapter: CommentListAdapter
-    private var getListJob: Job? = null
+    //    private lateinit var commentListAdapter: CommentListAdapter
+//    private var getListJob: Job? = null
     private var hospitalId by Delegates.notNull<Int>()
 
-    private fun getList() {
-        getListJob?.cancel()
-        getListJob = lifecycleScope.launch {
-            mViewModel.getCommentList(hospitalId).collect {
-                commentListAdapter.submitData(it)
-            }
-        }
+    //    private fun getList() {
+//        getListJob?.cancel()
+//        getListJob = lifecycleScope.launch {
+//            commentViewModel.getCommentList(hospitalId).collect {
+//                commentListAdapter.submitData(it)
+//            }
+//        }
+//    }
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return true
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        title = "医院详情"
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         hospitalId = intent.getIntExtra(KEY_HOSPITAL_ID, 0)
-        commentListAdapter = CommentListAdapter()
+//        commentListAdapter = CommentListAdapter()
         mBinding.apply {
             lifecycleOwner = this@HospitalDetailActivity
-            fakeDetailHeader.setOnClickListener {
-                startActivity(CommentListActivity.newIntent(this@HospitalDetailActivity, 0))
+//            fakeDetailHeader.setOnClickListener {
+//                startActivity(CommentListActivity.newIntent(this@HospitalDetailActivity, 0))
+//            }
+//            commentListContainer.adapter = commentListAdapter
+//            getList()
+            buttonRegister.setOnClickListener {
+                startActivity(DepartmentListActivity.newIntent(this@HospitalDetailActivity, hospitalId))
             }
-            commentListContainer.adapter = commentListAdapter
-            getList()
+        }
+        hospitalViewModel.getHospitalInfo(hospitalId).observe(this) {
+            it.doSuccess { info ->
+                mBinding.info = info
+                mBinding.executePendingBindings()
+            }
         }
     }
 
