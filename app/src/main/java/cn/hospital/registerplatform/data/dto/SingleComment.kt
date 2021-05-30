@@ -1,54 +1,23 @@
 package cn.hospital.registerplatform.data.dto
 
 import android.os.Parcelable
-import androidx.recyclerview.widget.DiffUtil
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
-
-@Parcelize
-data class RawCommentList(
-    @SerializedName("comment_list")
-    val commentList: List<SingleComment>
-) : Parcelable
+import java.util.*
 
 @Parcelize
 data class SingleComment(
-    @SerializedName("commentId")
-    val commentId: Int,
-    @SerializedName("userId")
-    val userId: Int,
-    @SerializedName("userName")
-    val userName: String,
-    @SerializedName("avatarUrl")
-    val avatarUrl: String,
-    @SerializedName("serviceType")
-    val serviceType: String,
-    @SerializedName("illness")
-    val illness: String,
-    @SerializedName("rate")
-    val rate: Int,
-    @SerializedName("commentTime")
-    val commentTime: String,
-    @SerializedName("commentDetail")
-    val commentDetail: String,
-    @SerializedName("commentTags")
-    val commentTags: List<String>,
-) : Parcelable {
-    companion object {
-        val DIFF_CALLBACK: DiffUtil.ItemCallback<SingleComment> =
-            object : DiffUtil.ItemCallback<SingleComment>() {
-                override fun areItemsTheSame(
-                    oldItem: SingleComment,
-                    newItem: SingleComment
-                ) = oldItem == newItem
-
-                override fun areContentsTheSame(
-                    oldItem: SingleComment,
-                    newItem: SingleComment
-                ) = oldItem.commentId == newItem.commentId
-            }
-    }
-}
+    @SerializedName("id")
+    override val id: Int,
+    @SerializedName("user_id")
+    val user_id: Int,
+    @SerializedName("rating")
+    val rating: Int,
+    @SerializedName("comment")
+    val comment: String,
+    @SerializedName("last_edit_time")
+    val last_edit_time: Date,
+) : Parcelable, ListItem
 
 @Parcelize
 data class UploadComment(

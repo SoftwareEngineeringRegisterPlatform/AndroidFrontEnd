@@ -57,6 +57,9 @@ class DoctorListActivity : BaseActivity() {
             R.layout.item_doctor_list,
         ) { binding, data ->
             binding.item = data
+            binding.onClick = View.OnClickListener {
+                startActivity(DoctorDetailActivity.newIntent(this, data.id))
+            }
         }
         mBinding.apply {
             lifecycleOwner = this@DoctorListActivity
@@ -64,21 +67,21 @@ class DoctorListActivity : BaseActivity() {
                 LinearLayoutManager(this@DoctorListActivity, LinearLayoutManager.HORIZONTAL, false)
             dateContainer.adapter = dateAdapter
             container.adapter = doctorAdapter
-            mViewModel.getAllDoctorList(departmentId).observe(this@DoctorListActivity) {
-                it.doSuccess { list ->
-                    this@DoctorListActivity.doctorList = list
-                }
+        }
+        mViewModel.getAllDoctorList(departmentId).observe(this@DoctorListActivity) {
+            it.doSuccess { list ->
+                this@DoctorListActivity.doctorList = list
             }
-            mViewModel.getDepartmentScheduleList(departmentId).observe(this@DoctorListActivity) {
-                it.doSuccess { map ->
-                    val dateList = map.keys.sorted().toList()
-                    dateAdapter.updateList(dateList)
-                    scheduleMap = map
-                    doctorAdapter.updateList(doctorList.filter { doctorListItem ->
-                        scheduleMap[dateList.getOrElse(0) { "" }]?.map { scheduleInfo -> scheduleInfo.doctor__name }
-                            ?.contains(doctorListItem.name) ?: false
-                    })
-                }
+        }
+        mViewModel.getDepartmentScheduleList(departmentId).observe(this@DoctorListActivity) {
+            it.doSuccess { map ->
+                val dateList = map.keys.sorted().toList()
+                dateAdapter.updateList(dateList)
+                scheduleMap = map
+                doctorAdapter.updateList(doctorList.filter { doctorListItem ->
+                    scheduleMap[dateList.getOrElse(0) { "" }]?.map { scheduleInfo -> scheduleInfo.doctor__name }
+                        ?.contains(doctorListItem.name) ?: false
+                })
             }
         }
     }

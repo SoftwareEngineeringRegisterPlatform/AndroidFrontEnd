@@ -15,7 +15,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RegisterPlatform"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.component.hospital.DoctorListActivity"></activity>
+        <activity android:name=".ui.component.hospital.DoctorDetailActivity"/>
+        <activity android:name=".ui.component.hospital.DoctorListActivity" />
         <activity
             android:name=".ui.component.main.MainActivity"
             android:label="@string/title_activity_main"
@@ -29,7 +30,6 @@
         <activity android:name=".ui.component.hospital.HospitalListActivity" />
         <activity android:name=".ui.component.hospital.HospitalDetailActivity" />
         <activity android:name=".ui.component.comment.SubmitCommentActivity" />
-        <activity android:name=".ui.component.comment.CommentListActivity" />
         <activity android:name=".ui.component.hospital.DepartmentListActivity" />
         <activity android:name=".ui.component.login.LoginActivity" />
     </application>

@@ -16,7 +16,6 @@
             android:id="@+id/date_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_alignParentTop="true"
             android:layout_marginHorizontal="6dp"
             tools:listitem="@layout/item_schedule_date"

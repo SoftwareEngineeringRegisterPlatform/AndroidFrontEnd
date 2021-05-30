@@ -64,7 +64,7 @@ class ApiModule {
         .addConverterFactory(
             GsonConverterFactory.create(
                 GsonBuilder()
-                    .setDateFormat("yyyy-MM-dd' 00':HH:mm")
+                    .setDateFormat("yyyy-MM-dd HH:mm:ss")
                     .create()
             )
         )

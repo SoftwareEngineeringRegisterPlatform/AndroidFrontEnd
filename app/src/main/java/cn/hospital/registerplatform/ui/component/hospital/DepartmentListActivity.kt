@@ -5,12 +5,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import cn.hospital.registerplatform.R
 import cn.hospital.registerplatform.data.dto.DepartmentListItem
 import cn.hospital.registerplatform.databinding.ActivityDepartmentListBinding
 import cn.hospital.registerplatform.databinding.ItemDepartmentListBinding
+import cn.hospital.registerplatform.ui.base.BaseActivity
 import com.hi.dhl.binding.databind
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
 import kotlin.properties.Delegates
 
 @AndroidEntryPoint
-class DepartmentListActivity : AppCompatActivity() {
+class DepartmentListActivity : BaseActivity() {
     private val mBinding: ActivityDepartmentListBinding by databind(R.layout.activity_department_list)
     private val mViewModel: HospitalViewModel by viewModels()
     private var hospitalId by Delegates.notNull<Int>()

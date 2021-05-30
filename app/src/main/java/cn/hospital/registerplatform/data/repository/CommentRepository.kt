@@ -7,9 +7,10 @@ import cn.hospital.registerplatform.api.Resource
 import cn.hospital.registerplatform.api.interfaces.CommentApi
 import cn.hospital.registerplatform.data.UserPreference
 import cn.hospital.registerplatform.data.dto.CreateCommentResult
+import cn.hospital.registerplatform.data.dto.LoadType
 import cn.hospital.registerplatform.data.dto.SingleComment
 import cn.hospital.registerplatform.data.dto.UploadComment
-import cn.hospital.registerplatform.data.pagingsource.CommentPagingSource
+import cn.hospital.registerplatform.data.pagingsource.HospitalPagingSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -21,17 +22,21 @@ class CommentRepository(
     private val pagingConfig: PagingConfig
 ) {
 
-    fun getComment(
-        hospitalId: Int
+    fun getCommentList(
+        doctorId: Int
     ): Flow<PagingData<SingleComment>> {
         return Pager(
             config = pagingConfig,
             pagingSourceFactory = {
-                CommentPagingSource(
-                    commentApi,
-                    userPreference,
-                    hospitalId
-                )
+                HospitalPagingSource { page: Int, size: Int ->
+                    try {
+                        val rawResult = commentApi.getComments(doctorId, LoadType.PAGE, page, size)
+                        if (rawResult.success) rawResult.content else listOf()
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                        listOf()
+                    }
+                }
             }
         ).flow.flowOn(Dispatchers.IO)
     }

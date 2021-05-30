@@ -20,12 +20,12 @@ class HospitalRepository(
     private val userPreference: UserPreference,
     private val pagingConfig: PagingConfig
 ) {
-    fun getHospitalList() = getList { countType, page, size ->
-        hospitalApi.getHospitalList(countType, page, size)
+    fun getHospitalList() = getList { loadType, page, size ->
+        hospitalApi.getHospitalList(loadType, page, size)
     }
 
-    fun getDepartmentList(hospitalId: Int) = getList { countType, page, size ->
-        hospitalApi.getDepartmentList(hospitalId, countType, page, size)
+    fun getDepartmentList(hospitalId: Int) = getList { loadType, page, size ->
+        hospitalApi.getDepartmentList(hospitalId, loadType, page, size)
     }
 
     fun getDoctorList(departmentId: Int) = getList { countType, page, size ->
@@ -61,21 +61,9 @@ class HospitalRepository(
         }
     }.flowOn(Dispatchers.IO)
 
-    fun getDoctorScheduleList(doctorId: Int) = flow {
-        try {
-            val rawResult = hospitalApi.getDoctorSchedule(doctorId)
-            if (rawResult.success) {
-                val mapFromDate = rawResult.content.associateBy {
-                    DateFormat.format("MM-dd", it.begin_time).toString()
-                }
-                emit(Resource.Success(mapFromDate))
-            } else {
-                emit(Resource.Failure(null))
-            }
-        } catch (e: Exception) {
-            emit(Resource.Failure(e))
-        }
-    }.flowOn(Dispatchers.IO)
+    fun getDoctorScheduleList(doctorId: Int) = getInfo {
+        hospitalApi.getDoctorSchedule(doctorId)
+    }
 
     private fun <T : Any> getList(
         getListFromApi: suspend (LoadType, page: Int, size: Int) -> RawResult<List<T>>

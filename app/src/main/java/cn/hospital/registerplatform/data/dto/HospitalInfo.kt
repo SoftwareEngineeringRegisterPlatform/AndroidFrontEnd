@@ -87,18 +87,22 @@ data class DoctorInfo(
     val id: Int,
     @SerializedName("name")
     val name: String,
-    @SerializedName("hospital_name")
-    val hospital_name: String,
-    @SerializedName("department_name")
-    val department_name: String,
     @SerializedName("introduction")
     val introduction: String,
     @SerializedName("picture")
     val picture: String,
     @SerializedName("position")
-    val position: String,
+    val position: String?,
     @SerializedName("qualification")
-    val qualification: String,
+    val qualification: String?,
+    @SerializedName("hospital__name")
+    val hospital__name: String,
+    @SerializedName("department__name")
+    val department__name: String,
+    @SerializedName("hospital__id")
+    val hospital__id: Int,
+    @SerializedName("department__id")
+    val department__id: Int,
 ) : Parcelable
 
 @Parcelize

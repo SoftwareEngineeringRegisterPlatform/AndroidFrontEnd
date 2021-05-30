@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="cn.hospital.registerplatform.data.dto.DoctorInfo" />
+
+        <variable
+            name="info"
+            type="DoctorInfo" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFF0F0F0"
+        tools:context=".ui.component.hospital.DoctorDetailActivity">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/doctor_info_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/doctor_avatar"
+                android:layout_width="48dp"
+                android:layout_height="72dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:loadImage="@{info.picture}" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/doctor_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:text="@{info.name}"
+                android:textColor="@color/black"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@id/doctor_avatar"
+                app:layout_constraintTop_toTopOf="@id/doctor_avatar" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/doctor_department"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="6dp"
+                android:text="@{info.department__name}"
+                android:textSize="16sp"
+                app:layout_constraintStart_toEndOf="@id/doctor_name"
+                app:layout_constraintTop_toTopOf="@id/doctor_name" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/doctor_hospital"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="@{info.hospital__name}"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@id/doctor_name"
+                app:layout_constraintTop_toBottomOf="@id/doctor_name" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/doctor_introduction"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginBottom="12dp"
+                android:lines="4"
+                android:text="@{info.introduction}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/doctor_name"
+                app:layout_constraintTop_toBottomOf="@id/doctor_hospital" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/schedule_container"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@id/doctor_info_container"
+            tools:listitem="@layout/item_schedule_detail" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/comment_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@color/white"
+            android:padding="8dp"
+            android:text="@string/user_comment"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/schedule_container" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/comment_container"
+            android:layout_width="match_parent"
+            android:background="@color/white"
+            android:layout_height="0dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/comment_title"
+            tools:listitem="@layout/item_comment_list" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

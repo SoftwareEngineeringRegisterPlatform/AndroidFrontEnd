@@ -1,5 +1,6 @@
 package cn.hospital.registerplatform.utils
 
+import android.text.format.DateFormat
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.DrawableRes
@@ -9,6 +10,7 @@ import cn.hospital.registerplatform.R
 import coil.load
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
+import java.util.*
 
 @BindingAdapter("loadImage")
 fun loadImage(view: ImageView, url: String?) {
@@ -44,4 +46,9 @@ fun loadStringChips(view: ChipGroup, chips: List<String>) {
 @BindingAdapter("loadText")
 fun loadText(view: TextView, @StringRes res: Int) {
     view.text = view.context.getString(res)
+}
+
+@BindingAdapter("loadText")
+fun loadText(view: TextView, date: Date) {
+    view.text = DateFormat.format("MM-dd", date).toString()
 }
