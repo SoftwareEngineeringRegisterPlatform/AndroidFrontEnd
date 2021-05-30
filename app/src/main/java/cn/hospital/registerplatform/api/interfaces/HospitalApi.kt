@@ -38,8 +38,26 @@ interface HospitalApi {
         @Query("size") size: Int
     ): RawResult<List<DoctorListItem>>
 
+    @GET("Hospital/DoctorList")
+    suspend fun getAllDoctorList(
+        @Query("department_id") departmentId: Int,
+        @Query("loadType") LoadType: LoadType = cn.hospital.registerplatform.data.dto.LoadType.ALL
+    ): RawResult<List<DoctorListItem>>
+
     @GET("Hospital/DoctorInfo")
     suspend fun getDoctorInfo(
         @Query("doctor_id") doctorId: Int
     ): RawResult<DoctorInfo>
+
+    @GET("Hospital/DepartmentSchedule")
+    suspend fun getDepartmentSchedule(
+        @Query("department_id") departmentId: Int,
+        @Query("loadType") loadType: LoadType = LoadType.ALL
+    ): RawResult<List<ScheduleInfo>>
+
+    @GET("Hospital/DoctorSchedule")
+    suspend fun getDoctorSchedule(
+        @Query("doctor_id") doctorId: Int,
+        @Query("loadType") loadType: LoadType = LoadType.ALL
+    ): RawResult<List<ScheduleInfo>>
 }

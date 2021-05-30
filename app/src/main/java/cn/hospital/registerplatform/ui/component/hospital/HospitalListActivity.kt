@@ -22,7 +22,7 @@ class HospitalListActivity : BaseActivity() {
     private val mBinding: ActivityHospitalListBinding by databind(R.layout.activity_hospital_list)
     private val mViewModel: HospitalViewModel by viewModels()
 
-    private lateinit var hospitalAdapter: HospitalListAdapter<HospitalListItem, ItemHospitalListBinding>
+    private lateinit var hospitalAdapter: HospitalPagingAdapter<HospitalListItem, ItemHospitalListBinding>
 
     private var getListJob: Job? = null
     private fun getList() {
@@ -43,7 +43,7 @@ class HospitalListActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         title = "医院列表"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        hospitalAdapter = HospitalListAdapter(R.layout.item_hospital_list) { binding, data ->
+        hospitalAdapter = HospitalPagingAdapter(R.layout.item_hospital_list) { binding, data ->
             binding.item = data
             binding.onClick = View.OnClickListener {
                 startActivity(

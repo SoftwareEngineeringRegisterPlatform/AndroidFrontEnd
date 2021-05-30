@@ -61,7 +61,13 @@ class ApiModule {
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder()
         .baseUrl(baseUrl)
         .addConverterFactory(ScalarsConverterFactory.create())
-        .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
+        .addConverterFactory(
+            GsonConverterFactory.create(
+                GsonBuilder()
+                    .setDateFormat("yyyy-MM-dd' 00':HH:mm")
+                    .create()
+            )
+        )
         .client(okHttpClient)
         .build()
 

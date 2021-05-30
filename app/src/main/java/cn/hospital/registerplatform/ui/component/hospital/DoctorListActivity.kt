@@ -5,17 +5,17 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
-import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import cn.hospital.registerplatform.R
+import cn.hospital.registerplatform.api.doSuccess
 import cn.hospital.registerplatform.data.dto.DoctorListItem
+import cn.hospital.registerplatform.data.dto.ScheduleInfo
 import cn.hospital.registerplatform.databinding.ActivityDoctorListBinding
 import cn.hospital.registerplatform.databinding.ItemDoctorListBinding
+import cn.hospital.registerplatform.databinding.ItemScheduleDateBinding
 import cn.hospital.registerplatform.ui.base.BaseActivity
 import com.hi.dhl.binding.databind
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 import kotlin.properties.Delegates
 
 @AndroidEntryPoint
@@ -25,18 +25,11 @@ class DoctorListActivity : BaseActivity() {
 
     private var departmentId by Delegates.notNull<Int>()
 
+    private lateinit var dateAdapter: HospitalListAdapter<String, ItemScheduleDateBinding>
     private lateinit var doctorAdapter: HospitalListAdapter<DoctorListItem, ItemDoctorListBinding>
 
-    private var getListJob: Job? = null
-    private fun getList() {
-        getListJob?.cancel()
-        getListJob = lifecycleScope.launch {
-            mViewModel.getDoctorList(departmentId).collect {
-                doctorAdapter.submitData(it)
-            }
-        }
-    }
-
+    private lateinit var doctorList: List<DoctorListItem>
+    private lateinit var scheduleMap: Map<String, List<ScheduleInfo>>
     override fun onSupportNavigateUp(): Boolean {
         finish()
         return true
@@ -44,19 +37,49 @@ class DoctorListActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        title = "科室列表"
+        title = "医生列表"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         departmentId = intent.getIntExtra(KEY_DEPARTMENT_ID, 0)
-        doctorAdapter = HospitalListAdapter(R.layout.item_doctor_list) { binding, data ->
-            binding.item = data
+        dateAdapter = HospitalListAdapter(
+            listOf(),
+            R.layout.item_schedule_date,
+        ) { binding, data ->
+            binding.date = data
             binding.onClick = View.OnClickListener {
-
+                val thisDayDoctor = scheduleMap[data]?.map { it.doctor__name }
+                doctorAdapter.updateList(doctorList.filter {
+                    thisDayDoctor?.contains(it.name) ?: false
+                })
             }
+        }
+        doctorAdapter = HospitalListAdapter(
+            listOf(),
+            R.layout.item_doctor_list,
+        ) { binding, data ->
+            binding.item = data
         }
         mBinding.apply {
             lifecycleOwner = this@DoctorListActivity
+            dateContainer.layoutManager =
+                LinearLayoutManager(this@DoctorListActivity, LinearLayoutManager.HORIZONTAL, false)
+            dateContainer.adapter = dateAdapter
             container.adapter = doctorAdapter
-            getList()
+            mViewModel.getAllDoctorList(departmentId).observe(this@DoctorListActivity) {
+                it.doSuccess { list ->
+                    this@DoctorListActivity.doctorList = list
+                }
+            }
+            mViewModel.getDepartmentScheduleList(departmentId).observe(this@DoctorListActivity) {
+                it.doSuccess { map ->
+                    val dateList = map.keys.sorted().toList()
+                    dateAdapter.updateList(dateList)
+                    scheduleMap = map
+                    doctorAdapter.updateList(doctorList.filter { doctorListItem ->
+                        scheduleMap[dateList.getOrElse(0) { "" }]?.map { scheduleInfo -> scheduleInfo.doctor__name }
+                            ?.contains(doctorListItem.name) ?: false
+                    })
+                }
+            }
         }
     }
 

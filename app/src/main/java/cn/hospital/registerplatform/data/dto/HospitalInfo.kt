@@ -4,6 +4,7 @@ import android.os.Parcelable
 import androidx.recyclerview.widget.DiffUtil
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
+import java.util.*
 
 @Parcelize
 data class HospitalListItem(
@@ -100,8 +101,25 @@ data class DoctorInfo(
     val qualification: String,
 ) : Parcelable
 
+@Parcelize
+data class ScheduleInfo(
+    @SerializedName("id")
+    override val id: Int,
+    @SerializedName("doctor__name")
+    val doctor__name: String,
+    @SerializedName("begin_time")
+    val begin_time: Date,
+    @SerializedName("end_time")
+    val end_time: Date,
+    @SerializedName("limit")
+    val limit: Int,
+    @SerializedName("registed")
+    val registed: Int,
+) : Parcelable, ListItem
+
 interface ListItem {
     val id: Int
+
     companion object : ListItemCompanion {
         override fun <T : ListItem> getDiffCallback(): DiffUtil.ItemCallback<T> {
             return object : DiffUtil.ItemCallback<T>() {

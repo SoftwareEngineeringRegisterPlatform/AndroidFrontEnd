@@ -24,7 +24,7 @@ class DepartmentListActivity : AppCompatActivity() {
     private val mViewModel: HospitalViewModel by viewModels()
     private var hospitalId by Delegates.notNull<Int>()
 
-    private lateinit var departmentAdapter: HospitalListAdapter<DepartmentListItem, ItemDepartmentListBinding>
+    private lateinit var departmentAdapter: HospitalPagingAdapter<DepartmentListItem, ItemDepartmentListBinding>
 
     private var getListJob: Job? = null
     private fun getList() {
@@ -46,7 +46,7 @@ class DepartmentListActivity : AppCompatActivity() {
         title = "科室列表"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         hospitalId = intent.getIntExtra(KEY_HOSPITAL_ID, 0)
-        departmentAdapter = HospitalListAdapter(R.layout.item_department_list) { binding, data ->
+        departmentAdapter = HospitalPagingAdapter(R.layout.item_department_list) { binding, data ->
             binding.item = data
             binding.onClick = View.OnClickListener {
                 startActivity(DoctorListActivity.newIntent(this, data.id))

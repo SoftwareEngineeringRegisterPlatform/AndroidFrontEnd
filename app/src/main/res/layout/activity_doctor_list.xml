@@ -13,11 +13,22 @@
         tools:context=".ui.component.hospital.DoctorListActivity">
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/date_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_alignParentTop="true"
+            android:layout_marginHorizontal="6dp"
+            tools:listitem="@layout/item_schedule_date"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentTop="true"
+            android:layout_height="0dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@id/date_container"
+            app:layout_constraintBottom_toBottomOf="parent"
             tools:listitem="@layout/item_doctor_list" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

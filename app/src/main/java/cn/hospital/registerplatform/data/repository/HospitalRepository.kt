@@ -1,5 +1,6 @@
 package cn.hospital.registerplatform.data.repository
 
+import android.text.format.DateFormat
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
@@ -30,6 +31,51 @@ class HospitalRepository(
     fun getDoctorList(departmentId: Int) = getList { countType, page, size ->
         hospitalApi.getDoctorList(departmentId, countType, page, size)
     }
+
+    fun getAllDoctorList(departmentId: Int) = flow {
+        try {
+            val rawResult = hospitalApi.getAllDoctorList(departmentId)
+            if (rawResult.success) {
+                emit(Resource.Success(rawResult.content))
+            } else {
+                emit(Resource.Failure(null))
+            }
+        } catch (e: Exception) {
+            emit(Resource.Failure(e))
+        }
+    }
+
+    fun getDepartmentScheduleList(departmentId: Int) = flow {
+        try {
+            val rawResult = hospitalApi.getDepartmentSchedule(departmentId)
+            if (rawResult.success) {
+                val mapFromDate = rawResult.content.groupBy {
+                    DateFormat.format("MM-dd", it.begin_time).toString()
+                }
+                emit(Resource.Success(mapFromDate))
+            } else {
+                emit(Resource.Failure(null))
+            }
+        } catch (e: Exception) {
+            emit(Resource.Failure(e))
+        }
+    }.flowOn(Dispatchers.IO)
+
+    fun getDoctorScheduleList(doctorId: Int) = flow {
+        try {
+            val rawResult = hospitalApi.getDoctorSchedule(doctorId)
+            if (rawResult.success) {
+                val mapFromDate = rawResult.content.associateBy {
+                    DateFormat.format("MM-dd", it.begin_time).toString()
+                }
+                emit(Resource.Success(mapFromDate))
+            } else {
+                emit(Resource.Failure(null))
+            }
+        } catch (e: Exception) {
+            emit(Resource.Failure(e))
+        }
+    }.flowOn(Dispatchers.IO)
 
     private fun <T : Any> getList(
         getListFromApi: suspend (LoadType, page: Int, size: Int) -> RawResult<List<T>>
