@@ -1,6 +1,7 @@
 package cn.hospital.registerplatform
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import app.cash.turbine.test
 import cn.hospital.registerplatform.api.doSuccess
 import cn.hospital.registerplatform.data.UserPreference
 import cn.hospital.registerplatform.data.dto.DoctorInfo
@@ -8,15 +9,18 @@ import cn.hospital.registerplatform.data.repository.HospitalRepository
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runBlockingTest
 import org.hamcrest.BaseMatcher
 import org.hamcrest.Description
 import org.junit.*
 import javax.inject.Inject
+import kotlin.time.Duration
+import kotlin.time.ExperimentalTime
 
 @HiltAndroidTest
 @ExperimentalCoroutinesApi
+@ExperimentalTime
 class HiltUnitTest {
 
     @get:Rule
@@ -47,9 +51,9 @@ class HiltUnitTest {
     }
 
     @Test
-    fun hospitalRepositoryTest() = runBlockingTest {
-        hospitalRepository.getDoctorInfo(1).collect {
-            it.doSuccess { info ->
+    fun hospitalRepositoryTest() = runBlocking {
+        hospitalRepository.getDoctorInfo(1).test(timeout = Duration.seconds(20)) {
+            expectItem().doSuccess { info ->
                 Assert.assertThat(info, object : BaseMatcher<DoctorInfo>() {
                     override fun describeTo(description: Description?) {
                     }
@@ -59,6 +63,7 @@ class HiltUnitTest {
                     }
                 })
             }
+            expectComplete()
         }
     }
 
