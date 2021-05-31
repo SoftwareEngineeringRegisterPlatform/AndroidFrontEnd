@@ -10,7 +10,6 @@ import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.runBlockingTest
 import org.hamcrest.BaseMatcher
 import org.hamcrest.Description
 import org.junit.*
