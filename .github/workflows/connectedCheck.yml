@@ -20,5 +20,4 @@ jobs:
       with:
         api-level: 29
         script:
-          chmod +x ./gradlew
-          ./gradlew connectedCheck
+          chmod +x ./gradlew && ./gradlew connectedCheck
