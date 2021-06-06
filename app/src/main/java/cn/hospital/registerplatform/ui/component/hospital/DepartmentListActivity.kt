@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import cn.hospital.registerplatform.R
 import cn.hospital.registerplatform.data.dto.DepartmentListItem
 import cn.hospital.registerplatform.databinding.ActivityDepartmentListBinding
@@ -55,6 +57,12 @@ class DepartmentListActivity : BaseActivity() {
         mBinding.apply {
             lifecycleOwner = this@DepartmentListActivity
             container.adapter = departmentAdapter
+            container.addItemDecoration(
+                DividerItemDecoration(
+                    this@DepartmentListActivity,
+                    LinearLayoutManager.VERTICAL
+                )
+            )
             getList()
         }
     }

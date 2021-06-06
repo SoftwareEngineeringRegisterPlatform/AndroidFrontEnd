@@ -1,6 +1,5 @@
 <resources>
-    <string name="app_name">Register Platform</string>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="app_name">挂号平台</string>
     <string name="title_home">首页</string>
     <string name="title_empty" />
     <string name="title_profile">我的</string>

@@ -31,7 +31,7 @@
                 android:layout_height="72dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:scaleType="centerCrop"
+                android:scaleType="fitCenter"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:loadImage="@{info.picture}" />
@@ -69,26 +69,30 @@
                 app:layout_constraintStart_toStartOf="@id/doctor_name"
                 app:layout_constraintTop_toBottomOf="@id/doctor_name" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/doctor_introduction"
+            <ScrollView
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="80dp"
                 android:layout_marginTop="6dp"
                 android:layout_marginEnd="12dp"
                 android:layout_marginBottom="12dp"
-                android:lines="4"
-                android:text="@{info.introduction}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@id/doctor_name"
-                app:layout_constraintTop_toBottomOf="@id/doctor_hospital" />
+                app:layout_constraintTop_toBottomOf="@id/doctor_hospital">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/doctor_introduction"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{info.introduction}" />
+            </ScrollView>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/schedule_container"
-            android:background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/white"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintTop_toBottomOf="@id/doctor_info_container"
             tools:listitem="@layout/item_schedule_detail" />
@@ -110,8 +114,8 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/comment_container"
             android:layout_width="match_parent"
-            android:background="@color/white"
             android:layout_height="0dp"
+            android:background="@color/white"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/comment_title"
