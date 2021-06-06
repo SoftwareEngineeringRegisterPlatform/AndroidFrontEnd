@@ -1,6 +1,9 @@
 package cn.hospital.registerplatform.api.interfaces
 
-import cn.hospital.registerplatform.data.dto.*
+import cn.hospital.registerplatform.data.dto.CommentListItem
+import cn.hospital.registerplatform.data.dto.LoadType
+import cn.hospital.registerplatform.data.dto.RawResult
+import cn.hospital.registerplatform.data.dto.UploadComment
 import retrofit2.http.*
 
 interface CommentApi {
@@ -10,14 +13,19 @@ interface CommentApi {
         @Query("loadType") loadType: LoadType,
         @Query("page") page: Int,
         @Query("size") size: Int
-    ): RawResult<List<SingleComment>>
+    ): RawResult<List<CommentListItem>>
 
     @Headers("Content-Type: application/json")
-    @POST("upload_comment")
+    @POST("Evaluate/SubmitEva")
     suspend fun createComments(
-        @Header("token") token: String,
-        @Query("hospital_id") hospitalId: Int,
         @Body comment: UploadComment
-    ): CreateCommentResult
+    ): RawResult<String>
 
+    @GET("Evaluate/MyEva")
+    suspend fun getMyComment(
+        @Query("token") token: String,
+        @Query("loadType") LoadType: LoadType,
+        @Query("page") page: Int,
+        @Query("size") size: Int
+    ): RawResult<List<CommentListItem>>
 }

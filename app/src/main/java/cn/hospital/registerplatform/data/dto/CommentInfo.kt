@@ -6,7 +6,7 @@ import kotlinx.parcelize.Parcelize
 import java.util.*
 
 @Parcelize
-data class SingleComment(
+data class CommentListItem(
     @SerializedName("id")
     override val id: Int,
     @SerializedName("user_id")
@@ -20,21 +20,25 @@ data class SingleComment(
 ) : Parcelable, ListItem
 
 @Parcelize
-data class UploadComment(
-    @SerializedName("serviceType")
-    val serviceType: String,
-    @SerializedName("illness")
-    val illness: String,
-    @SerializedName("rate")
-    val rate: Int,
-    @SerializedName("commentDetail")
-    val commentDetail: String,
-    @SerializedName("commentTags")
-    val commentTags: List<String>,
-) : Parcelable
-
-@Parcelize
 data class CreateCommentResult(
     @SerializedName("success")
     val success: Boolean
+) : Parcelable
+
+@Parcelize
+data class UploadComment(
+    @SerializedName("recipe_id")
+    val recipe_id: Int,
+    @SerializedName("token")
+    val token: String,
+    @SerializedName("evaluateinfo")
+    val evaluateinfo: EvaluateInfo,
+) : Parcelable
+
+@Parcelize
+data class EvaluateInfo(
+    @SerializedName("rating")
+    val rating: Int,
+    @SerializedName("comment")
+    val comment: String,
 ) : Parcelable

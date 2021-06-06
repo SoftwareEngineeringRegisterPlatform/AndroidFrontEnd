@@ -2,9 +2,7 @@ package cn.hospital.registerplatform.di
 
 
 import cn.hospital.registerplatform.BuildConfig
-import cn.hospital.registerplatform.api.interfaces.CommentApi
-import cn.hospital.registerplatform.api.interfaces.HospitalApi
-import cn.hospital.registerplatform.api.interfaces.UserApi
+import cn.hospital.registerplatform.api.interfaces.*
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
@@ -87,4 +85,14 @@ class ApiModule {
     @Singleton
     fun provideUserApi(retrofit: Retrofit): UserApi =
         retrofit.create(UserApi::class.java)
+
+    @Provides
+    @Singleton
+    fun provideRecipeApi(retrofit: Retrofit): RecipeApi =
+        retrofit.create(RecipeApi::class.java)
+
+    @Provides
+    @Singleton
+    fun provideRegisterApi(retrofit: Retrofit): RegisterApi =
+        retrofit.create(RegisterApi::class.java)
 }

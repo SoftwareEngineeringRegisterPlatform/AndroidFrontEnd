@@ -8,12 +8,13 @@ import androidx.lifecycle.lifecycleScope
 import cn.hospital.registerplatform.R
 import cn.hospital.registerplatform.api.doSuccess
 import cn.hospital.registerplatform.data.dto.ScheduleInfo
-import cn.hospital.registerplatform.data.dto.SingleComment
+import cn.hospital.registerplatform.data.dto.CommentListItem
 import cn.hospital.registerplatform.databinding.ActivityDoctorDetailBinding
 import cn.hospital.registerplatform.databinding.ItemCommentListBinding
 import cn.hospital.registerplatform.databinding.ItemScheduleDetailBinding
 import cn.hospital.registerplatform.ui.base.BaseActivity
 import cn.hospital.registerplatform.ui.component.comment.CommentViewModel
+import cn.hospital.registerplatform.utils.ToastUtils
 import com.hi.dhl.binding.databind
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
@@ -28,7 +29,7 @@ class DoctorDetailActivity : BaseActivity() {
     private val commentViewModel: CommentViewModel by viewModels()
 
     private lateinit var scheduleAdapter: HospitalListAdapter<ScheduleInfo, ItemScheduleDetailBinding>
-    private lateinit var commentAdapter: HospitalPagingAdapter<SingleComment, ItemCommentListBinding>
+    private lateinit var commentListItemAdapter: HospitalPagingAdapter<CommentListItem, ItemCommentListBinding>
     private var doctorId by Delegates.notNull<Int>()
 
     private var getListJob: Job? = null
@@ -36,7 +37,7 @@ class DoctorDetailActivity : BaseActivity() {
         getListJob?.cancel()
         getListJob = lifecycleScope.launch {
             commentViewModel.getCommentList(doctorId).collect {
-                commentAdapter.submitData(it)
+                commentListItemAdapter.submitData(it)
             }
         }
     }
@@ -54,16 +55,16 @@ class DoctorDetailActivity : BaseActivity() {
         scheduleAdapter = HospitalListAdapter(listOf(), R.layout.item_schedule_detail) { binding, data ->
             binding.info = data
             binding.scheduleButton.setOnClickListener {
-
+                ToastUtils.show(this, data.id.toString())
             }
         }
-        commentAdapter = HospitalPagingAdapter(R.layout.item_comment_list) { binding, data ->
+        commentListItemAdapter = HospitalPagingAdapter(R.layout.item_comment_list) { binding, data ->
             binding.item = data
         }
         mBinding.apply {
             lifecycleOwner = this@DoctorDetailActivity
             scheduleContainer.adapter = scheduleAdapter
-            commentContainer.adapter = commentAdapter
+            commentContainer.adapter = commentListItemAdapter
             getList()
         }
         hospitalViewModel.getDoctorInfo(doctorId).observe(this@DoctorDetailActivity) { res ->
