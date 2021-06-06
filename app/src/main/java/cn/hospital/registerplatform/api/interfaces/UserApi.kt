@@ -1,35 +1,47 @@
 package cn.hospital.registerplatform.api.interfaces
 
-import cn.hospital.registerplatform.data.dto.NewUserInfo
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.Headers
-import retrofit2.http.POST
+import cn.hospital.registerplatform.data.dto.NewUserData
+import cn.hospital.registerplatform.data.dto.RawResult
+import cn.hospital.registerplatform.data.dto.UploadUserInfo
+import cn.hospital.registerplatform.data.dto.UserInfo
+import retrofit2.http.*
 
 interface UserApi {
     @Headers("Content-Type: application/json")
     @POST("User/NewUser")
     suspend fun newUser(
-        @Body userinfo: NewUserInfo
-    )
+        @Body newUserData: NewUserData
+    ): RawResult<String>
 
+    @FormUrlEncoded
     @POST("User/SignIn")
-    suspend fun signInViaPassword(
+    suspend fun logInViaPassword(
+        @Field("phone_number") phoneNumber: String,
+        @Field("password") password: String,
+    ): RawResult<String>
 
-    )
-
+    @FormUrlEncoded
     @POST("User/SendVerification")
     suspend fun sendVerification(
+        @Field("phone_number") phoneNumber: String
+    ): RawResult<String>
 
-    )
-
+    @FormUrlEncoded
     @POST("User/SignIn")
-    suspend fun signInViaPhone(
+    suspend fun logInViaVerification(
+        @Field("phone_number") phoneNumber: String,
+        @Field("verification") verificationCode: String
+    ): RawResult<String>
 
-    )
+    @Headers("Content-Type: application/json")
+    @POST("User/UpdateInfo")
+    suspend fun updateInfo(
+        @Body uploadUserInfo: UploadUserInfo
+    ): RawResult<String>
 
+    @FormUrlEncoded
     @GET("User/GetInfo")
     suspend fun getInfo(
-
-    )
+        @Field("token") token: String
+    ): RawResult<UserInfo>
 }

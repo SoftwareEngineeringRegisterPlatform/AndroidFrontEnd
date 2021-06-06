@@ -5,11 +5,13 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class NewUserInfo(
+data class NewUserData(
+    @SerializedName("user_name")
+    val user_name: String,
+    @SerializedName("phone_number")
+    val phone_number: String,
     @SerializedName("password")
     val password: String,
-    @SerializedName("userinfo")
-    val userinfo: UploadUserInfo,
 ) : Parcelable
 
 @Parcelize

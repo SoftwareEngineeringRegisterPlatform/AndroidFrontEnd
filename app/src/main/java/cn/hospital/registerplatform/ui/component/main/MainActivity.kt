@@ -1,5 +1,7 @@
 package cn.hospital.registerplatform.ui.component.main
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
@@ -32,6 +34,12 @@ class MainActivity : BaseActivity() {
                 setupWithNavController((supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment).navController)
                 menu.getItem(1).isEnabled = false
             }
+        }
+    }
+
+    companion object {
+        fun newIntent(context: Context): Intent {
+            return Intent(context, MainActivity::class.java)
         }
     }
 }

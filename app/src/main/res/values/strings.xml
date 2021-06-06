@@ -7,11 +7,12 @@
     <string name="prompt_password">密码</string>
     <string name="prompt_verification_code">验证码</string>
     <string name="send_verification_code">发送验证码</string>
-    <string name="action_sign_in">登录或注册</string>
+    <string name="switch_login_method">切换登陆方式</string>
+    <string name="action_sign_in">登录</string>
     <string name="action_sign_in_short">Sign in</string>
-    <string name="welcome">"Welcome !"</string>
-    <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="invalid_phone">不是合法的手机号</string>
+    <string name="invalid_password">不是合法的密码</string>
+    <string name="invalid_verification_code">不是合法的验证码</string>
     <string name="login_failed">"Login failed"</string>
     <string name="search_placeholder">搜索医院、科室、医生</string>
     <string name="profile_button_register">我的预约</string>

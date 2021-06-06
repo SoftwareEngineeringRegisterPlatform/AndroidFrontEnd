@@ -1,20 +1,24 @@
 package cn.hospital.registerplatform.ui.component.login
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.View
-import android.view.inputmethod.EditorInfo
-import android.widget.EditText
-import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.annotation.StringRes
-import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import cn.hospital.registerplatform.R
+import cn.hospital.registerplatform.api.doSuccess
 import cn.hospital.registerplatform.databinding.ActivityLoginBinding
 import cn.hospital.registerplatform.ui.base.BaseActivity
+import cn.hospital.registerplatform.ui.component.main.MainActivity
+import cn.hospital.registerplatform.utils.ToastUtils
+import cn.hospital.registerplatform.utils.afterTextChanged
+import cn.hospital.registerplatform.utils.launchPeriodicAsync
 import com.hi.dhl.binding.databind
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class LoginActivity : BaseActivity() {
@@ -22,74 +26,122 @@ class LoginActivity : BaseActivity() {
     private val loginViewModel: LoginViewModel by viewModels()
     private val binding: ActivityLoginBinding by databind(R.layout.activity_login)
 
+    private var job: Job? = null
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return true
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        title = "登陆"
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val username = binding.username
-        val password = binding.password
-        val login = binding.login
-
-        loginViewModel.loginFormState.observe(this@LoginActivity, Observer {
-            val loginState = it ?: return@Observer
-
-            login.isEnabled = loginState.isDataValid
-
-            if (loginState.usernameError != null) {
-                username.error = getString(loginState.usernameError)
+        binding.apply {
+            lifecycleOwner = this@LoginActivity
+            loginViewModel.loginMethod.observe(this@LoginActivity) {
+                when (it) {
+                    LoginMethod.VERIFICATION_CODE -> {
+                        passwordContainer.visibility = View.INVISIBLE
+                        verificationContainer.visibility = View.VISIBLE
+                    }
+                    LoginMethod.PASSWORD -> {
+                        passwordContainer.visibility = View.VISIBLE
+                        verificationContainer.visibility = View.INVISIBLE
+                    }
+                    else -> {
+                        ToastUtils.show(this@LoginActivity, "发生异常")
+                    }
+                }
             }
-            if (loginState.passwordError != null) {
-                password.error = getString(loginState.passwordError)
+            binding.switchLoginMethod.setOnClickListener {
+                loginViewModel.switchLoginMethod()
             }
-        })
-
-        username.afterTextChanged {
-            loginViewModel.loginDataChanged(
-                username.text.toString(),
-                password.text.toString()
-            )
+            loginViewModel.loginFormState.observe(this@LoginActivity) {
+                val loginState = it ?: return@observe
+                login.isEnabled = loginState.isDataValid
+                sendVerificationCode.isEnabled = true
+                if (loginState.phoneNumberError != null) {
+                    phoneNumber.error = getString(loginState.phoneNumberError)
+                    sendVerificationCode.isEnabled = false
+                }
+                if (loginState.passwordError != null) {
+                    password.error = getString(loginState.passwordError)
+                }
+                if (loginState.verificationError != null) {
+                    verificationCode.error = getString(loginState.verificationError)
+                }
+            }
+            phoneNumber.afterTextChanged {
+                loginDataChanged()
+            }
+            password.afterTextChanged {
+                loginDataChanged()
+            }
+            verificationCode.afterTextChanged {
+                loginDataChanged()
+            }
+            login.setOnClickListener {
+                val pass = when (loginViewModel.loginMethod.value) {
+                    LoginMethod.PASSWORD -> password.text.toString()
+                    LoginMethod.VERIFICATION_CODE -> verificationCode.text.toString()
+                    else -> ""
+                }
+                loginViewModel.login(phoneNumber.text.toString(), pass)
+                    .observe(this@LoginActivity) {
+                        it.doSuccess {
+                            ToastUtils.show(this@LoginActivity, "登陆成功")
+                            lifecycleScope.launch {
+                                delay(1000)
+                                startActivity(MainActivity.newIntent(this@LoginActivity))
+                            }
+                        }
+                    }
+            }
+            sendVerificationCode.setOnClickListener {
+                loginViewModel.sendVerificationCode(phoneNumber.text.toString()).observe(this@LoginActivity) {
+                    it.doSuccess {
+                        ToastUtils.show(this@LoginActivity, "验证码发送成功")
+                        job?.cancel()
+                        job = lifecycleScope.launchPeriodicAsync(
+                            1000,
+                            60,
+                            { second ->
+                                sendVerificationCode.isEnabled = false
+                                sendVerificationCode.text = second.toString()
+                            },
+                            {
+                                sendVerificationCode.isEnabled = true
+                            }
+                        )
+                    }
+                }
+            }
         }
+    }
 
-        password.apply {
-            afterTextChanged {
+    private fun loginDataChanged() {
+        when (loginViewModel.loginMethod.value) {
+            LoginMethod.VERIFICATION_CODE -> {
                 loginViewModel.loginDataChanged(
-                    username.text.toString(),
-                    password.text.toString()
+                    binding.phoneNumber.text.toString(),
+                    binding.verificationCode.text.toString()
                 )
             }
-
-            setOnEditorActionListener { _, actionId, _ ->
-                when (actionId) {
-                    EditorInfo.IME_ACTION_DONE ->
-                        loginViewModel.login(
-                            username.text.toString(),
-                            password.text.toString()
-                        )
-                }
-                false
+            LoginMethod.PASSWORD -> {
+                loginViewModel.loginDataChanged(
+                    binding.phoneNumber.text.toString(),
+                    binding.password.text.toString()
+                )
             }
-
-            login.setOnClickListener {
-                loginViewModel.login(username.text.toString(), password.text.toString())
+            else -> {
             }
         }
     }
 
-    private fun showLoginFailed(@StringRes errorString: Int) {
-        Toast.makeText(applicationContext, errorString, Toast.LENGTH_SHORT).show()
-    }
-}
-
-/**
- * Extension function to simplify setting an afterTextChanged action to EditText components.
- */
-fun EditText.afterTextChanged(afterTextChanged: (String) -> Unit) {
-    this.addTextChangedListener(object : TextWatcher {
-        override fun afterTextChanged(editable: Editable?) {
-            afterTextChanged.invoke(editable.toString())
+    companion object {
+        fun newIntent(context: Context): Intent {
+            return Intent(context, LoginActivity::class.java)
         }
-
-        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-
-        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
-    })
+    }
 }

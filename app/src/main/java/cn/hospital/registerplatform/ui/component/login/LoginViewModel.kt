@@ -3,74 +3,71 @@ package cn.hospital.registerplatform.ui.component.login
 import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.asLiveData
 import cn.hospital.registerplatform.R
+import cn.hospital.registerplatform.api.Resource
+import cn.hospital.registerplatform.data.repository.UserRepository
 import cn.hospital.registerplatform.ui.base.BaseViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
 
-//@HiltViewModel
+@HiltViewModel
 class LoginViewModel
-//@Inject constructor(private val loginRepository: LoginRepository)
-    : BaseViewModel() {
+@Inject constructor(private val userRepository: UserRepository) : BaseViewModel() {
 
-    private val _loginMode = MutableLiveData(LoginMethod.VERIFICATION_CODE)
-    val loginMode: LiveData<LoginMethod> = _loginMode
+    private val _loginMethod = MutableLiveData(LoginMethod.VERIFICATION_CODE)
+    val loginMethod: LiveData<LoginMethod> = _loginMethod
 
     private val _loginForm = MutableLiveData<LoginFormState>()
     val loginFormState: LiveData<LoginFormState> = _loginForm
 
-    fun login(username: String, password: String) {
-//        val result = loginRepository.login(username, password)
-//
-//        if (result is Result.Success) {
-//            _loginResult.value =
-//                LoginResult(success = LoggedInUserView(displayName = result.data.displayName))
-//        } else {
-//            _loginResult.value = LoginResult(error = R.string.login_failed)
-//        }
-    }
+    fun sendVerificationCode(phoneNumber: String) = userRepository.sendVerification(phoneNumber).asLiveData()
 
-    fun loginDataChanged(username: String, password: String) {
-        when (_loginMode.value) {
-            LoginMethod.VERIFICATION_CODE -> {
-                if (!isUserNameValid(username)) {
-                    _loginForm.value = LoginFormState(usernameError = R.string.invalid_username)
-                } else if (!isPasswordValid(password)) {
-                    _loginForm.value = LoginFormState(passwordError = R.string.invalid_password)
-                } else {
-                    _loginForm.value = LoginFormState(isDataValid = true)
-                }
+    fun login(phoneNumber: String, password: String) =
+        when (_loginMethod.value) {
+            LoginMethod.VERIFICATION_CODE -> userRepository.logInViaVerification(phoneNumber, password).asLiveData()
+            LoginMethod.PASSWORD -> userRepository.logInViaPassword(phoneNumber, password).asLiveData()
+            else -> MutableLiveData<Resource<String>>().apply {
+                postValue(Resource.Failure(Exception("loginMethod not initialized")))
             }
-            LoginMethod.PASSWORD -> {
-                if (!isUserNameValid(username)) {
-                    _loginForm.value = LoginFormState(usernameError = R.string.invalid_username)
-                } else if (!isPasswordValid(password)) {
-                    _loginForm.value = LoginFormState(passwordError = R.string.invalid_password)
-                } else {
-                    _loginForm.value = LoginFormState(isDataValid = true)
+        }
+
+    fun loginDataChanged(phoneNumber: String, password: String) {
+        if (!isPhoneNumberValid(phoneNumber)) {
+            _loginForm.value = LoginFormState(phoneNumberError = R.string.invalid_phone)
+        } else {
+            when (_loginMethod.value) {
+                LoginMethod.VERIFICATION_CODE -> {
+                    if (!isVerificationCodeValid(password)) {
+                        _loginForm.value = LoginFormState(verificationError = R.string.invalid_verification_code)
+                    } else {
+                        _loginForm.value = LoginFormState(isDataValid = true)
+                    }
+                }
+                LoginMethod.PASSWORD -> {
+                    if (!isPasswordValid(password)) {
+                        _loginForm.value = LoginFormState(passwordError = R.string.invalid_password)
+                    } else {
+                        _loginForm.value = LoginFormState(isDataValid = true)
+                    }
                 }
             }
         }
     }
 
     fun switchLoginMethod() {
-
-    }
-
-    // A placeholder username validation check
-    private fun isUserNameValid(username: String): Boolean {
-        return if (username.contains('@')) {
-            Patterns.EMAIL_ADDRESS.matcher(username).matches()
-        } else {
-            username.isNotBlank()
-        }
+        _loginMethod.postValue(
+            when (_loginMethod.value) {
+                LoginMethod.PASSWORD -> LoginMethod.VERIFICATION_CODE
+                LoginMethod.VERIFICATION_CODE -> LoginMethod.PASSWORD
+                else -> LoginMethod.VERIFICATION_CODE
+            }
+        )
     }
 
     private fun isPhoneNumberValid(phoneNumber: String): Boolean {
-        return if (phoneNumber.length == 11) {
-            Patterns.PHONE.matcher(phoneNumber).matches()
-        } else {
-            phoneNumber.isNotBlank()
-        }
+        return Patterns.PHONE.matcher(phoneNumber).matches()
     }
 
     // A placeholder password validation check
@@ -85,8 +82,9 @@ class LoginViewModel
 
 
 data class LoginFormState(
-    val usernameError: Int? = null,
+    val phoneNumberError: Int? = null,
     val passwordError: Int? = null,
+    val verificationError: Int? = null,
     val isDataValid: Boolean = false
 )
 

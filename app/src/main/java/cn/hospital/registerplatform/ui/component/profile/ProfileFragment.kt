@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import cn.hospital.registerplatform.R
 import cn.hospital.registerplatform.databinding.FragmentProfileBinding
-import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+import cn.hospital.registerplatform.ui.component.login.LoginActivity
 import com.hi.dhl.binding.databind
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -20,6 +20,9 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         super.onViewCreated(view, savedInstanceState)
         mBinding.apply {
             lifecycleOwner = this@ProfileFragment
+            username.setOnClickListener {
+                startActivity(LoginActivity.newIntent(requireContext()))
+            }
         }
     }
 }

@@ -2,6 +2,9 @@ package cn.hospital.registerplatform.utils
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
 class CombinedLiveData<A, B>(ld1: LiveData<A>, ld2: LiveData<B>) : MediatorLiveData<Pair<A?, B?>>() {
@@ -23,4 +26,17 @@ class CombinedLiveData<A, B>(ld1: LiveData<A>, ld2: LiveData<B>) : MediatorLiveD
             setValue(Pair(a, b))
         }
     }
+}
+
+fun CoroutineScope.launchPeriodicAsync(
+    repeatMillis: Long,
+    repeatTime: Long,
+    repeatAction: (Long) -> Unit,
+    finishAction: () -> Unit
+) = this.launch {
+    for (i in repeatTime downTo 1) {
+        repeatAction(i)
+        delay(repeatMillis)
+    }
+    finishAction()
 }
