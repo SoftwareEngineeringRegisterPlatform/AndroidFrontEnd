@@ -14,9 +14,11 @@ import cn.hospital.registerplatform.databinding.ActivityDoctorListBinding
 import cn.hospital.registerplatform.databinding.ItemDoctorListBinding
 import cn.hospital.registerplatform.databinding.ItemScheduleDateBinding
 import cn.hospital.registerplatform.ui.base.BaseActivity
+import cn.hospital.registerplatform.utils.CombinedLiveData
 import com.hi.dhl.binding.databind
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.properties.Delegates
+
 
 @AndroidEntryPoint
 class DoctorListActivity : BaseActivity() {
@@ -68,20 +70,23 @@ class DoctorListActivity : BaseActivity() {
             dateContainer.adapter = dateAdapter
             container.adapter = doctorAdapter
         }
-        mViewModel.getAllDoctorList(departmentId).observe(this@DoctorListActivity) {
-            it.doSuccess { list ->
-                this@DoctorListActivity.doctorList = list
-            }
-        }
-        mViewModel.getDepartmentScheduleList(departmentId).observe(this@DoctorListActivity) {
-            it.doSuccess { map ->
-                val dateList = map.keys.sorted().toList()
-                dateAdapter.updateList(dateList)
-                scheduleMap = map
-                doctorAdapter.updateList(doctorList.filter { doctorListItem ->
-                    scheduleMap[dateList.getOrElse(0) { "" }]?.map { scheduleInfo -> scheduleInfo.doctor__name }
-                        ?.contains(doctorListItem.name) ?: false
-                })
+        CombinedLiveData(
+            mViewModel.getAllDoctorList(departmentId),
+            mViewModel.getDepartmentScheduleList(departmentId)
+        ).observe(this) {
+            if (it.first != null && it.second != null) {
+                it.first!!.doSuccess { list ->
+                    this@DoctorListActivity.doctorList = list
+                    it.second!!.doSuccess { map ->
+                        val dateList = map.keys.sorted().toList()
+                        dateAdapter.updateList(dateList)
+                        scheduleMap = map
+                        doctorAdapter.updateList(list.filter { doctorListItem ->
+                            map[dateList.getOrElse(0) { "" }]?.map { scheduleInfo -> scheduleInfo.doctor__name }
+                                ?.contains(doctorListItem.name) ?: false
+                        })
+                    }
+                }
             }
         }
     }

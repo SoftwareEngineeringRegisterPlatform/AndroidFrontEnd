@@ -7,12 +7,10 @@ import androidx.paging.PagingData
 import cn.hospital.registerplatform.api.Resource
 import cn.hospital.registerplatform.api.interfaces.HospitalApi
 import cn.hospital.registerplatform.data.UserPreference
-import cn.hospital.registerplatform.data.dto.LoadType
-import cn.hospital.registerplatform.data.dto.RawResult
+import cn.hospital.registerplatform.data.dto.*
 import cn.hospital.registerplatform.data.pagingsource.HospitalPagingSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 
 class HospitalRepository(
@@ -32,37 +30,33 @@ class HospitalRepository(
         hospitalApi.getDoctorList(departmentId, countType, page, size)
     }
 
-    fun getAllDoctorList(departmentId: Int) = flow {
-        try {
-            val rawResult = hospitalApi.getAllDoctorList(departmentId)
-            if (rawResult.success) {
-                emit(Resource.Success(rawResult.content))
-            } else {
-                emit(Resource.Failure(null))
-            }
-        } catch (e: Exception) {
-            emit(Resource.Failure(e))
-        }
+    fun getAllDoctorList(departmentId: Int) = suspendFunctionToFlow<List<DoctorListItem>, List<DoctorListItem>> {
+        hospitalApi.getAllDoctorList(departmentId)
     }
 
-    fun getDepartmentScheduleList(departmentId: Int) = flow {
-        try {
-            val rawResult = hospitalApi.getDepartmentSchedule(departmentId)
-            if (rawResult.success) {
-                val mapFromDate = rawResult.content.groupBy {
-                    DateFormat.format("MM-dd", it.begin_time).toString()
-                }
-                emit(Resource.Success(mapFromDate))
-            } else {
-                emit(Resource.Failure(null))
+    fun getDepartmentScheduleList(departmentId: Int) =
+        suspendFunctionToFlow<List<ScheduleInfo>, Map<String, List<ScheduleInfo>>>(
+            successHandler = { flowCollector, t ->
+                flowCollector.emit(Resource.Success(t.groupBy { info ->
+                    DateFormat.format("MM-dd", info.begin_time).toString()
+                }))
             }
-        } catch (e: Exception) {
-            emit(Resource.Failure(e))
-        }
-    }.flowOn(Dispatchers.IO)
+        ) { hospitalApi.getDepartmentSchedule(departmentId) }
 
-    fun getDoctorScheduleList(doctorId: Int) = getInfo {
+    fun getDoctorScheduleList(doctorId: Int) = suspendFunctionToFlow<List<ScheduleInfo>, List<ScheduleInfo>> {
         hospitalApi.getDoctorSchedule(doctorId)
+    }
+
+    fun getHospitalInfo(hospitalId: Int) = suspendFunctionToFlow<HospitalInfo, HospitalInfo> {
+        hospitalApi.getHospitalInfo(hospitalId)
+    }
+
+    fun getDepartmentInfo(departmentId: Int) = suspendFunctionToFlow<DepartmentInfo, DepartmentInfo> {
+        hospitalApi.getDepartmentInfo(departmentId)
+    }
+
+    fun getDoctorInfo(doctorId: Int) = suspendFunctionToFlow<DoctorInfo, DoctorInfo> {
+        hospitalApi.getDoctorInfo(doctorId)
     }
 
     private fun <T : Any> getList(
@@ -83,31 +77,4 @@ class HospitalRepository(
             }
         ).flow.flowOn(Dispatchers.IO)
     }
-
-    fun getHospitalInfo(hospitalId: Int) = getInfo {
-        hospitalApi.getHospitalInfo(hospitalId)
-    }
-
-    fun getDepartmentInfo(departmentId: Int) = getInfo {
-        hospitalApi.getDepartmentInfo(departmentId)
-    }
-
-    fun getDoctorInfo(doctorId: Int) = getInfo {
-        hospitalApi.getDoctorInfo(doctorId)
-    }
-
-    private fun <T> getInfo(
-        getInfoFromApi: suspend () -> RawResult<T>
-    ): Flow<Resource<T>> = flow {
-        try {
-            val rawResult = getInfoFromApi()
-            if (rawResult.success) {
-                emit(Resource.Success(rawResult.content))
-            } else {
-                emit(Resource.Failure(null))
-            }
-        } catch (e: Exception) {
-            emit(Resource.Failure(e))
-        }
-    }.flowOn(Dispatchers.IO)
 }
