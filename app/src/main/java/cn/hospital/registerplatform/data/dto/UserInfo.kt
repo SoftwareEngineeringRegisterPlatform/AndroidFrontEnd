@@ -7,7 +7,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class NewUserData(
     @SerializedName("user_name")
-    val user_name: String,
+    val userName: String,
     @SerializedName("phone_number")
     val phone_number: String,
     @SerializedName("password")
@@ -17,23 +17,39 @@ data class NewUserData(
 @Parcelize
 data class UploadUserInfo(
     @SerializedName("user_name")
-    val user_name: String,
+    val userName: String,
     @SerializedName("signature")
     val signature: String,
     @SerializedName("phone_number")
-    val phone_number: String,
+    val phoneNumber: String,
     @SerializedName("portrait")
     val portrait: String
 ) : Parcelable
 
 @Parcelize
 data class UserInfo(
-    @SerializedName("id")
-    val id: Int,
+    @SerializedName("name")
+    val name: String?,
     @SerializedName("user_name")
-    val user_name: String,
+    val userName: String,
     @SerializedName("signature")
-    val signature: String,
+    val signature: String?,
     @SerializedName("portrait")
     val portrait: String,
+    @SerializedName("email")
+    val email: String?,
+    @SerializedName("phone_number")
+    val phoneNumber: String,
+    @SerializedName("gender")
+    val gender: String?,
+    @SerializedName("height")
+    val height: Int?,
+    @SerializedName("weight")
+    val weight: Double?,
+    @SerializedName("blood_type")
+    val bloodType: String?,
+    @SerializedName("job")
+    val job: String?,
+    @SerializedName("diseasy_history")
+    val diseaseHistory: String?,
 ) : Parcelable

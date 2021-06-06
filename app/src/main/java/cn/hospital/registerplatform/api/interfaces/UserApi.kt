@@ -39,9 +39,8 @@ interface UserApi {
         @Body uploadUserInfo: UploadUserInfo
     ): RawResult<String>
 
-    @FormUrlEncoded
     @GET("User/GetInfo")
     suspend fun getInfo(
-        @Field("token") token: String
+        @Query("token") token: String
     ): RawResult<UserInfo>
 }
