@@ -25,7 +25,7 @@ class HospitalPagingSource<T : Any>(
     }
 }
 
-fun <T : Any> getList(
+fun <T : Any> getRawResultList(
     pagingConfig: PagingConfig,
     getListFromApi: suspend (LoadType, page: Int, size: Int) -> RawResult<List<T>>
 ): Flow<PagingData<T>> {
@@ -36,6 +36,25 @@ fun <T : Any> getList(
                 try {
                     val rawResult = getListFromApi(LoadType.PAGE, page, size)
                     if (rawResult.success) rawResult.content else listOf()
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    listOf()
+                }
+            }
+        }
+    ).flow.flowOn(Dispatchers.IO)
+}
+
+fun <T : Any> getList(
+    pagingConfig: PagingConfig,
+    getListFromApi: suspend (LoadType, page: Int, size: Int) -> List<T>
+): Flow<PagingData<T>> {
+    return Pager(
+        config = pagingConfig,
+        pagingSourceFactory = {
+            HospitalPagingSource { page: Int, size: Int ->
+                try {
+                    getListFromApi(LoadType.PAGE, page, size)
                 } catch (e: Exception) {
                     e.printStackTrace()
                     listOf()

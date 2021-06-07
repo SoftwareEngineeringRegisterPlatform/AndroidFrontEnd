@@ -49,13 +49,13 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 startActivity(RegisterListActivity.newIntent(requireContext()))
             }
             buttonAdvisory.setOnClickListener {
-                ToastUtils.show(requireContext(), "等待后端API完善")
+                ToastUtils.show(requireContext(), R.string.waiting_for_backend_complete)
             }
             buttonDoctor.setOnClickListener {
-                ToastUtils.show(requireContext(), "等待后端API完善")
+                ToastUtils.show(requireContext(), R.string.waiting_for_backend_complete)
             }
             buttonHospital.setOnClickListener {
-                ToastUtils.show(requireContext(), "等待后端API完善")
+                ToastUtils.show(requireContext(), R.string.waiting_for_backend_complete)
             }
         }
     }

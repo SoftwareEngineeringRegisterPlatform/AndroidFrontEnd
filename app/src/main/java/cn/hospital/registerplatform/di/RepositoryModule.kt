@@ -72,10 +72,12 @@ class RepositoryModule {
     @Provides
     fun provideRegisterRepository(
         registerApi: RegisterApi,
+        hospitalApi: HospitalApi,
         userPreference: UserPreference,
         pagingConfig: PagingConfig
     ): RegisterRepository = RegisterRepository(
         registerApi,
+        hospitalApi,
         userPreference,
         pagingConfig
     )

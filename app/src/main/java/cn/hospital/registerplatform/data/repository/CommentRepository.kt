@@ -5,7 +5,7 @@ import cn.hospital.registerplatform.api.interfaces.CommentApi
 import cn.hospital.registerplatform.data.UserPreference
 import cn.hospital.registerplatform.data.dto.UploadComment
 import cn.hospital.registerplatform.data.dto.suspendFunctionToFlow
-import cn.hospital.registerplatform.data.pagingsource.getList
+import cn.hospital.registerplatform.data.pagingsource.getRawResultList
 
 class CommentRepository(
     private val commentApi: CommentApi,
@@ -15,7 +15,7 @@ class CommentRepository(
 
     fun getCommentList(
         doctorId: Int
-    ) = getList(pagingConfig) { loadType, page, size ->
+    ) = getRawResultList(pagingConfig) { loadType, page, size ->
         commentApi.getComments(doctorId, loadType, page, size)
     }
 

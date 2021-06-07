@@ -22,6 +22,8 @@
     <string name="home_fab_text">挂号</string>
     <string name="home_register_button">挂号</string>
     <string name="home_hospital_button">医院</string>
+    <string name="home_register_history_button">挂号历史</string>
+    <string name="home_recipe_button">病历</string>
     <string name="hospital_detail_introduction_title">医院介绍</string>
     <string name="hospital_detail_register_title">预约挂号</string>
     <string name="generic_schedule_limit_remain">总%1$d剩%2$d</string>
@@ -32,4 +34,6 @@
     <string name="schedule_time">就诊时间</string>
     <string name="schedule_remain">号源剩余</string>
     <string name="register_schedule">提交预约</string>
+    <string name="waiting_for_backend_complete">等待后端API完善</string>
+    <string name="comment_to_register_button">评价</string>
 </resources>

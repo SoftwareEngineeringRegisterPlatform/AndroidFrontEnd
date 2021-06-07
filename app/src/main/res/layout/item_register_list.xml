@@ -4,6 +4,12 @@
 
     <data>
 
+        <import type="cn.hospital.registerplatform.data.dto.DoctorInfo" />
+
+        <variable
+            name="doctorInfo"
+            type="DoctorInfo" />
+
         <import type="cn.hospital.registerplatform.data.dto.RegisterListItem" />
 
         <variable
@@ -16,13 +22,72 @@
         android:layout_height="wrap_content"
         android:padding="16dp">
 
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/doctor_info_container"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="12dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/doctor_avatar"
+                    android:layout_width="48dp"
+                    android:layout_height="72dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:scaleType="fitCenter"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:loadImage="@{doctorInfo.picture}" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/doctor_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:text="@{doctorInfo.name}"
+                    android:textColor="@color/black"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toEndOf="@id/doctor_avatar"
+                    app:layout_constraintTop_toTopOf="@id/doctor_avatar" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/doctor_hospital"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="@{doctorInfo.hospitalName}"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="@id/doctor_name"
+                    app:layout_constraintTop_toBottomOf="@id/doctor_name" />
+
+                <View
+                    android:id="@+id/divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="16dp"
+                    android:background="#FFF0F0F0"
+                    app:layout_constraintTop_toBottomOf="@id/doctor_avatar" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/info_leading_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:tint="@color/blue_500"
+            android:layout_marginTop="12dp"
             app:srcCompat="@drawable/ic_baseline_access_time_24"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/doctor_info_container"
             app:layout_constraintBottom_toTopOf="@id/schedule_status"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -48,6 +113,17 @@
             app:layout_constraintTop_toBottomOf="@id/info_leading_icon"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@id/info_leading_icon" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/comment_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/blue_500"
+            android:text="@string/comment_to_register_button"
+            app:layout_constraintTop_toTopOf="@id/schedule_status"
+            app:layout_constraintBottom_toBottomOf="@id/schedule_status"
+            app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

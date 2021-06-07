@@ -9,6 +9,8 @@ import java.util.*
 data class RegisterListItem(
     @SerializedName("id")
     override val id: Int,
+    @SerializedName("schedule__doctor__id")
+    val doctorId: Int,
     @SerializedName("date")
     val date: Date,
     @SerializedName("schedule")
@@ -17,6 +19,12 @@ data class RegisterListItem(
     val status: RegisterStatus,
 ) : Parcelable, ListItem
 
+@Parcelize
+data class RegisterCombinedListItem(
+    override val id: Int,
+    val registerListItem: RegisterListItem,
+    val doctorInfo: DoctorInfo
+) : Parcelable, ListItem
 
 @Parcelize
 data class RegisterInfo(

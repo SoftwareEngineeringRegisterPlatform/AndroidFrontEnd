@@ -41,5 +41,11 @@ class MainActivity : BaseActivity() {
         fun newIntent(context: Context): Intent {
             return Intent(context, MainActivity::class.java)
         }
+
+        fun newClearIntent(context: Context): Intent {
+            return Intent(context, MainActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            }
+        }
     }
 }

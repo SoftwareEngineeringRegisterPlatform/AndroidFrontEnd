@@ -87,7 +87,7 @@ class LoginActivity : ActionBarActivity("登陆") {
                             ToastUtils.show(this@LoginActivity, "登陆成功")
                             lifecycleScope.launch {
                                 delay(1000)
-                                startActivity(MainActivity.newIntent(this@LoginActivity))
+                                startActivity(MainActivity.newClearIntent(this@LoginActivity))
                             }
                         }
                     }

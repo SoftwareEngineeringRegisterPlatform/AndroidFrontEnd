@@ -5,6 +5,7 @@ import cn.hospital.registerplatform.R
 import cn.hospital.registerplatform.data.UserPreference
 import cn.hospital.registerplatform.ui.base.BaseViewModel
 import cn.hospital.registerplatform.ui.component.hospital.HospitalListActivity
+import cn.hospital.registerplatform.ui.component.register.RegisterListActivity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -22,11 +23,11 @@ class MainViewModel @Inject constructor(private val userPreference: UserPreferen
                 startActivity(HospitalListActivity.newIntent(this))
             }
         },
-//        HomeCardData(R.string.title_home, R.drawable.ic_baseline_add_box_24) {},
-//        HomeCardData(R.string.title_home, R.drawable.ic_baseline_add_box_24) {},
-//        HomeCardData(R.string.title_home, R.drawable.ic_baseline_add_box_24) {},
-//        HomeCardData(R.string.title_home, R.drawable.ic_baseline_add_box_24) {},
-//        HomeCardData(R.string.title_home, R.drawable.ic_baseline_add_box_24) {},
+        HomeCardData(R.string.home_register_history_button, R.drawable.ic_baseline_access_time_24) {
+            it.context.apply {
+                startActivity(RegisterListActivity.newIntent(this))
+            }
+        }
     )
 
     val city = liveData {

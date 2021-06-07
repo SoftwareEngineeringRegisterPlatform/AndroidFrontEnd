@@ -27,8 +27,8 @@ data class CreateCommentResult(
 
 @Parcelize
 data class UploadComment(
-    @SerializedName("recipe_id")
-    val recipe_id: Int,
+    @SerializedName("regist_id")
+    val registerId: Int,
     @SerializedName("token")
     val token: String,
     @SerializedName("evaluateinfo")

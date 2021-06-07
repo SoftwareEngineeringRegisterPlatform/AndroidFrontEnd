@@ -7,14 +7,14 @@ import cn.hospital.registerplatform.data.dto.ExamInfo
 import cn.hospital.registerplatform.data.dto.PrescriptionInfo
 import cn.hospital.registerplatform.data.dto.RecipeInfo
 import cn.hospital.registerplatform.data.dto.suspendFunctionToFlow
-import cn.hospital.registerplatform.data.pagingsource.getList
+import cn.hospital.registerplatform.data.pagingsource.getRawResultList
 
 class RecipeRepository(
     private val recipeApi: RecipeApi,
     private val userPreference: UserPreference,
     private val pagingConfig: PagingConfig
 ) {
-    fun getRecipeList() = getList(pagingConfig) { loadType, page, size ->
+    fun getRecipeList() = getRawResultList(pagingConfig) { loadType, page, size ->
         recipeApi.getRecipeList(userPreference.getCachedToken(), loadType, page, size)
     }
 

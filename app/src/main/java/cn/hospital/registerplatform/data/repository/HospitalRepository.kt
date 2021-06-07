@@ -6,22 +6,22 @@ import cn.hospital.registerplatform.api.Resource
 import cn.hospital.registerplatform.api.interfaces.HospitalApi
 import cn.hospital.registerplatform.data.UserPreference
 import cn.hospital.registerplatform.data.dto.*
-import cn.hospital.registerplatform.data.pagingsource.getList
+import cn.hospital.registerplatform.data.pagingsource.getRawResultList
 
 class HospitalRepository(
     private val hospitalApi: HospitalApi,
     private val userPreference: UserPreference,
     private val pagingConfig: PagingConfig
 ) {
-    fun getHospitalList() = getList(pagingConfig) { loadType, page, size ->
+    fun getHospitalList() = getRawResultList(pagingConfig) { loadType, page, size ->
         hospitalApi.getHospitalList(loadType, page, size)
     }
 
-    fun getDepartmentList(hospitalId: Int) = getList(pagingConfig) { loadType, page, size ->
+    fun getDepartmentList(hospitalId: Int) = getRawResultList(pagingConfig) { loadType, page, size ->
         hospitalApi.getDepartmentList(hospitalId, loadType, page, size)
     }
 
-    fun getDoctorList(departmentId: Int) = getList(pagingConfig) { countType, page, size ->
+    fun getDoctorList(departmentId: Int) = getRawResultList(pagingConfig) { countType, page, size ->
         hospitalApi.getDoctorList(departmentId, countType, page, size)
     }
 
