@@ -12,9 +12,9 @@ class CommentViewModel @Inject constructor(private val commentRepository: Commen
     BaseViewModel() {
     fun getCommentList(doctorId: Int) = commentRepository.getCommentList(doctorId)
 
-    fun submitComment(
-        hospitalId: Int,
-        uploadComment: UploadComment
-    ) = commentRepository.createComment(hospitalId, uploadComment).asLiveData()
+//    fun submitComment(
+//        hospitalId: Int,
+//        uploadComment: UploadComment
+//    ) = commentRepository.createComment(hospitalId, uploadComment).asLiveData()
 
 }
