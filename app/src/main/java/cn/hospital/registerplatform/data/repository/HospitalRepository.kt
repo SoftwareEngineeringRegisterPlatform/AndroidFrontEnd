@@ -53,4 +53,8 @@ class HospitalRepository(
     fun getDoctorInfo(doctorId: Int) = suspendFunctionToFlow<DoctorInfo> {
         hospitalApi.getDoctorInfo(doctorId)
     }
+
+    fun getScheduleInfo(scheduleId: Int) = suspendFunctionToFlow<ScheduleInfo> {
+        hospitalApi.getScheduleInfo(scheduleId)
+    }
 }

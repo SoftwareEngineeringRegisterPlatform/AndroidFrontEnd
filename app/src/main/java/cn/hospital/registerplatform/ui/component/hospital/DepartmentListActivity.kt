@@ -12,6 +12,7 @@ import cn.hospital.registerplatform.R
 import cn.hospital.registerplatform.data.dto.DepartmentListItem
 import cn.hospital.registerplatform.databinding.ActivityDepartmentListBinding
 import cn.hospital.registerplatform.databinding.ItemDepartmentListBinding
+import cn.hospital.registerplatform.ui.base.ActionBarActivity
 import cn.hospital.registerplatform.ui.base.BaseActivity
 import com.hi.dhl.binding.databind
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,7 +22,7 @@ import kotlinx.coroutines.launch
 import kotlin.properties.Delegates
 
 @AndroidEntryPoint
-class DepartmentListActivity : BaseActivity() {
+class DepartmentListActivity : ActionBarActivity("科室列表") {
     private val mBinding: ActivityDepartmentListBinding by databind(R.layout.activity_department_list)
     private val mViewModel: HospitalViewModel by viewModels()
     private var hospitalId by Delegates.notNull<Int>()
@@ -38,15 +39,8 @@ class DepartmentListActivity : BaseActivity() {
         }
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        finish()
-        return true
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        title = "科室列表"
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         hospitalId = intent.getIntExtra(KEY_HOSPITAL_ID, 0)
         departmentAdapter = HospitalPagingAdapter(R.layout.item_department_list) { binding, data ->
             binding.item = data

@@ -23,6 +23,8 @@ class HospitalViewModel @Inject constructor(private val hospitalRepository: Hosp
 
     fun getDoctorInfo(doctorId: Int) = hospitalRepository.getDoctorInfo(doctorId).asLiveData()
 
+    fun getScheduleInfo(scheduleId: Int) = hospitalRepository.getScheduleInfo(scheduleId).asLiveData()
+
     fun getDepartmentScheduleList(departmentId: Int) =
         hospitalRepository.getDepartmentScheduleList(departmentId).asLiveData()
 

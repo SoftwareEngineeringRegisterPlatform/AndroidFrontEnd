@@ -10,7 +10,7 @@ import cn.hospital.registerplatform.R
 import cn.hospital.registerplatform.data.dto.HospitalListItem
 import cn.hospital.registerplatform.databinding.ActivityHospitalListBinding
 import cn.hospital.registerplatform.databinding.ItemHospitalListBinding
-import cn.hospital.registerplatform.ui.base.BaseActivity
+import cn.hospital.registerplatform.ui.base.ActionBarActivity
 import com.hi.dhl.binding.databind
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
@@ -18,7 +18,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class HospitalListActivity : BaseActivity() {
+class HospitalListActivity : ActionBarActivity("医院列表") {
     private val mBinding: ActivityHospitalListBinding by databind(R.layout.activity_hospital_list)
     private val mViewModel: HospitalViewModel by viewModels()
 
@@ -34,15 +34,8 @@ class HospitalListActivity : BaseActivity() {
         }
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        finish()
-        return true
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        title = "医院列表"
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         hospitalAdapter = HospitalPagingAdapter(R.layout.item_hospital_list) { binding, data ->
             binding.item = data
             binding.onClick = View.OnClickListener {

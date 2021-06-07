@@ -46,7 +46,7 @@ fun View.showToast(
         timeLength: Int
 ) {
 
-    ToastEvent.observe(lifecycleOwner, { event ->
+    ToastEvent.observe(lifecycleOwner) { event ->
         event.getContentIfNotHandled()?.let {
             when (it) {
                 is String -> Toast.makeText(this.context, it, timeLength).show()
@@ -55,7 +55,7 @@ fun View.showToast(
                 }
             }
         }
-    })
+    }
 }
 
 /**

@@ -9,7 +9,7 @@ import androidx.lifecycle.lifecycleScope
 import cn.hospital.registerplatform.R
 import cn.hospital.registerplatform.api.doSuccess
 import cn.hospital.registerplatform.databinding.ActivityLoginBinding
-import cn.hospital.registerplatform.ui.base.BaseActivity
+import cn.hospital.registerplatform.ui.base.ActionBarActivity
 import cn.hospital.registerplatform.ui.component.main.MainActivity
 import cn.hospital.registerplatform.utils.ToastUtils
 import cn.hospital.registerplatform.utils.afterTextChanged
@@ -21,21 +21,15 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class LoginActivity : BaseActivity() {
+class LoginActivity : ActionBarActivity("登陆") {
 
     private val loginViewModel: LoginViewModel by viewModels()
     private val binding: ActivityLoginBinding by databind(R.layout.activity_login)
 
     private var job: Job? = null
-    override fun onSupportNavigateUp(): Boolean {
-        finish()
-        return true
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        title = "登陆"
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         binding.apply {
             lifecycleOwner = this@LoginActivity
@@ -104,11 +98,11 @@ class LoginActivity : BaseActivity() {
                         ToastUtils.show(this@LoginActivity, "验证码发送成功")
                         job?.cancel()
                         job = lifecycleScope.launchPeriodicAsync(
-                            1000,
-                            60,
+                            100,
+                            600,
                             { second ->
                                 sendVerificationCode.isEnabled = false
-                                sendVerificationCode.text = second.toString()
+                                sendVerificationCode.text = (second / 10).toString()
                             },
                             {
                                 sendVerificationCode.isEnabled = true

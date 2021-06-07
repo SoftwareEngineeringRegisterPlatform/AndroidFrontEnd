@@ -28,4 +28,8 @@
     <string name="user_comment">用户评论</string>
     <string name="update_user_info">更新用户信息</string>
     <string name="logout">登出</string>
+    <string name="schedule_department">就诊科室</string>
+    <string name="schedule_time">就诊时间</string>
+    <string name="schedule_remain">号源剩余</string>
+    <string name="register_schedule">提交预约</string>
 </resources>

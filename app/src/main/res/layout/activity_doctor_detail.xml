@@ -54,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="6dp"
-                android:text="@{info.department__name}"
+                android:text="@{info.departmentName}"
                 android:textSize="16sp"
                 app:layout_constraintStart_toEndOf="@id/doctor_name"
                 app:layout_constraintTop_toTopOf="@id/doctor_name" />
@@ -64,7 +64,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
-                android:text="@{info.hospital__name}"
+                android:text="@{info.hospitalName}"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="@id/doctor_name"
                 app:layout_constraintTop_toBottomOf="@id/doctor_name" />

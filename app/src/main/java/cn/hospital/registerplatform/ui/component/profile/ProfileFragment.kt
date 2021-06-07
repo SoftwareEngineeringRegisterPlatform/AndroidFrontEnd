@@ -8,6 +8,8 @@ import androidx.fragment.app.viewModels
 import cn.hospital.registerplatform.R
 import cn.hospital.registerplatform.databinding.FragmentProfileBinding
 import cn.hospital.registerplatform.ui.component.login.LoginActivity
+import cn.hospital.registerplatform.ui.component.register.RegisterListActivity
+import cn.hospital.registerplatform.utils.ToastUtils
 import com.hi.dhl.binding.databind
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -42,6 +44,18 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                     }
                     else -> false
                 }
+            }
+            buttonRegister.setOnClickListener {
+                startActivity(RegisterListActivity.newIntent(requireContext()))
+            }
+            buttonAdvisory.setOnClickListener {
+                ToastUtils.show(requireContext(), "等待后端API完善")
+            }
+            buttonDoctor.setOnClickListener {
+                ToastUtils.show(requireContext(), "等待后端API完善")
+            }
+            buttonHospital.setOnClickListener {
+                ToastUtils.show(requireContext(), "等待后端API完善")
             }
         }
     }

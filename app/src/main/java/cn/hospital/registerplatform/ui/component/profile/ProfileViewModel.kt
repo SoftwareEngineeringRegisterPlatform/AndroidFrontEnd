@@ -33,6 +33,23 @@ class ProfileViewModel
                     }
                     it.doFailure {
                         userRepository.clearToken()
+                        _requireLogin.postValue(true)
+                        _userInfo.postValue(
+                            UserInfo(
+                                "点击登陆用户",
+                                "",
+                                "",
+                                "",
+                                "",
+                                "",
+                                "",
+                                null,
+                                null,
+                                "",
+                                "",
+                                ""
+                            )
+                        )
                     }
                 }
             }

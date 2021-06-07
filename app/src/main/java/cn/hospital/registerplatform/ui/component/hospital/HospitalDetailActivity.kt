@@ -7,6 +7,7 @@ import androidx.activity.viewModels
 import cn.hospital.registerplatform.R
 import cn.hospital.registerplatform.api.doSuccess
 import cn.hospital.registerplatform.databinding.ActivityHospitalDetailBinding
+import cn.hospital.registerplatform.ui.base.ActionBarActivity
 import cn.hospital.registerplatform.ui.base.BaseActivity
 import cn.hospital.registerplatform.ui.component.comment.CommentViewModel
 import com.hi.dhl.binding.databind
@@ -14,7 +15,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlin.properties.Delegates
 
 @AndroidEntryPoint
-class HospitalDetailActivity : BaseActivity() {
+class HospitalDetailActivity : ActionBarActivity("医院详情") {
     private val mBinding: ActivityHospitalDetailBinding by databind(R.layout.activity_hospital_detail)
     private val commentViewModel: CommentViewModel by viewModels()
     private val hospitalViewModel: HospitalViewModel by viewModels()
@@ -31,15 +32,8 @@ class HospitalDetailActivity : BaseActivity() {
 //            }
 //        }
 //    }
-    override fun onSupportNavigateUp(): Boolean {
-        finish()
-        return true
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        title = "医院详情"
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         hospitalId = intent.getIntExtra(KEY_HOSPITAL_ID, 0)
 //        commentListAdapter = CommentListAdapter()
         mBinding.apply {

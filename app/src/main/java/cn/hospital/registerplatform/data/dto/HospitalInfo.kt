@@ -96,21 +96,23 @@ data class DoctorInfo(
     @SerializedName("qualification")
     val qualification: String?,
     @SerializedName("hospital__name")
-    val hospital__name: String,
+    val hospitalName: String,
     @SerializedName("department__name")
-    val department__name: String,
+    val departmentName: String,
     @SerializedName("hospital__id")
-    val hospital__id: Int,
+    val hospitalId: Int,
     @SerializedName("department__id")
-    val department__id: Int,
+    val departmentId: Int,
 ) : Parcelable
 
 @Parcelize
 data class ScheduleInfo(
     @SerializedName("id")
     override val id: Int,
+    @SerializedName("doctor__id")
+    val doctorId: Int,
     @SerializedName("doctor__name")
-    val doctor__name: String,
+    val doctorName: String,
     @SerializedName("begin_time")
     val begin_time: Date,
     @SerializedName("end_time")
@@ -119,7 +121,21 @@ data class ScheduleInfo(
     val limit: Int,
     @SerializedName("registed")
     val registed: Int,
-) : Parcelable, ListItem
+) : Parcelable, ListItem {
+    companion object {
+        fun emptyScheduleInfo(): ScheduleInfo {
+            return ScheduleInfo(
+                0,
+                0,
+                "",
+                Date(),
+                Date(),
+                0,
+                0
+            )
+        }
+    }
+}
 
 interface ListItem {
     val id: Int

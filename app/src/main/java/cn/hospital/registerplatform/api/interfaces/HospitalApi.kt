@@ -60,4 +60,9 @@ interface HospitalApi {
         @Query("doctor_id") doctorId: Int,
         @Query("loadType") loadType: LoadType = LoadType.ALL
     ): RawResult<List<ScheduleInfo>>
+
+    @GET("Hospital/ScheduleInfo")
+    suspend fun getScheduleInfo(
+        @Query("schedule_id") scheduleId: Int,
+    ): RawResult<ScheduleInfo>
 }

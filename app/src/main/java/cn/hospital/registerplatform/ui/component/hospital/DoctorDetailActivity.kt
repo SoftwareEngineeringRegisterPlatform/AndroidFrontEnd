@@ -7,14 +7,14 @@ import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import cn.hospital.registerplatform.R
 import cn.hospital.registerplatform.api.doSuccess
-import cn.hospital.registerplatform.data.dto.ScheduleInfo
 import cn.hospital.registerplatform.data.dto.CommentListItem
+import cn.hospital.registerplatform.data.dto.ScheduleInfo
 import cn.hospital.registerplatform.databinding.ActivityDoctorDetailBinding
 import cn.hospital.registerplatform.databinding.ItemCommentListBinding
 import cn.hospital.registerplatform.databinding.ItemScheduleDetailBinding
-import cn.hospital.registerplatform.ui.base.BaseActivity
+import cn.hospital.registerplatform.ui.base.ActionBarActivity
 import cn.hospital.registerplatform.ui.component.comment.CommentViewModel
-import cn.hospital.registerplatform.utils.ToastUtils
+import cn.hospital.registerplatform.ui.component.register.RegisterScheduleActivity
 import com.hi.dhl.binding.databind
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
@@ -23,7 +23,7 @@ import kotlinx.coroutines.launch
 import kotlin.properties.Delegates
 
 @AndroidEntryPoint
-class DoctorDetailActivity : BaseActivity() {
+class DoctorDetailActivity : ActionBarActivity("医生详情") {
     private val mBinding: ActivityDoctorDetailBinding by databind(R.layout.activity_doctor_detail)
     private val hospitalViewModel: HospitalViewModel by viewModels()
     private val commentViewModel: CommentViewModel by viewModels()
@@ -42,20 +42,13 @@ class DoctorDetailActivity : BaseActivity() {
         }
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        finish()
-        return true
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        title = "医生详情"
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         doctorId = intent.getIntExtra(KEY_DOCTOR_ID, 0)
         scheduleAdapter = HospitalListAdapter(listOf(), R.layout.item_schedule_detail) { binding, data ->
             binding.info = data
             binding.scheduleButton.setOnClickListener {
-                ToastUtils.show(this, data.id.toString())
+                startActivity(RegisterScheduleActivity.newIntent(this, data))
             }
         }
         commentListItemAdapter = HospitalPagingAdapter(R.layout.item_comment_list) { binding, data ->

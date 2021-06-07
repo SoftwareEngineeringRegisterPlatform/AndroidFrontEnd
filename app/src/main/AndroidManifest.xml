@@ -7,14 +7,16 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
-        android:allowBackup="true"
         android:name=".App"
+        android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.RegisterPlatform"
         android:usesCleartextTraffic="true">
+        <activity android:name=".ui.component.register.RegisterScheduleActivity"></activity>
+        <activity android:name=".ui.component.register.RegisterListActivity" />
         <activity android:name=".ui.component.hospital.DoctorDetailActivity" />
         <activity android:name=".ui.component.hospital.DoctorListActivity" />
         <activity

@@ -3,13 +3,14 @@ package cn.hospital.registerplatform.data.dto
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
+import java.util.*
 
 @Parcelize
 data class RegisterListItem(
     @SerializedName("id")
     override val id: Int,
     @SerializedName("date")
-    val date: String,
+    val date: Date,
     @SerializedName("schedule")
     val schedule: Int,
     @SerializedName("status")
@@ -29,10 +30,14 @@ data class RegisterInfo(
     val status: RegisterStatus,
 ) : Parcelable
 
-enum class RegisterStatus {
+enum class RegisterStatus(private val stringValue: String) {
     @SerializedName("Waiting")
-    WAITING,
+    WAITING("等待看病"),
 
     @SerializedName("Finished")
-    FINISHED
+    FINISHED("已完成");
+
+    override fun toString(): String {
+        return stringValue
+    }
 }
