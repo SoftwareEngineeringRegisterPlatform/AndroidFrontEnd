@@ -29,6 +29,6 @@ interface RecipeApi {
     @GET("Recipe/PrescriptionInfo")
     suspend fun getPrescriptionInfo(
         @Query("token") token: String,
-        @Query("result_id") resultId: Int
+        @Query("prescription_id") prescriptionId: Int
     ): RawResult<PrescriptionInfo>
 }

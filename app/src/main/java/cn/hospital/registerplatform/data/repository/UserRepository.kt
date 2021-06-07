@@ -16,7 +16,7 @@ class UserRepository(
 ) {
     fun createUser(userName: String, phoneNumber: String, password: String) = suspendFunctionToFlow<String, String>(
         { flowCollector, _ ->
-            suspendFunctionToFlow<String, String> {
+            suspendFunctionToFlow<String> {
                 userApi.logInViaPassword(phoneNumber, password)
             }.collectLatest {
                 it.doSuccess { token ->
@@ -47,11 +47,11 @@ class UserRepository(
         userApi.logInViaVerification(phoneNumber, verification)
     }
 
-    fun sendVerification(phoneNumber: String) = suspendFunctionToFlow<String, String> {
+    fun sendVerification(phoneNumber: String) = suspendFunctionToFlow<String> {
         userApi.sendVerification(phoneNumber)
     }
 
-    fun getUserInfo() = suspendFunctionToFlow<UserInfo, UserInfo> {
+    fun getUserInfo() = suspendFunctionToFlow<UserInfo> {
         userApi.getInfo(userPreference.getCachedToken())
     }
 

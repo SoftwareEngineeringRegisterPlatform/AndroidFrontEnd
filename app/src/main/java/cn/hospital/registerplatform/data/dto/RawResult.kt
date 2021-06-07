@@ -15,13 +15,32 @@ data class RawResult<T>(
     val content: T
 )
 
-fun <GetResultClass, ReturnClass> suspendFunctionToFlow(
-    successHandler: suspend (FlowCollector<Resource<ReturnClass>>, GetResultClass) -> Unit = { flowCollector, t ->
-        flowCollector.emit(Resource.Success(t as ReturnClass))
+fun <GetResultClass> suspendFunctionToFlow(
+    valueGetter: suspend (FlowCollector<Resource<GetResultClass>>) -> RawResult<GetResultClass>
+) = suspendFunctionToFlow(
+    { flowCollector, t ->
+        flowCollector.emit(Resource.Success(t))
     },
-    errorHandler: suspend (FlowCollector<Resource<ReturnClass>>, Exception) -> Unit = { flowCollector, exception ->
+    { flowCollector, exception ->
         flowCollector.emit(Resource.Failure(exception))
     },
+    valueGetter
+)
+
+fun <GetResultClass, ReturnClass> suspendFunctionToFlow(
+    successHandler: suspend (FlowCollector<Resource<ReturnClass>>, GetResultClass) -> Unit,
+    valueGetter: suspend (FlowCollector<Resource<ReturnClass>>) -> RawResult<GetResultClass>
+) = suspendFunctionToFlow(
+    successHandler,
+    { flowCollector, exception ->
+        flowCollector.emit(Resource.Failure(exception))
+    },
+    valueGetter
+)
+
+fun <GetResultClass, ReturnClass> suspendFunctionToFlow(
+    successHandler: suspend (FlowCollector<Resource<ReturnClass>>, GetResultClass) -> Unit,
+    errorHandler: suspend (FlowCollector<Resource<ReturnClass>>, Exception) -> Unit,
     valueGetter: suspend (FlowCollector<Resource<ReturnClass>>) -> RawResult<GetResultClass>
 ) = flow {
     try {

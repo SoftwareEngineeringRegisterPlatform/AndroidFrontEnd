@@ -1,13 +1,9 @@
 package cn.hospital.registerplatform.di
 
 import androidx.paging.PagingConfig
-import cn.hospital.registerplatform.api.interfaces.CommentApi
-import cn.hospital.registerplatform.api.interfaces.HospitalApi
-import cn.hospital.registerplatform.api.interfaces.UserApi
+import cn.hospital.registerplatform.api.interfaces.*
 import cn.hospital.registerplatform.data.UserPreference
-import cn.hospital.registerplatform.data.repository.CommentRepository
-import cn.hospital.registerplatform.data.repository.HospitalRepository
-import cn.hospital.registerplatform.data.repository.UserRepository
+import cn.hospital.registerplatform.data.repository.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -58,5 +54,29 @@ class RepositoryModule {
     ): UserRepository = UserRepository(
         userApi,
         userPreference
+    )
+
+    @Singleton
+    @Provides
+    fun provideRecipeRepository(
+        recipeApi: RecipeApi,
+        userPreference: UserPreference,
+        pagingConfig: PagingConfig
+    ): RecipeRepository = RecipeRepository(
+        recipeApi,
+        userPreference,
+        pagingConfig
+    )
+
+    @Singleton
+    @Provides
+    fun provideRegisterRepository(
+        registerApi: RegisterApi,
+        userPreference: UserPreference,
+        pagingConfig: PagingConfig
+    ): RegisterRepository = RegisterRepository(
+        registerApi,
+        userPreference,
+        pagingConfig
     )
 }
