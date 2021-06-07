@@ -10,6 +10,8 @@
     <string name="switch_login_method">切换登陆方式</string>
     <string name="action_sign_in">登录</string>
     <string name="action_sign_in_short">Sign in</string>
+    <string name="action_goto_create_account">去注册</string>
+    <string name="action_create_account">注册</string>
     <string name="invalid_phone">不是合法的手机号</string>
     <string name="invalid_password">不是合法的密码</string>
     <string name="invalid_verification_code">不是合法的验证码</string>
