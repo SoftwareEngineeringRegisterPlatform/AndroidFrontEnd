@@ -8,6 +8,8 @@ import androidx.fragment.app.viewModels
 import cn.hospital.registerplatform.R
 import cn.hospital.registerplatform.databinding.FragmentProfileBinding
 import cn.hospital.registerplatform.ui.component.login.LoginActivity
+import cn.hospital.registerplatform.ui.component.login.UploadInfoActivity
+import cn.hospital.registerplatform.ui.component.recipe.RecipeDetailActivity
 import cn.hospital.registerplatform.ui.component.register.RegisterListActivity
 import cn.hospital.registerplatform.utils.ToastUtils
 import com.hi.dhl.binding.databind
@@ -21,6 +23,15 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        mViewModel.requireLogin.observe(viewLifecycleOwner) {
+            if (it) {
+                mBinding.updateUserInfo.visibility = View.INVISIBLE
+                mBinding.meaningless.visibility = View.INVISIBLE
+            } else {
+                mBinding.updateUserInfo.visibility = View.VISIBLE
+                mBinding.meaningless.visibility = View.VISIBLE
+            }
+        }
         mBinding.apply {
             profileViewModel = mViewModel
             lifecycleOwner = this@ProfileFragment
@@ -34,9 +45,6 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_settings_24)
             toolbarProfile.setOnMenuItemClickListener {
                 when (it.itemId) {
-                    R.id.action_update_user_info -> {
-                        true
-                    }
                     R.id.action_logout -> {
                         mViewModel.clearToken()
                         mViewModel.fetchUserInfo()
@@ -49,13 +57,16 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 startActivity(RegisterListActivity.newIntent(requireContext()))
             }
             buttonAdvisory.setOnClickListener {
-                ToastUtils.show(requireContext(), R.string.waiting_for_backend_complete)
+                startActivity(RecipeDetailActivity.newIntent(requireContext()))
             }
             buttonDoctor.setOnClickListener {
                 ToastUtils.show(requireContext(), R.string.waiting_for_backend_complete)
             }
             buttonHospital.setOnClickListener {
                 ToastUtils.show(requireContext(), R.string.waiting_for_backend_complete)
+            }
+            updateUserInfo.setOnClickListener {
+                startActivity(UploadInfoActivity.newIntent(requireContext()))
             }
         }
     }

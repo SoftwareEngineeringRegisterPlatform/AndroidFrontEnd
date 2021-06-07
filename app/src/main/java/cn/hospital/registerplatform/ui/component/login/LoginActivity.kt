@@ -111,6 +111,9 @@ class LoginActivity : ActionBarActivity("登陆") {
                     }
                 }
             }
+            register.setOnClickListener {
+                startActivity(NewUserActivity.newIntent(this@LoginActivity))
+            }
         }
     }
 

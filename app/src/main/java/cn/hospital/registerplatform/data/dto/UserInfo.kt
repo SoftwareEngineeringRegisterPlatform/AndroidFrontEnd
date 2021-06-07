@@ -15,15 +15,27 @@ data class NewUserData(
 ) : Parcelable
 
 @Parcelize
+data class WrapUploadUserInfo(
+    @SerializedName("token")
+    val token: String,
+    @SerializedName("userinfo")
+    val userInfo: UploadUserInfo
+) : Parcelable
+
+@Parcelize
 data class UploadUserInfo(
-    @SerializedName("user_name")
-    val userName: String,
-    @SerializedName("signature")
-    val signature: String,
-    @SerializedName("phone_number")
-    val phoneNumber: String,
-    @SerializedName("portrait")
-    val portrait: String
+    @SerializedName("name")
+    val name: String,
+    @SerializedName("gender")
+    val gender: String,
+    @SerializedName("height")
+    val height: Double,
+    @SerializedName("weight")
+    val weight: Double,
+    @SerializedName("blood_type")
+    val bloodType: String,
+    @SerializedName("diseasy_history")
+    val diseaseHistory: String,
 ) : Parcelable
 
 @Parcelize

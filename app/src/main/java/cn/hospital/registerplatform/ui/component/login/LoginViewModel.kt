@@ -6,6 +6,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
 import cn.hospital.registerplatform.R
 import cn.hospital.registerplatform.api.Resource
+import cn.hospital.registerplatform.data.dto.UploadUserInfo
+import cn.hospital.registerplatform.data.dto.WrapUploadUserInfo
 import cn.hospital.registerplatform.data.repository.UserRepository
 import cn.hospital.registerplatform.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -78,6 +80,37 @@ class LoginViewModel
     private fun isVerificationCodeValid(verificationCode: String): Boolean {
         return verificationCode.matches(Regex("[0-9]{6}"))
     }
+
+    fun createUser(
+        username: String,
+        phoneNumber: String,
+        password: String
+    ) = userRepository.createUser(username, phoneNumber, password).asLiveData()
+
+    fun saveToken(
+        token: String
+    ) = userRepository.saveToken(token)
+
+    fun updateInfo(
+        username: String,
+        sex: String,
+        bloodType: String,
+        height: Double,
+        weight: Double,
+        diseaseHistory: String
+    ) = userRepository.updateInfo(
+        WrapUploadUserInfo(
+            userRepository.getToken(),
+            UploadUserInfo(
+                username,
+                sex,
+                height,
+                weight,
+                bloodType,
+                diseaseHistory
+            )
+        )
+    ).asLiveData()
 }
 
 

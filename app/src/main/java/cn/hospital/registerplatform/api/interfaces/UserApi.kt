@@ -2,8 +2,8 @@ package cn.hospital.registerplatform.api.interfaces
 
 import cn.hospital.registerplatform.data.dto.NewUserData
 import cn.hospital.registerplatform.data.dto.RawResult
-import cn.hospital.registerplatform.data.dto.UploadUserInfo
 import cn.hospital.registerplatform.data.dto.UserInfo
+import cn.hospital.registerplatform.data.dto.WrapUploadUserInfo
 import retrofit2.http.*
 
 interface UserApi {
@@ -36,7 +36,7 @@ interface UserApi {
     @Headers("Content-Type: application/json")
     @POST("User/UpdateInfo")
     suspend fun updateInfo(
-        @Body uploadUserInfo: UploadUserInfo
+        @Body uploadUserInfo: WrapUploadUserInfo
     ): RawResult<String>
 
     @GET("User/GetInfo")
