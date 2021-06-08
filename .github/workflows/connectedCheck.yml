@@ -24,7 +24,12 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-gradle-
 
-    - name: run tests
+    - name: assembleDebug
+      uses: vgaidarji/android-github-actions-build@v1.0.1
+      with:
+        args: "./gradlew assembleDebug"
+          
+    - name: connectedCheck
       uses: reactivecircus/android-emulator-runner@v2
       with:
         api-level: 29
