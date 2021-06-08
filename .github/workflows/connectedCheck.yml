@@ -9,9 +9,9 @@ on:
   workflow_dispatch:
 
 jobs:
-  test:
-    runs-on: macos-latest
-    steps:
+  assemble:
+    runs-on: ubuntu-latest
+    steps: 
     - name: checkout
       uses: actions/checkout@v2
       
@@ -28,6 +28,21 @@ jobs:
       uses: vgaidarji/android-github-actions-build@v1.0.1
       with:
         args: "./gradlew assembleDebug"
+    
+  test:
+    runs-on: macos-latest
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+      
+    - uses: actions/cache@v2
+      with:
+        path: |
+          ~/.gradle/caches
+          ~/.gradle/wrapper
+        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+        restore-keys: |
+          ${{ runner.os }}-gradle-
           
     - name: connectedCheck
       uses: reactivecircus/android-emulator-runner@v2
