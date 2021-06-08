@@ -13,4 +13,5 @@
     <color name="blue_700">#FF1976D2</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="grey">#FFAAAAAA</color>
 </resources>
