@@ -49,7 +49,7 @@
                     app:loadImage="@{doctorInfo.picture}" />
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/user_name"
+                    android:id="@+id/doctor_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
@@ -61,14 +61,14 @@
                     app:layout_constraintTop_toTopOf="@id/doctor_avatar" />
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/recipe_date"
+                    android:id="@+id/doctor_hospital"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
                     android:text="@{doctorInfo.hospitalName}"
                     android:textSize="16sp"
-                    app:layout_constraintStart_toStartOf="@id/user_name"
-                    app:layout_constraintTop_toBottomOf="@id/user_name" />
+                    app:layout_constraintStart_toStartOf="@id/doctor_name"
+                    app:layout_constraintTop_toBottomOf="@id/doctor_name" />
 
                 <View
                     android:id="@+id/divider"
@@ -88,11 +88,11 @@
             android:layout_marginTop="12dp"
             app:srcCompat="@drawable/ic_baseline_access_time_24"
             app:layout_constraintTop_toBottomOf="@id/doctor_info_container"
-            app:layout_constraintBottom_toTopOf="@id/prescription_number"
+            app:layout_constraintBottom_toTopOf="@id/schedule_status"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
-            android:id="@+id/exam_number"
+            android:id="@+id/shedule_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
@@ -104,7 +104,7 @@
             app:layout_constraintStart_toEndOf="@id/info_leading_icon" />
 
         <TextView
-            android:id="@+id/prescription_number"
+            android:id="@+id/schedule_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
@@ -121,8 +121,8 @@
             android:textColor="@color/white"
             android:backgroundTint="@color/blue_500"
             android:text="@string/comment_to_register_button"
-            app:layout_constraintTop_toTopOf="@id/prescription_number"
-            app:layout_constraintBottom_toBottomOf="@id/prescription_number"
+            app:layout_constraintTop_toTopOf="@id/schedule_status"
+            app:layout_constraintBottom_toBottomOf="@id/schedule_status"
             app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
