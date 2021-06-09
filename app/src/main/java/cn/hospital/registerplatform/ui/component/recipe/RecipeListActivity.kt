@@ -10,6 +10,7 @@ import cn.hospital.registerplatform.data.dto.RecipeCombinedListItem
 import cn.hospital.registerplatform.databinding.ActivityRecipeListBinding
 import cn.hospital.registerplatform.databinding.ItemRecipeListBinding
 import cn.hospital.registerplatform.ui.base.ActionBarActivity
+import cn.hospital.registerplatform.ui.component.hospital.DoctorDetailActivity
 import cn.hospital.registerplatform.ui.component.hospital.HospitalPagingAdapter
 import com.hi.dhl.binding.databind
 import dagger.hilt.android.AndroidEntryPoint
@@ -41,6 +42,9 @@ class RecipeListActivity : ActionBarActivity("病历列表") {
             binding.info = data.recipeInfo
             binding.detailButton.setOnClickListener {
                 startActivity(RecipeDetailActivity.newIntent(this, data.recipeInfo))
+            }
+            binding.doctorCard.setOnClickListener {
+                startActivity(DoctorDetailActivity.newIntent(this, data.doctorInfo.id))
             }
         }
 
