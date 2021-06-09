@@ -16,6 +16,7 @@ import com.hi.dhl.binding.databind
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -29,7 +30,7 @@ class RecipeListActivity : ActionBarActivity("病历列表") {
     private fun getList() {
         getListJob?.cancel()
         getListJob = lifecycleScope.launch {
-            mViewModel.getRecipeList().collect {
+            mViewModel.getRecipeList().collectLatest {
                 recipeAdapter.submitData(it)
             }
         }

@@ -21,8 +21,10 @@ class RecipeRepository(
     fun getRecipeList() = getList(pagingConfig) { loadType, page, size ->
         val rawResult = recipeApi.getRecipeList(userPreference.getCachedToken(), loadType, page, size)
         val rawRegisterResult = registerApi.getRegisterList(userPreference.getCachedToken(), loadType, page, size)
-        val rawFinishedRegister =
-            rawRegisterResult.content.filter { reg -> rawResult.content.any { res -> res.regist == reg.id } }
+        val rawFinishedRegister = rawResult.content.map {
+            rawRegisterResult.content.filter { reg -> it.regist == reg.id }[0]
+        }
+//            rawRegisterResult.content.filter { reg -> rawResult.content.any { res -> res.regist == reg.id } }
         if (rawResult.success) {
             rawResult.content.mapIndexed { index, it ->
                 RecipeCombinedListItem(
