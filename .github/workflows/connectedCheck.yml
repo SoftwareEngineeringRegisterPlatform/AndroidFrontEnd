@@ -28,16 +28,15 @@ jobs:
       uses: vgaidarji/android-github-actions-build@v1.0.1
       with:
         args: "./gradlew assembleDebug"
-    
-    - name: Create release and upload apk
-      uses: underwindfall/create-release-with-debugapk@v2.0.0
-      env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        
+    - name: Upload Debug apk
+      uses: zkqiang/tencent-cos-action@v0.1.0
       with:
-        tag_name: v1.0.1
-        asset_path: app/build/outputs/apk/debug/app-debug.apk
-        asset_name: Example.apk
-        asset_content_type: application/zip
+        args: delete -r -f /apk && upload ./app/build/outputs/apk/debug/app-debug.apk /apk
+        secret_id: ${{ secrets.SECRET_ID }}
+        secret_key: ${{ secrets.SECRET_KEY }}
+        bucket: ${{ secrets.BUCKET }}
+        region: ap-nanjing
     
   test:
     runs-on: macos-latest
