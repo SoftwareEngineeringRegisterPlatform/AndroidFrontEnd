@@ -9,7 +9,7 @@ import cn.hospital.registerplatform.R
 import cn.hospital.registerplatform.databinding.FragmentProfileBinding
 import cn.hospital.registerplatform.ui.component.login.LoginActivity
 import cn.hospital.registerplatform.ui.component.login.UploadInfoActivity
-import cn.hospital.registerplatform.ui.component.recipe.RecipeDetailActivity
+import cn.hospital.registerplatform.ui.component.recipe.RecipeListActivity
 import cn.hospital.registerplatform.ui.component.register.RegisterListActivity
 import cn.hospital.registerplatform.utils.ToastUtils
 import com.hi.dhl.binding.databind
@@ -57,7 +57,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 startActivity(RegisterListActivity.newIntent(requireContext()))
             }
             buttonAdvisory.setOnClickListener {
-                startActivity(RecipeDetailActivity.newIntent(requireContext()))
+                startActivity(RecipeListActivity.newIntent(requireContext()))
             }
             buttonDoctor.setOnClickListener {
                 ToastUtils.show(requireContext(), R.string.waiting_for_backend_complete)

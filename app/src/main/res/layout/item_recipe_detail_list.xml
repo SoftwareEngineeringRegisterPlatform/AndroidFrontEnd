@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="java.util.Date" />
+
+        <variable
+            name="date"
+            type="Date" />
+
+        <import type="cn.hospital.registerplatform.data.dto.DoctorInfo" />
+
+        <variable
+            name="content"
+            type="String" />
+
+        <variable
+            name="type"
+            type="String" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/doctor_info_container"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="12dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="16dp"
+        app:layout_constraintTop_toTopOf="parent">
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/info_leading_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:tint="@color/blue_500"
+            app:srcCompat="@drawable/ic_baseline_access_time_24"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/event_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:layout_marginStart="12dp"
+            app:loadText="@{date}"
+            android:textSize="16sp"
+            app:layout_constraintTop_toTopOf="@id/info_leading_icon"
+            app:layout_constraintBottom_toBottomOf="@id/info_leading_icon"
+            app:layout_constraintStart_toEndOf="@id/info_leading_icon" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/type_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="@{type}"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+
+            app:layout_constraintTop_toBottomOf="@id/info_leading_icon"
+            app:layout_constraintStart_toStartOf="@id/info_leading_icon" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/content_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="@{content}"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+
+            app:layout_constraintTop_toBottomOf="@id/type_text"
+            app:layout_constraintStart_toStartOf="@id/type_text" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

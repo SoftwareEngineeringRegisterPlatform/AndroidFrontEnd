@@ -28,6 +28,15 @@ jobs:
       uses: vgaidarji/android-github-actions-build@v1.0.1
       with:
         args: "./gradlew assembleDebug"
+        
+    - name: Upload Debug apk
+      uses: zkqiang/tencent-cos-action@v0.1.0
+      with:
+        args: delete -r -f /apk && upload ./app/build/outputs/apk/debug/app-debug.apk /apk/debug.apk
+        secret_id: ${{ secrets.SECRET_ID }}
+        secret_key: ${{ secrets.SECRET_KEY }}
+        bucket: ${{ secrets.BUCKET }}
+        region: ap-shanghai
     
   test:
     runs-on: macos-latest
@@ -50,3 +59,5 @@ jobs:
         api-level: 29
         script:
           chmod +x ./gradlew && ./gradlew connectedCheck
+  
+    

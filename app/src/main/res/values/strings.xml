@@ -38,4 +38,8 @@
     <string name="register_schedule">提交预约</string>
     <string name="waiting_for_backend_complete">等待后端API完善</string>
     <string name="comment_to_register_button">评价</string>
+    <string name="recipe_detail_button">详情</string>
+    <string name="recipe_diag_label">诊疗结果:</string>
+    <string name="recipe_suggestion_label">医嘱:</string>
+    <string name="detail_button_label">检查结果和处方请查看详情</string>
 </resources>

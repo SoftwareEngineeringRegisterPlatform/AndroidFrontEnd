@@ -60,10 +60,14 @@ class RepositoryModule {
     @Provides
     fun provideRecipeRepository(
         recipeApi: RecipeApi,
+        registerApi: RegisterApi,
+        hospitalApi: HospitalApi,
         userPreference: UserPreference,
         pagingConfig: PagingConfig
     ): RecipeRepository = RecipeRepository(
         recipeApi,
+        registerApi,
+        hospitalApi,
         userPreference,
         pagingConfig
     )

@@ -15,6 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RegisterPlatform"
         android:usesCleartextTraffic="true">
+        <activity android:name=".ui.component.recipe.RecipeListActivity"></activity>
         <activity android:name=".ui.component.recipe.RecipeDetailActivity"></activity>
         <activity android:name=".ui.component.login.UploadInfoActivity" />
         <activity android:name=".ui.component.login.NewUserActivity" />
