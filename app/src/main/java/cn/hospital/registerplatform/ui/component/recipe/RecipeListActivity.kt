@@ -44,7 +44,7 @@ class RecipeListActivity : ActionBarActivity("病历列表") {
             binding.detailButton.setOnClickListener {
                 startActivity(RecipeDetailActivity.newIntent(this, data.recipeInfo))
             }
-            binding.doctorCard.setOnClickListener {
+            binding.doctorInfoContainer.setOnClickListener {
                 startActivity(DoctorDetailActivity.newIntent(this, data.doctorInfo.id))
             }
         }

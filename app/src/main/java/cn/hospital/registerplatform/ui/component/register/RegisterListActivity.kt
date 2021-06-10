@@ -11,6 +11,7 @@ import cn.hospital.registerplatform.databinding.ActivityRegisterListBinding
 import cn.hospital.registerplatform.databinding.ItemRegisterListBinding
 import cn.hospital.registerplatform.ui.base.ActionBarActivity
 import cn.hospital.registerplatform.ui.component.comment.SubmitCommentActivity
+import cn.hospital.registerplatform.ui.component.hospital.DoctorDetailActivity
 import cn.hospital.registerplatform.ui.component.hospital.HospitalPagingAdapter
 import com.hi.dhl.binding.databind
 import dagger.hilt.android.AndroidEntryPoint
@@ -42,6 +43,9 @@ class RegisterListActivity : ActionBarActivity("我的预约") {
             binding.doctorInfo = data.doctorInfo
             binding.commentButton.setOnClickListener {
                 startActivity(SubmitCommentActivity.newIntent(this, data.id))
+            }
+            binding.doctorInfoContainer.setOnClickListener {
+                startActivity(DoctorDetailActivity.newIntent(this, data.doctorInfo.id))
             }
         }
         mBinding.apply {
