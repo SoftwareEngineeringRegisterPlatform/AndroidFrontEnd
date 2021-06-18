@@ -42,7 +42,22 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/username_input_text"
-            app:layout_constraintBottom_toBottomOf="@id/phone_number_input_text" />
+            app:layout_constraintBottom_toBottomOf="@id/username_input_hint" />
+
+        <TextView
+            android:id="@+id/username_input_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="32dp"
+            android:alpha="0.5"
+            android:gravity="left"
+            android:text="*用户名长度>5"
+            android:textSize="16sp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="@id/phone_number_input_text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/username_input"></TextView>
 
         <TextView
             android:id="@+id/phone_number_input_text"
@@ -56,7 +71,7 @@
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="@id/phone_number_input"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/username_input"></TextView>
+            app:layout_constraintTop_toTopOf="@id/username_input_hint"></TextView>
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/phone_number_input"
@@ -64,9 +79,9 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="32dp"
             android:hint="手机号"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="@id/password_input_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/phone_number_input_text" />
 
         <TextView
