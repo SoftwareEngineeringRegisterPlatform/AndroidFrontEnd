@@ -12,7 +12,18 @@ interface CommentApi {
         @Query("doctor_id") doctorId: Int,
         @Query("loadType") loadType: LoadType,
         @Query("page") page: Int,
-        @Query("size") size: Int
+        @Query("size") size: Int,
+        @Query("sort_by") sort_method: String
+    ): RawResult<List<CommentListItem>>
+
+    @GET("Evaluate/EvaFilter")
+    suspend fun getComments(
+        @Query("doctor_id") doctorId: Int,
+        @Query("loadType") loadType: LoadType,
+        @Query("page") page: Int,
+        @Query("size") size: Int,
+        @Query("sort_by") sort_method: String,
+        @Query("rating") sort_select: Int
     ): RawResult<List<CommentListItem>>
 
     @Headers("Content-Type: application/json")
