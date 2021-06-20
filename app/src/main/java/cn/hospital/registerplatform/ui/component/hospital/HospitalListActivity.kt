@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.lifecycleScope
 import cn.hospital.registerplatform.R
 import cn.hospital.registerplatform.data.dto.HospitalListItem
@@ -14,6 +15,7 @@ import cn.hospital.registerplatform.databinding.ActivityHospitalListBinding
 import cn.hospital.registerplatform.databinding.ItemHospitalListBinding
 import cn.hospital.registerplatform.ui.base.ActionBarActivity
 import cn.hospital.registerplatform.utils.ToastUtils
+import cn.hospital.registerplatform.utils.afterTextChanged
 import com.hi.dhl.binding.databind
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
@@ -29,6 +31,9 @@ class HospitalListActivity : ActionBarActivity("医院列表") {
     private lateinit var conditionArray: Array<String>
     private lateinit var hospitalAdapter: HospitalPagingAdapter<HospitalListItem, ItemHospitalListBinding>
 
+    private var searchPosition = 0;
+    private var searchName = "";
+
     private var getListJob: Job? = null
     private fun getList() {
         getListJob?.cancel()
@@ -39,8 +44,7 @@ class HospitalListActivity : ActionBarActivity("医院列表") {
         }
     }
 
-    private fun getList(type: String) {
-        var name = ""
+    private fun getList(name: String, type: String) {
         getListJob?.cancel()
         getListJob = lifecycleScope.launch {
             mViewModel.getHospitalFilterList(name, type).collect {
@@ -74,12 +78,17 @@ class HospitalListActivity : ActionBarActivity("医院列表") {
                     position: Int,
                     id: Long
                 ) {
-                    getList(conditionArray[position])
+                    searchPosition = position
+                    getList(searchName, conditionArray[position])
 //                    ToastUtils.show(this@HospitalListActivity, conditionArray[position])
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {
                 }
+            }
+            hospitalSearchName.afterTextChanged { text ->
+                searchName = text
+                getList(text, conditionArray[searchPosition])
             }
 
         }
