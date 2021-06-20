@@ -37,16 +37,59 @@ class RecipeRepository(
         }
     }
 
+    fun getDoctorRecipeList() = getList(pagingConfig) { loadType, page, size ->
+        val rawResult = recipeApi.getDoctorRecipeList(userPreference.getCachedToken(), loadType)
+        val rawRegisterResult = registerApi.getRegisterList(userPreference.getCachedToken(), loadType, page, size)
+        val rawFinishedRegister = rawResult.content.map {
+            rawRegisterResult.content.filter { reg -> it.regist == reg.id }[0]
+        }
+//            rawRegisterResult.content.filter { reg -> rawResult.content.any { res -> res.regist == reg.id } }
+        if (rawResult.success) {
+            rawResult.content.mapIndexed { index, it ->
+                RecipeCombinedListItem(
+                    it.id, it, recipeApi.getRecipeInfo(userPreference.getCachedToken(), it.regist).content,
+                    hospitalApi.getDoctorInfo(rawFinishedRegister[index].doctorId).content
+                )
+            }
+        } else {
+            listOf()
+        }
+    }
+
     fun getRecipeInfo(recipeId: Int) = suspendFunctionToFlow<RecipeInfo> {
         recipeApi.getRecipeInfo(userPreference.getCachedToken(), recipeId)
+    }
+
+    fun submitRecipeInfo(recipeInfo: RecipeInfoSubmit) = suspendFunctionToFlow<String> {
+        recipeApi.submitRecipe(userPreference.getCachedToken(), recipeInfo)
+    }
+
+    fun editRecipeInfo(recipeId: Int, recipeInfo: RecipeInfoEdit) = suspendFunctionToFlow<String> {
+        recipeApi.editRecipe(userPreference.getCachedToken(), recipeId, recipeInfo)
     }
 
     fun getExamInfo(resultId: Int) = suspendFunctionToFlow<ExamInfo> {
         recipeApi.getExamInfo(userPreference.getCachedToken(), resultId)
     }
 
+    fun submitExamInfo(examInfo: ExamInfoSubmit) = suspendFunctionToFlow<String> {
+        recipeApi.submitExam(userPreference.getCachedToken(), examInfo)
+    }
+
+    fun editExamInfo(examId: Int, examInfo: ExamInfoEdit) = suspendFunctionToFlow<String> {
+        recipeApi.editExam(userPreference.getCachedToken(), examId, examInfo)
+    }
+
     fun getPrescriptionInfo(prescriptionId: Int) = suspendFunctionToFlow<PrescriptionInfo> {
         recipeApi.getPrescriptionInfo(userPreference.getCachedToken(), prescriptionId)
+    }
+
+    fun submitPrescriptionInfo(prescriptionInfo: PrescriptionInfoSubmit) = suspendFunctionToFlow<String> {
+        recipeApi.submitPrescription(userPreference.getCachedToken(), prescriptionInfo)
+    }
+
+    fun editPrescriptionInfo(prescriptionId: Int, prescriptionInfo: PrescriptionInfoEdit) = suspendFunctionToFlow<String> {
+        recipeApi.editPrescription(userPreference.getCachedToken(), prescriptionId, prescriptionInfo)
     }
 
     fun getDetailInfoList(examIds: List<Int>, prescriptionIds: List<Int>) =
