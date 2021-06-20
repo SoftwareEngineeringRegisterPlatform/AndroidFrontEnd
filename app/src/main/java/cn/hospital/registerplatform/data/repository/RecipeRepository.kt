@@ -12,6 +12,7 @@ import cn.hospital.registerplatform.data.dto.*
 import cn.hospital.registerplatform.data.pagingsource.getList
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
+import java.util.*
 
 class RecipeRepository(
     private val recipeApi: RecipeApi,
@@ -53,7 +54,7 @@ class RecipeRepository(
             } else listOf()) +
                     (if (registWithoutRecipe.success) registWithoutRecipe.content.mapIndexed { index, it ->
                         RecipeDoctorCombinedListItem(
-                            index, null,
+                            index, RecipeInfo(0, Date(), 0, "", "", listOf(), listOf()),
                             userApi.getInfoById(it.user).content, false
                         )
                     } else listOf())

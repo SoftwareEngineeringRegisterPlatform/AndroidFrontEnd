@@ -37,21 +37,31 @@ class RecipeListEditActivity : ActionBarActivity("芜湖，起飞！") {
         recipeAdapter = HospitalListAdapter(listOf(), R.layout.item_recipe_edit_list) { binding, data ->
             binding.userInfo = data.userInfo
             binding.info = data.recipeInfo
+            binding.isFinish = data.hasRecipe
             if (data.hasRecipe) {
                 binding.editButton.setOnClickListener {
-                    startActivity(data.recipeInfo?.regist?.let { it1 ->
+                    startActivity(
                         EditRecipeAbstractActivity.newIntent(this,
-                            it1
-                        )
-                    })
+                            data.recipeInfo.regist, data.recipeInfo.user, false
+                        ))
                 }
+                binding.detailButton.setVisibility(View.VISIBLE)
                 binding.detailButton.setOnClickListener {
-                    startActivity(data.recipeInfo?.let { it1 ->
+                    startActivity(
                         RecipeDetailActivity.newIntent(
                             this,
-                            it1
+                            data.recipeInfo
+                        ))
+                }
+            } else {
+                binding.detailButton.setVisibility(View.GONE)
+                binding.editButton.setText(R.string.recipe_submit_button)
+                binding.editButton.setOnClickListener {
+                    startActivity(
+                        EditRecipeAbstractActivity.newIntent(this,
+                            data.recipeInfo.regist, data.recipeInfo.user, true
                         )
-                    })
+                    )
                 }
             }
         }

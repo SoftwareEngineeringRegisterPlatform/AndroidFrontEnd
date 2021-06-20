@@ -8,6 +8,7 @@ import cn.hospital.registerplatform.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import cn.hospital.registerplatform.data.dto.RecipeInfoEdit
+import cn.hospital.registerplatform.data.dto.RecipeInfoSubmit
 
 @HiltViewModel
 class RecipeViewModel
@@ -26,5 +27,10 @@ class RecipeViewModel
         recipeRepository.editRecipeInfo(
             recipeId,
             RecipeInfoEdit(newRecipeDiag, newRecipeSuggestion)
+        ).asLiveData()
+
+    fun submitRecipeInfo(user: Int, regist: Int, newRecipeDiag: String, newRecipeSuggestion: String) =
+        recipeRepository.submitRecipeInfo(
+            RecipeInfoSubmit(user, regist, newRecipeDiag, newRecipeSuggestion)
         ).asLiveData()
 }
