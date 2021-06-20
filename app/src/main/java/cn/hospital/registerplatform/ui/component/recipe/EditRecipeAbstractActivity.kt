@@ -35,11 +35,18 @@ class EditRecipeAbstractActivity : BaseActivity() {
                     recipeId,
                     recipeDiag.text.toString(),
                     recipeSuggestion.text.toString()
-                )
-                // success ?
-                lifecycleScope.launch {
-                    delay(1000)
-                    startActivity(MainActivity.newClearIntent(this@EditRecipeAbstractActivity))
+                ).observe(this@EditRecipeAbstractActivity) {
+                    it.doSuccess {
+                        ToastUtils.show(this@EditRecipeAbstractActivity, "修改病历成功")
+                        lifecycleScope.launch {
+                            delay(1000)
+                            startActivity(MainActivity.newClearIntent(this@EditRecipeAbstractActivity))
+                        }
+                    }
+                    it.doFailure {
+                        ToastUtils.show(this@EditRecipeAbstractActivity, "修改病历失败")
+
+                    }
                 }
             }
         }

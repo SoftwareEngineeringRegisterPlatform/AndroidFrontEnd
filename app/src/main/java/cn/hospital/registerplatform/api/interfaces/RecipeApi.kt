@@ -1,10 +1,7 @@
 package cn.hospital.registerplatform.api.interfaces
 
 import cn.hospital.registerplatform.data.dto.*
-import retrofit2.http.Field
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface RecipeApi {
 
@@ -41,6 +38,18 @@ interface RecipeApi {
         @Query("loadType") LoadType: LoadType
     ): RawResult<List<RecipeListItem>>
 
+    @GET("Regist/DoctorRegistWithRecipe")
+    suspend fun getDoctorRegistWithRecipe(
+        @Query("token") token: String,
+        @Query("loadType") LoadType: LoadType
+    ): RawResult<List<RegistWithRecipeListItem>>
+
+    @GET("Regist/DoctorRegistWithoutRecipe")
+    suspend fun getDoctorRegistWithoutRecipe(
+        @Query("token") token: String,
+        @Query("loadType") LoadType: LoadType
+    ): RawResult<List<RegistWithRecipeListItem>>
+
     @POST("Recipe/SubmitRecipe")
     suspend fun submitRecipe(
         @Field("token") token: String,
@@ -58,24 +67,19 @@ interface RecipeApi {
         @Field("prescription_info") prescription_info: PrescriptionInfoSubmit
     ): RawResult<String>
 
+    @Headers("Content-Type: application/json")
     @POST("Recipe/EditRecipe")
     suspend fun editRecipe(
-        @Field("token") token: String,
-        @Field("recipe_id") recipeId: Int,
-        @Field("recipe_info") recipeInfo: RecipeInfoEdit,
+        @Body editRecipe: RecipeInfoEditBody
     ): RawResult<String>
 
     @POST("Recipe/EditExam")
     suspend fun editExam(
-        @Field("token") token: String,
-        @Field("recipe_id") recipeId: Int,
-        @Field("exam_info") examInfo: ExamInfoEdit
+        @Body editExam: ExamInfoEditBody
     ): RawResult<String>
 
     @POST("Recipe/EditPrescription")
     suspend fun editPrescription(
-        @Field("token") token: String,
-        @Field("recipe_id") recipeId: Int,
-        @Field("prescription_info") prescriptionInfo: PrescriptionInfoEdit
+        @Body editPrescription: PrescriptionInfoEditBody
     ): RawResult<String>
 }

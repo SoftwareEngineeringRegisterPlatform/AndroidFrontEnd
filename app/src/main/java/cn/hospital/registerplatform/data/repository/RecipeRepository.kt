@@ -1,10 +1,12 @@
 package cn.hospital.registerplatform.data.repository
 
+import android.util.Log
 import androidx.paging.PagingConfig
 import cn.hospital.registerplatform.api.Resource
 import cn.hospital.registerplatform.api.interfaces.HospitalApi
 import cn.hospital.registerplatform.api.interfaces.RecipeApi
 import cn.hospital.registerplatform.api.interfaces.RegisterApi
+import cn.hospital.registerplatform.api.interfaces.UserApi
 import cn.hospital.registerplatform.data.UserPreference
 import cn.hospital.registerplatform.data.dto.*
 import cn.hospital.registerplatform.data.pagingsource.getList
@@ -15,6 +17,7 @@ class RecipeRepository(
     private val recipeApi: RecipeApi,
     private val registerApi: RegisterApi,
     private val hospitalApi: HospitalApi,
+    private val userApi: UserApi,
     private val userPreference: UserPreference,
     private val pagingConfig: PagingConfig
 ) {
@@ -37,24 +40,25 @@ class RecipeRepository(
         }
     }
 
-    fun getDoctorRecipeList() = getList(pagingConfig) { loadType, page, size ->
-        val rawResult = recipeApi.getDoctorRecipeList(userPreference.getCachedToken(), loadType)
-        val rawRegisterResult = registerApi.getRegisterList(userPreference.getCachedToken(), loadType, page, size)
-        val rawFinishedRegister = rawResult.content.map {
-            rawRegisterResult.content.filter { reg -> it.regist == reg.id }[0]
-        }
-//            rawRegisterResult.content.filter { reg -> rawResult.content.any { res -> res.regist == reg.id } }
-        if (rawResult.success) {
-            rawResult.content.mapIndexed { index, it ->
-                RecipeCombinedListItem(
-                    it.id, it, recipeApi.getRecipeInfo(userPreference.getCachedToken(), it.regist).content,
-                    hospitalApi.getDoctorInfo(rawFinishedRegister[index].doctorId).content
+    fun getDoctorRecipeList(loadType: LoadType) =
+        flow {
+            val registWithRecipe = recipeApi.getDoctorRegistWithRecipe(userPreference.getCachedToken(), loadType)
+            val registWithoutRecipe = recipeApi.getDoctorRegistWithoutRecipe(userPreference.getCachedToken(), loadType)
+
+            val res = (if (registWithRecipe.success) registWithRecipe.content.mapIndexed { index, it ->
+                RecipeDoctorCombinedListItem(
+                    index, recipeApi.getRecipeInfo(userPreference.getCachedToken(), it.id).content,
+                    userApi.getInfoById(it.user).content, true
                 )
-            }
-        } else {
-            listOf()
+            } else listOf()) +
+                    (if (registWithoutRecipe.success) registWithoutRecipe.content.mapIndexed { index, it ->
+                        RecipeDoctorCombinedListItem(
+                            index, null,
+                            userApi.getInfoById(it.user).content, false
+                        )
+                    } else listOf())
+            emit(res)
         }
-    }
 
     fun getRecipeInfo(recipeId: Int) = suspendFunctionToFlow<RecipeInfo> {
         recipeApi.getRecipeInfo(userPreference.getCachedToken(), recipeId)
@@ -65,7 +69,10 @@ class RecipeRepository(
     }
 
     fun editRecipeInfo(recipeId: Int, recipeInfo: RecipeInfoEdit) = suspendFunctionToFlow<String> {
-        recipeApi.editRecipe(userPreference.getCachedToken(), recipeId, recipeInfo)
+        Log.d(
+            "edit recipe Info Repo",
+            "$recipeId ${recipeInfo.diag} ${recipeInfo.suggestion}")
+        recipeApi.editRecipe(RecipeInfoEditBody(userPreference.getCachedToken(), recipeId, recipeInfo))
     }
 
     fun getExamInfo(resultId: Int) = suspendFunctionToFlow<ExamInfo> {
@@ -77,7 +84,7 @@ class RecipeRepository(
     }
 
     fun editExamInfo(examId: Int, examInfo: ExamInfoEdit) = suspendFunctionToFlow<String> {
-        recipeApi.editExam(userPreference.getCachedToken(), examId, examInfo)
+        recipeApi.editExam(ExamInfoEditBody(userPreference.getCachedToken(), examId, examInfo))
     }
 
     fun getPrescriptionInfo(prescriptionId: Int) = suspendFunctionToFlow<PrescriptionInfo> {
@@ -89,7 +96,7 @@ class RecipeRepository(
     }
 
     fun editPrescriptionInfo(prescriptionId: Int, prescriptionInfo: PrescriptionInfoEdit) = suspendFunctionToFlow<String> {
-        recipeApi.editPrescription(userPreference.getCachedToken(), prescriptionId, prescriptionInfo)
+        recipeApi.editPrescription(PrescriptionInfoEditBody(userPreference.getCachedToken(), prescriptionId, prescriptionInfo))
     }
 
     fun getDetailInfoList(examIds: List<Int>, prescriptionIds: List<Int>) =

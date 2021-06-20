@@ -59,7 +59,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             }
             buttonAdvisory.setOnClickListener {
                 when (mViewModel.userInfo.value?.phoneNumber) {
-                    "18871951902" -> startActivity(RecipeListEditActivity.newIntent(requireContext()))
+                    "189123456789" -> startActivity(RecipeListEditActivity.newIntent(requireContext()))
                     else -> startActivity(RecipeListActivity.newIntent(requireContext()))
                 }
             }
