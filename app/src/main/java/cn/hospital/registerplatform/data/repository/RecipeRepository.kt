@@ -104,7 +104,7 @@ class RecipeRepository(
         flow {
             val resultList = examIds.map {
                 getExamInfo(it).first()
-            }.filterIsInstance<Resource.Success<ExamInfo>>()
+            }.filterIsInstance<Pair<Resource.Success<ExamInfo>>()
                 .mapIndexed { index, resource ->
                     RecipeDetailCombinedListItem(index, resource.value.date, true, resource.value, null)
                 }.toMutableList()

@@ -2,6 +2,7 @@ package cn.hospital.registerplatform.ui.component.recipe
 
 import android.util.Log
 import androidx.lifecycle.asLiveData
+import cn.hospital.registerplatform.data.dto.ExamInfoEdit
 import cn.hospital.registerplatform.data.dto.LoadType
 import cn.hospital.registerplatform.data.repository.RecipeRepository
 import cn.hospital.registerplatform.ui.base.BaseViewModel
@@ -33,4 +34,7 @@ class RecipeViewModel
         recipeRepository.submitRecipeInfo(
             RecipeInfoSubmit(user, regist, newRecipeDiag, newRecipeSuggestion)
         ).asLiveData()
+
+    fun editExamInfo(examId: Int, diag: String, content: String) =
+        recipeRepository.editExamInfo(examId, ExamInfoEdit(diag, content)).asLiveData()
 }

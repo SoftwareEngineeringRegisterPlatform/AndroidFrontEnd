@@ -95,7 +95,10 @@
             android:layout_height="wrap_content"
             android:text="编辑"
             tools:layout_editor_absoluteX="267dp"
-            tools:layout_editor_absoluteY="60dp" />
+            tools:layout_editor_absoluteY="60dp"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
     </androidx.constraintlayout.widget.ConstraintLayout>

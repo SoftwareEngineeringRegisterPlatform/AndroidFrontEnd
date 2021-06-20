@@ -20,6 +20,7 @@
         <activity android:name=".ui.component.recipe.RecipeDetailActivity"></activity>
         <activity android:name=".ui.component.recipe.EditRecipeAbstractActivity"></activity>
         <activity android:name=".ui.component.recipe.RecipeDetailEditListActivity"></activity>
+        <activity android:name=".ui.component.recipe.EditRecipeDetailActivity"></activity>
         <activity android:name=".ui.component.login.UploadInfoActivity" />
         <activity android:name=".ui.component.login.NewUserActivity" />
         <activity android:name=".ui.component.register.RegisterScheduleActivity" />

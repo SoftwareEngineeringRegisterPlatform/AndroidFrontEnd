@@ -15,7 +15,9 @@
         <variable
             name="userInfo"
             type="UserInfo" />
-
+        <variable
+            name="isFinish"
+            type="Boolean" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
