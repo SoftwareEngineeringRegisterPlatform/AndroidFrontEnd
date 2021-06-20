@@ -42,7 +42,7 @@ class EditRecipeDetailActivity : BaseActivity() {
 
             submitAbstract.setOnClickListener {
                 mViewModel.editExamInfo(
-                    recipeDetailItem.examInfo,
+                    recipeDetailItem.examId,
                     recipeDiag.text.toString(),
                     recipeSuggestion.text.toString()
                 ).observe(this@EditRecipeDetailActivity) {
