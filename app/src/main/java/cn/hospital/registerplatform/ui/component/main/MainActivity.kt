@@ -38,10 +38,6 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    public fun newSearchIntent() {
-        startActivity(HospitalListActivity.newIntent(this@MainActivity))
-    };
-
     companion object {
         fun newIntent(context: Context): Intent {
             return Intent(context, MainActivity::class.java)
@@ -51,11 +47,6 @@ class MainActivity : BaseActivity() {
             return Intent(context, MainActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             }
-        }
-
-        fun onSearchHospital() {
-            HospitalListActivity.newIntent(this@MainActivity)
-            //newSearchIntent()
         }
 
     }

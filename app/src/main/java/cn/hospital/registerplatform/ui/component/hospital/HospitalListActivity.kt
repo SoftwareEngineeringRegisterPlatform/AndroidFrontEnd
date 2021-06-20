@@ -14,8 +14,10 @@ import cn.hospital.registerplatform.ui.base.ActionBarActivity
 import com.hi.dhl.binding.databind
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.newSingleThreadContext
 
 @AndroidEntryPoint
 class HospitalListActivity : ActionBarActivity("医院列表") {

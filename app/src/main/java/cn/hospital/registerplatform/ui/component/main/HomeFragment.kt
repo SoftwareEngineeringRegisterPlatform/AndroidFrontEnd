@@ -8,6 +8,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import cn.hospital.registerplatform.R
 import cn.hospital.registerplatform.databinding.FragmentHomeBinding
+import cn.hospital.registerplatform.ui.component.hospital.HospitalListActivity
 import cn.hospital.registerplatform.utils.ToastUtils
 import com.hi.dhl.binding.databind
 import dagger.hilt.android.AndroidEntryPoint
@@ -24,12 +25,14 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             currentCitySelector.setOnClickListener {
                 ToastUtils.show(requireContext(), R.string.waiting_for_backend_complete)
             }
-            searchContainer.setOnClickListener {
+            searchContainer.apply {
                 // startActivity(HospitalListActivity.newIntent(MainActivity))
 //                it.context.apply {
 //                    startActivity(HospitalListActivity.newIntent(this))
 //                }
-                MainActivity.onSearchHospital()
+                setOnClickListener {
+                    startActivity(HospitalListActivity.newIntent(view.context))
+                }
             }
             buttonContainer.apply {
                 layoutManager = GridLayoutManager(requireContext(), 2)
