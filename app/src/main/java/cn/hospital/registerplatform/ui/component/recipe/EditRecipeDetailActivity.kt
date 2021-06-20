@@ -9,6 +9,7 @@ import androidx.lifecycle.lifecycleScope
 import cn.hospital.registerplatform.R
 import cn.hospital.registerplatform.api.doFailure
 import cn.hospital.registerplatform.api.doSuccess
+import cn.hospital.registerplatform.data.dto.RecipeDetailCombinedListItem
 import cn.hospital.registerplatform.data.dto.RecipeInfo
 import cn.hospital.registerplatform.databinding.ActivityRecipeAbstractEditBinding
 import cn.hospital.registerplatform.ui.base.BaseActivity
@@ -21,39 +22,39 @@ import kotlinx.coroutines.launch
 import kotlin.properties.Delegates
 
 @AndroidEntryPoint
-class EditRecipeAbstractActivity : BaseActivity() {
+class EditRecipeDetailActivity : BaseActivity() {
     private val mBinding: ActivityRecipeAbstractEditBinding by databind(R.layout.activity_recipe_abstract_edit)
     private val mViewModel: RecipeViewModel by viewModels()
 
-    private var recipeId by Delegates.notNull<Int>()
-    private var recipeOriginDiag by Delegates.notNull<String>()
-    private var recipeOriginSugg by Delegates.notNull<String>()
+    private var recipeDetailItem by Delegates.notNull<RecipeDetailCombinedListItem>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        recipeId = intent.getIntExtra(KEY_RECIPE_ID, 0)
-        recipeOriginDiag = intent.getStringExtra(KEY_RECIPE_DIAG).toString()
-        recipeOriginSugg = intent.getStringExtra(KEY_RECIPE_SUGG).toString()
+        recipeDetailItem = intent.getParcelableExtra(KEY_RECIPE_DETAIL)!!
         mBinding.apply {
-            lifecycleOwner = this@EditRecipeAbstractActivity
-            recipeDiag.setText(recipeOriginDiag)
-            recipeSuggestion.setText(recipeOriginSugg)
+            lifecycleOwner = this@EditRecipeDetailActivity
+            recipeDiagPrompt.text = "病历条目类型"
+            recipeDiag.hint = "填写病历条目类型"
+            recipeSuggestionPrompt.text = "病历条目内容"
+            recipeSuggestion.hint = "填写病历条目内容"
+            recipeDiag.setText(recipeDetailItem.examInfo?.diag)
+            recipeSuggestion.setText(recipeDetailItem.examInfo?.content)
 
             submitAbstract.setOnClickListener {
-                mViewModel.editRecipeInfo(
-                    recipeId,
+                mViewModel.editExamInfo(
+                    recipeDetailItem.id,
                     recipeDiag.text.toString(),
                     recipeSuggestion.text.toString()
-                ).observe(this@EditRecipeAbstractActivity) {
+                ).observe(this@EditRecipeDetailActivity) {
                     it.doSuccess {
-                        ToastUtils.show(this@EditRecipeAbstractActivity, "修改病历成功")
+                        ToastUtils.show(this@EditRecipeDetailActivity, "修改病历成功")
                         lifecycleScope.launch {
                             delay(1000)
-                            startActivity(MainActivity.newClearIntent(this@EditRecipeAbstractActivity))
+                            startActivity(MainActivity.newClearIntent(this@EditRecipeDetailActivity))
                         }
                     }
                     it.doFailure {
-                        ToastUtils.show(this@EditRecipeAbstractActivity, "修改病历失败")
+                        ToastUtils.show(this@EditRecipeDetailActivity, "修改病历失败")
 
                     }
                 }
@@ -62,14 +63,10 @@ class EditRecipeAbstractActivity : BaseActivity() {
     }
 
     companion object {
-        private const val KEY_RECIPE_ID = "key_recipe_id"
-        private const val KEY_RECIPE_DIAG = "key_recipe_diag"
-        private const val KEY_RECIPE_SUGG = "key_recipe_sugg"
-        fun newIntent(context: Context, recipeInfo: RecipeInfo): Intent {
-            return Intent(context, EditRecipeAbstractActivity::class.java).apply {
-                putExtra(KEY_RECIPE_ID, recipeInfo.regist)
-                putExtra(KEY_RECIPE_DIAG, recipeInfo.diag)
-                putExtra(KEY_RECIPE_SUGG, recipeInfo.suggestion)
+        private const val KEY_RECIPE_DETAIL = "key_recipe_detail"
+        fun newIntent(context: Context, recipeDetail: RecipeDetailCombinedListItem): Intent {
+            return Intent(context, EditRecipeDetailActivity::class.java).apply {
+                putExtra(KEY_RECIPE_DETAIL, recipeDetail)
             }
         }
     }
