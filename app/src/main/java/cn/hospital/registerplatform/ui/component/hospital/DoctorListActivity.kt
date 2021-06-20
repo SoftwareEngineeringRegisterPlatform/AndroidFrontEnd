@@ -83,7 +83,7 @@ class DoctorListActivity : ActionBarActivity("医生列表") {
                                         ?.contains(doctorListItem.name) ?: false
                                 })
                             } else {
-                                ToastUtils.show(this@DoctorListActivity, "No doctor Available today.")
+                                ToastUtils.show(this@DoctorListActivity, "No doctor Available.")
                             }
                         }
                     } else {
