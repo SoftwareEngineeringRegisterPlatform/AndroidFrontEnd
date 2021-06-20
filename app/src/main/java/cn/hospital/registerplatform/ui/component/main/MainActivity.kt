@@ -8,6 +8,7 @@ import androidx.navigation.ui.setupWithNavController
 import cn.hospital.registerplatform.R
 import cn.hospital.registerplatform.databinding.ActivityMainBinding
 import cn.hospital.registerplatform.ui.base.BaseActivity
+import cn.hospital.registerplatform.ui.component.comment.SubmitCommentActivity
 import cn.hospital.registerplatform.ui.component.hospital.HospitalListActivity
 import com.hi.dhl.binding.databind
 import dagger.hilt.android.AndroidEntryPoint
@@ -37,6 +38,10 @@ class MainActivity : BaseActivity() {
         }
     }
 
+    public fun newSearchIntent() {
+        startActivity(HospitalListActivity.newIntent(this@MainActivity))
+    };
+
     companion object {
         fun newIntent(context: Context): Intent {
             return Intent(context, MainActivity::class.java)
@@ -47,5 +52,11 @@ class MainActivity : BaseActivity() {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             }
         }
+
+        fun onSearchHospital() {
+            HospitalListActivity.newIntent(this@MainActivity)
+            //newSearchIntent()
+        }
+
     }
 }

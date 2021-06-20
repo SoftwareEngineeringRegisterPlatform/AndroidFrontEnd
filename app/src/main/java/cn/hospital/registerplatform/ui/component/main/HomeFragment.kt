@@ -1,5 +1,6 @@
 package cn.hospital.registerplatform.ui.component.main
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -10,6 +11,7 @@ import cn.hospital.registerplatform.databinding.FragmentHomeBinding
 import cn.hospital.registerplatform.utils.ToastUtils
 import com.hi.dhl.binding.databind
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(R.layout.fragment_home) {
@@ -23,7 +25,11 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 ToastUtils.show(requireContext(), R.string.waiting_for_backend_complete)
             }
             searchContainer.setOnClickListener {
-                startActivity(HospitalListActivity.newIntent(this))
+                // startActivity(HospitalListActivity.newIntent(MainActivity))
+//                it.context.apply {
+//                    startActivity(HospitalListActivity.newIntent(this))
+//                }
+                MainActivity.onSearchHospital()
             }
             buttonContainer.apply {
                 layoutManager = GridLayoutManager(requireContext(), 2)
