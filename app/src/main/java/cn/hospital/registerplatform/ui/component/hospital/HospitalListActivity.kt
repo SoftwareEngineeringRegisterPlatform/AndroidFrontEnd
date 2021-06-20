@@ -40,9 +40,10 @@ class HospitalListActivity : ActionBarActivity("医院列表") {
     }
 
     private fun getList(type: String) {
+        var name = ""
         getListJob?.cancel()
         getListJob = lifecycleScope.launch {
-            mViewModel.getHospitalFilterList(type).collect {
+            mViewModel.getHospitalFilterList(name, type).collect {
                 hospitalAdapter.submitData(it)
             }
         }
