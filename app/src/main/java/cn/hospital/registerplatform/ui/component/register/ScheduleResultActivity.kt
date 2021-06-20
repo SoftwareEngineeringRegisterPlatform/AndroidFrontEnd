@@ -42,7 +42,7 @@ class ScheduleResultActivity : ActionBarActivity("预约成功") {
     companion object {
         private const val KEY_DOCTOR_INFO = "key_doctor_info"
         private const val KEY_SCHEDULE_INFO = "key_schedule_info"
-        fun newIntent(context: Context, doctorInfo: DoctorInfo?, scheduleInfo: ScheduleInfo?): Intent {
+        fun newIntent(context: Context, doctorInfo: DoctorInfo, scheduleInfo: ScheduleInfo): Intent {
             return Intent(context, ScheduleResultActivity::class.java).apply {
                 putExtra(KEY_DOCTOR_INFO, doctorInfo)
                 putExtra(KEY_SCHEDULE_INFO, scheduleInfo)

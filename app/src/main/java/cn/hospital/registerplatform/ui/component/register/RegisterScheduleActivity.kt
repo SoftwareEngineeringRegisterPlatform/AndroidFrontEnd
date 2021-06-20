@@ -7,6 +7,7 @@ import androidx.activity.viewModels
 import cn.hospital.registerplatform.R
 import cn.hospital.registerplatform.api.doFailure
 import cn.hospital.registerplatform.api.doSuccess
+import cn.hospital.registerplatform.data.dto.DoctorInfo
 import cn.hospital.registerplatform.data.dto.ScheduleInfo
 import cn.hospital.registerplatform.databinding.ActivityRegisterScheduleBinding
 import cn.hospital.registerplatform.ui.base.ActionBarActivity
@@ -23,12 +24,14 @@ class RegisterScheduleActivity : ActionBarActivity("预约信息") {
     private val hospitalViewModel: HospitalViewModel by viewModels()
 
     private var scheduleInfo by Delegates.notNull<ScheduleInfo>()
+    private var doctorInfo = DoctorInfo.emptyDoctorInfo()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         scheduleInfo = intent.getParcelableExtra(KEY_SCHEDULE_ID) ?: ScheduleInfo.emptyScheduleInfo()
         hospitalViewModel.getDoctorInfo(scheduleInfo.doctorId).observe(this) {
             it.doSuccess { doctorInfo ->
+                this.doctorInfo = doctorInfo
                 mBinding.doctorInfo = doctorInfo
                 mBinding.executePendingBindings()
             }
@@ -42,8 +45,8 @@ class RegisterScheduleActivity : ActionBarActivity("预约信息") {
                         it.doSuccess {
                             startActivity(ScheduleResultActivity.newIntent(
                                 this@RegisterScheduleActivity,
-                                this.doctorInfo,
-                                this.scheduleInfo
+                                this@RegisterScheduleActivity.doctorInfo,
+                                this@RegisterScheduleActivity.scheduleInfo
                             ))
                         }
                         it.doFailure { exception ->
