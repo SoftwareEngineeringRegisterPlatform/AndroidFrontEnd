@@ -149,8 +149,8 @@ data class ExamInfoSubmit(
 data class ExamInfoEditBody(
     @SerializedName("token")
     val token: String,
-    @SerializedName("recipe_id")
-    val recipeId: Int,
+    @SerializedName("exam_id")
+    val examId: Int,
     @SerializedName("exam_info")
     val examInfo: ExamInfoEdit
 ) : Parcelable
@@ -194,8 +194,8 @@ data class PrescriptionInfoSubmit(
 data class PrescriptionInfoEditBody(
     @SerializedName("token")
     val token: String,
-    @SerializedName("recipe_id")
-    val recipeId: Int,
+    @SerializedName("prescription_id")
+    val prescriptionId: Int,
     @SerializedName("prescription_info")
     val prescriptionInfo: PrescriptionInfoEdit
 ) : Parcelable
