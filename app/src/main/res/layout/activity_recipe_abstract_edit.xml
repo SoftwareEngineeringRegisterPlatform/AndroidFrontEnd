@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        tools:context=".ui.component.recipe.EditRecipeAbstractActivity">
+
+        <TextView
+            android:id="@+id/recipe_diag_prompt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:text="医嘱："
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@id/recipe_diag"
+            tools:layout_editor_absoluteX="0dp" />
+
+        <TextView
+            android:id="@+id/recipe_suggestion_prompt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:text="诊疗建议："
+            android:textSize="20sp"
+            tools:layout_editor_absoluteX="-1dp"
+            app:layout_constraintBottom_toTopOf="@id/recipe_suggestion"
+            tools:layout_editor_absoluteY="217dp" />
+
+        <EditText
+            android:id="@+id/recipe_diag"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="top|left"
+            android:hint="请填写您对这次挂号的医嘱"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="233dp" />
+
+        <EditText
+            android:id="@+id/recipe_suggestion"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="84dp"
+            android:gravity="top|left"
+            android:hint="请填写您对这次挂号的诊疗建议"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/recipe_diag"
+            tools:layout_editor_absoluteX="16dp" />
+
+        <Button
+            android:id="@+id/submit_abstract"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="68dp"
+            android:text="提交"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/recipe_suggestion" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
