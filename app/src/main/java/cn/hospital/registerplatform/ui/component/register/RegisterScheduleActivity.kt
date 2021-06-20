@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.lifecycle.lifecycleScope
 import cn.hospital.registerplatform.R
 import cn.hospital.registerplatform.api.doFailure
 import cn.hospital.registerplatform.api.doSuccess
@@ -12,12 +11,9 @@ import cn.hospital.registerplatform.data.dto.ScheduleInfo
 import cn.hospital.registerplatform.databinding.ActivityRegisterScheduleBinding
 import cn.hospital.registerplatform.ui.base.ActionBarActivity
 import cn.hospital.registerplatform.ui.component.hospital.HospitalViewModel
-import cn.hospital.registerplatform.ui.component.main.MainActivity
 import cn.hospital.registerplatform.utils.ToastUtils
 import com.hi.dhl.binding.databind
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import kotlin.properties.Delegates
 
 @AndroidEntryPoint
@@ -44,11 +40,11 @@ class RegisterScheduleActivity : ActionBarActivity("预约信息") {
                 registerViewModel.registerSchedule(this@RegisterScheduleActivity.scheduleInfo.id)
                     .observe(this@RegisterScheduleActivity) {
                         it.doSuccess {
-                            ToastUtils.show(this@RegisterScheduleActivity, "预约成功")
-                            lifecycleScope.launch {
-                                delay(1000)
-                                startActivity(MainActivity.newClearIntent(this@RegisterScheduleActivity))
-                            }
+                            startActivity(ScheduleResultActivity.newIntent(
+                                this@RegisterScheduleActivity,
+                                this.doctorInfo,
+                                this.scheduleInfo
+                            ))
                         }
                         it.doFailure { exception ->
                             ToastUtils.show(this@RegisterScheduleActivity, "预约失败，原因：" + exception?.message)
