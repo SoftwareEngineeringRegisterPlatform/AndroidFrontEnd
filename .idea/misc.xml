@@ -1,5 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/0PROGRESS/AndroidFrontEnd/app/src/main/res/drawable/background_transparent.xml" value="0.331" />
+        <entry key="..\:/0PROGRESS/AndroidFrontEnd/app/src/main/res/drawable/ic_baseline_add_24.xml" value="0.331" />
+        <entry key="..\:/0PROGRESS/AndroidFrontEnd/app/src/main/res/drawable/ic_baseline_calendar_today_24.xml" value="0.331" />
+        <entry key="..\:/0PROGRESS/AndroidFrontEnd/app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.331" />
+        <entry key="..\:/0PROGRESS/AndroidFrontEnd/app/src/main/res/drawable/ic_baseline_settings_24.xml" value="0.331" />
+        <entry key="..\:/0PROGRESS/AndroidFrontEnd/app/src/main/res/drawable/ic_home_black_24dp.xml" value="0.331" />
+        <entry key="..\:/0PROGRESS/AndroidFrontEnd/app/src/main/res/drawable/ic_launcher_background.xml" value="0.331" />
+        <entry key="..\:/0PROGRESS/AndroidFrontEnd/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.331" />
+        <entry key="..\:/0PROGRESS/AndroidFrontEnd/app/src/main/res/drawable/ic_person_black_24dp.xml" value="0.331" />
+        <entry key="..\:/0PROGRESS/AndroidFrontEnd/app/src/main/res/layout/activity_doctor_detail.xml" value="0.33" />
+        <entry key="..\:/0PROGRESS/AndroidFrontEnd/app/src/main/res/layout/fragment_profile.xml" value="0.358695652173913" />
+        <entry key="..\:/0PROGRESS/AndroidFrontEnd/app/src/main/res/layout/item_comment_list.xml" value="0.358695652173913" />
+      </map>
+    </option>
+  </component>
   <component name="FrameworkDetectionExcludesConfiguration">
     <file type="web" url="file://$PROJECT_DIR$" />
   </component>

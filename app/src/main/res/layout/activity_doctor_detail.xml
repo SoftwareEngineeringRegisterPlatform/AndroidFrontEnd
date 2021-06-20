@@ -101,15 +101,43 @@
             android:id="@+id/comment_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="8dp"
             android:background="@color/white"
             android:padding="8dp"
             android:text="@string/user_comment"
             android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/schedule_container" />
+            app:layout_constraintTop_toBottomOf="@id/schedule_container"/>
+
+        <Spinner
+            android:id="@+id/user_comment_sort_method"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_transparent"
+            android:entries="@array/user_comment_sort_method"
+            android:padding="8dp"
+            android:spinnerMode="dropdown"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toStartOf="@+id/user_comment_select_method"
+            app:layout_constraintTop_toTopOf="@+id/comment_title" />
+
+        <Spinner
+            android:id="@+id/user_comment_select_method"
+            android:layout_width="wrap_content"
+            android:background="@drawable/background_transparent"
+            android:layout_height="wrap_content"
+            android:entries="@array/user_comment_select_method"
+            android:padding="8dp"
+            android:spinnerMode="dropdown"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/comment_title" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/comment_container"
@@ -119,6 +147,9 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/comment_title"
+            app:layout_constraintVertical_bias="1.0"
+            tools:layout_editor_absoluteX="0dp"
             tools:listitem="@layout/item_comment_list" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
