@@ -28,8 +28,8 @@ class RecipeDetailActivity : ActionBarActivity("病历详情") {
         recipeInfo = intent.getParcelableExtra(KEY_RECIPE_ID)!!
         recipeAdapter = HospitalListAdapter(listOf(), R.layout.item_recipe_detail_list) { binding, data ->
             binding.date = data.date
-            binding.content = if (data.isExam) data.examInfo?.diag else data.prescriptionInfo?.medicine
-            binding.type = if (data.isExam) "检查结果" else "处方"
+            binding.content = data.examInfo?.content
+            binding.type = data.examInfo?.diag
 
         }
 

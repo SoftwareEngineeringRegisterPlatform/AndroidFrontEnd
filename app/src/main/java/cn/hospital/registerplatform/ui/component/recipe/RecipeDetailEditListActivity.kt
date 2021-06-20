@@ -28,8 +28,8 @@ class RecipeDetailEditListActivity : ActionBarActivity("病历详情") {
         recipeInfo = intent.getParcelableExtra(KEY_RECIPE_ID)!!
         recipeAdapter = HospitalListAdapter(listOf(), R.layout.item_recipe_detail_edit_list) { binding, data ->
             binding.date = data.date
-            binding.content = data.examInfo?.diag
-            binding.type = data.examInfo?.content
+            binding.content = data.examInfo?.content
+            binding.type = data.examInfo?.diag
             binding.button.setOnClickListener {
                 startActivity(EditRecipeDetailActivity.newIntent(this, data))
             }
