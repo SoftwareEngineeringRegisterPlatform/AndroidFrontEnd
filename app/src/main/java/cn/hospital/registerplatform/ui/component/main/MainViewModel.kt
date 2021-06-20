@@ -21,7 +21,7 @@ class MainViewModel @Inject constructor(private val userPreference: UserPreferen
         },
         HomeCardData(R.string.home_hospital_button, R.drawable.ic_baseline_add_box_24) {
             it.context.apply {
-                startActivity(HospitalListActivity.newIntent(this))
+                startActivity( )
             }
         },
         HomeCardData(R.string.home_register_history_button, R.drawable.ic_baseline_access_time_24) {

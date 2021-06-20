@@ -22,9 +22,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             currentCitySelector.setOnClickListener {
                 ToastUtils.show(requireContext(), R.string.waiting_for_backend_complete)
             }
-            searchContainer.apply {
-                layoutManager = GridLayoutManager(requireContext(), 2)
-                adapter = HomeAdapter(mViewModel.searchContent)
+            searchContainer.setOnClickListener {
+                startActivity(HospitalListActivity.newIntent(this))
             }
             buttonContainer.apply {
                 layoutManager = GridLayoutManager(requireContext(), 2)
