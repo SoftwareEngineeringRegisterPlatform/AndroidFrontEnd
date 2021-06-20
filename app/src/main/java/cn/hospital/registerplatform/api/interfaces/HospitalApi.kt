@@ -1,8 +1,7 @@
 package cn.hospital.registerplatform.api.interfaces
 
 import cn.hospital.registerplatform.data.dto.*
-import retrofit2.http.GET
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface HospitalApi {
     @GET("Hospital/HospitalList")
@@ -16,6 +15,15 @@ interface HospitalApi {
     suspend fun getHospitalInfo(
         @Query("hospital_id") hospitalId: Int
     ): RawResult<HospitalInfo>
+
+    @GET("Hospital/HospitalFilter")
+    suspend fun getHospitalFilterList(
+        @Query("hospital_info") typeInfo: String,
+        @Query("loadType") LoadType: LoadType,
+        @Query("page") page: Int,
+        @Query("size") size: Int
+    ): RawResult<List<HospitalListItem>>
+
 
     @GET("Hospital/DepartmentList")
     suspend fun getDepartmentList(
