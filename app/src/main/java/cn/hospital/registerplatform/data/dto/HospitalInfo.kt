@@ -108,6 +108,26 @@ data class DoctorInfo(
     @SerializedName("n_rating")
     val commentsNum: Int,
 ) : Parcelable
+) : Parcelable {
+    companion object {
+        fun emptyDoctorInfo(): DoctorInfo {
+            return DoctorInfo(
+                0,
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                0,
+                0,
+                0.0,
+                0
+            )
+        }
+    }
+}
 
 @Parcelize
 data class ScheduleInfo(
