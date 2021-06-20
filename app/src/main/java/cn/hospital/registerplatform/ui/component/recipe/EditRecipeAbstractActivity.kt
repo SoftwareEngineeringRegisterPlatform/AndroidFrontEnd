@@ -52,8 +52,7 @@ class EditRecipeAbstractActivity : BaseActivity() {
                         ToastUtils.show(this@EditRecipeAbstractActivity, "上传病历失败")
 
                     }
-                } else
-                mViewModel.editRecipeInfo(
+                } else mViewModel.editRecipeInfo(
                     recipeId,
                     recipeDiag.text.toString(),
                     recipeSuggestion.text.toString()

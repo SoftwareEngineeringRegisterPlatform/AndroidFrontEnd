@@ -73,6 +73,13 @@ data class RecipeInfo(
     val prescription: List<Int>
 ) : Parcelable
 
+@Parcelize
+data class RecipeInfoSubmitBody(
+    @SerializedName("token")
+    val token: String,
+    @SerializedName("recipe_info")
+    val recipeInfo: RecipeInfoSubmit,
+) : Parcelable
 
 @Parcelize
 data class RecipeInfoSubmit(
@@ -117,6 +124,15 @@ data class ExamInfo(
     val content: String,
 ) : Parcelable
 
+
+@Parcelize
+data class ExamInfoSubmitBody(
+    @SerializedName("token")
+    val token: String,
+    @SerializedName("exam_info")
+    val examInfo: ExamInfoSubmit,
+) : Parcelable
+
 @Parcelize
 data class ExamInfoSubmit(
     @SerializedName("user")
@@ -158,6 +174,14 @@ data class PrescriptionInfo(
 ) : Parcelable
 
 @Parcelize
+data class PrescriptionInfoSubmitBody(
+    @SerializedName("token")
+    val token: String,
+    @SerializedName("prescirption_info")
+    val prescirptionInfo: PrescriptionInfoSubmit,
+) : Parcelable
+
+@Parcelize
 data class PrescriptionInfoSubmit(
     @SerializedName("user")
     val user: Int,
@@ -185,6 +209,7 @@ data class PrescriptionInfoEdit(
 @Parcelize
 data class RecipeDetailCombinedListItem(
     override val id: Int,
+    val examId: Int,
     val date: Date,
     val isExam: Boolean,
     var examInfo: ExamInfo?,

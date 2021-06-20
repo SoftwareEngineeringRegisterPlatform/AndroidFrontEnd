@@ -66,7 +66,7 @@ class RecipeRepository(
     }
 
     fun submitRecipeInfo(recipeInfo: RecipeInfoSubmit) = suspendFunctionToFlow<String> {
-        recipeApi.submitRecipe(userPreference.getCachedToken(), recipeInfo)
+        recipeApi.submitRecipe(RecipeInfoSubmitBody(userPreference.getCachedToken(), recipeInfo))
     }
 
     fun editRecipeInfo(recipeId: Int, recipeInfo: RecipeInfoEdit) = suspendFunctionToFlow<String> {
@@ -81,7 +81,7 @@ class RecipeRepository(
     }
 
     fun submitExamInfo(examInfo: ExamInfoSubmit) = suspendFunctionToFlow<String> {
-        recipeApi.submitExam(userPreference.getCachedToken(), examInfo)
+        recipeApi.submitExam(ExamInfoSubmitBody(userPreference.getCachedToken(), examInfo))
     }
 
     fun editExamInfo(examId: Int, examInfo: ExamInfoEdit) = suspendFunctionToFlow<String> {
@@ -93,7 +93,7 @@ class RecipeRepository(
     }
 
     fun submitPrescriptionInfo(prescriptionInfo: PrescriptionInfoSubmit) = suspendFunctionToFlow<String> {
-        recipeApi.submitPrescription(userPreference.getCachedToken(), prescriptionInfo)
+        recipeApi.submitPrescription(PrescriptionInfoSubmitBody(userPreference.getCachedToken(), prescriptionInfo))
     }
 
     fun editPrescriptionInfo(prescriptionId: Int, prescriptionInfo: PrescriptionInfoEdit) = suspendFunctionToFlow<String> {
@@ -103,20 +103,21 @@ class RecipeRepository(
     fun getDetailInfoList(examIds: List<Int>, prescriptionIds: List<Int>) =
         flow {
             val resultList = examIds.map {
-                getExamInfo(it).first()
-            }.filterIsInstance<Resource.Success<ExamInfo>>()
+                Pair(getExamInfo(it).first(), it)
+            }.filterIsInstance<Pair<Resource.Success<ExamInfo>, Int>>()
                 .mapIndexed { index, resource ->
-                    RecipeDetailCombinedListItem(index, resource.value.date, true, resource.value, null)
+                    RecipeDetailCombinedListItem(index, resource.second, resource.first.value.date, true, resource.first.value, null)
                 }.toMutableList()
             resultList.addAll(prescriptionIds.map {
-                getPrescriptionInfo(it).first()
-            }.filterIsInstance<Resource.Success<PrescriptionInfo>>().mapIndexed { index, resource ->
+                Pair(getPrescriptionInfo(it).first(), it)
+            }.filterIsInstance<Pair<Resource.Success<PrescriptionInfo>, Int>>().mapIndexed { index, resource ->
                 RecipeDetailCombinedListItem(
                     resultList.size + index,
-                    resource.value.date,
+                    resource.second,
+                    resource.first.value.date,
                     false,
                     null,
-                    resource.value
+                    resource.first.value
                 )
             })
             resultList.sortWith { a: RecipeDetailCombinedListItem, b: RecipeDetailCombinedListItem ->
