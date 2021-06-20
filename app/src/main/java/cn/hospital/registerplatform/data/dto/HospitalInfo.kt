@@ -103,7 +103,24 @@ data class DoctorInfo(
     val hospitalId: Int,
     @SerializedName("department__id")
     val departmentId: Int,
-) : Parcelable
+) : Parcelable {
+    companion object {
+        fun emptyDoctorInfo(): DoctorInfo {
+            return DoctorInfo(
+                0,
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                0,
+                0
+            )
+        }
+    }
+}
 
 @Parcelize
 data class ScheduleInfo(
