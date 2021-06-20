@@ -101,7 +101,6 @@
             android:id="@+id/comment_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:background="@color/white"
             android:padding="8dp"
             android:text="@string/user_comment"
@@ -111,7 +110,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/schedule_container"/>
+            app:layout_constraintTop_toBottomOf="@+id/comments_overview_container" />
 
         <Spinner
             android:id="@+id/user_comment_sort_method"
@@ -146,10 +145,71 @@
             android:background="@color/white"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/comment_title"
-            app:layout_constraintVertical_bias="1.0"
+            app:layout_constraintTop_toBottomOf="@+id/comment_title"
+            app:layout_constraintVertical_bias="0.0"
             tools:layout_editor_absoluteX="0dp"
             tools:listitem="@layout/item_comment_list" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/comments_overview_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/schedule_container"
+            tools:layout_editor_absoluteX="0dp">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/comment_overview_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:padding="8dp"
+                android:text="@string/comment_overview_title"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/comment_overview_title2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:padding="8dp"
+                android:text="@string/comment_overview_title2"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/comment_overview_score"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/comment_overview_score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:padding="8dp"
+                android:text="@string/comment_overview_score_default"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="italic"
+                app:layout_constraintStart_toEndOf="@+id/comment_overview_title"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/comment_overview_people"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:padding="8dp"
+                android:text="@string/comment_overview_people_default"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="italic"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/comment_overview_title2"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

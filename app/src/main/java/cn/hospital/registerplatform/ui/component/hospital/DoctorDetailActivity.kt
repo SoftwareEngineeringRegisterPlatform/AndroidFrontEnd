@@ -9,6 +9,7 @@ import android.widget.Spinner
 import android.widget.AdapterView
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.lifecycle.lifecycleScope
 import cn.hospital.registerplatform.R
 import cn.hospital.registerplatform.api.doSuccess
@@ -78,6 +79,8 @@ class DoctorDetailActivity : ActionBarActivity("医生详情") {
             res.doSuccess {
                 mBinding.info = it
                 mBinding.executePendingBindings()
+                findViewById<AppCompatTextView>(R.id.comment_overview_score).text = it.averageRating.toString()
+                findViewById<AppCompatTextView>(R.id.comment_overview_people).text = it.commentsNum.toString() + "人"
             }
         }
         hospitalViewModel.getDoctorScheduleList(doctorId)
