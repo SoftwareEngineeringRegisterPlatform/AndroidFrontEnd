@@ -50,17 +50,20 @@ interface RecipeApi {
         @Query("loadType") LoadType: LoadType
     ): RawResult<List<RegistWithRecipeListItem>>
 
+    @Headers("Content-Type: application/json")
     @POST("Recipe/SubmitRecipe")
     suspend fun submitRecipe(
         @Field("token") token: String,
         @Field("recipe_info") recipe_info: RecipeInfoSubmit
     ): RawResult<String>
 
+    @Headers("Content-Type: application/json")
     @POST("Recipe/SubmitExam")
     suspend fun submitExam(
         @Field("token") token: String,
         @Field("exam_info") exam_info: ExamInfoSubmit
     ): RawResult<String>
+    @Headers("Content-Type: application/json")
     @POST("Recipe/SubmitPrescription")
     suspend fun submitPrescription(
         @Field("token") token: String,
@@ -73,11 +76,13 @@ interface RecipeApi {
         @Body editRecipe: RecipeInfoEditBody
     ): RawResult<String>
 
+    @Headers("Content-Type: application/json")
     @POST("Recipe/EditExam")
     suspend fun editExam(
         @Body editExam: ExamInfoEditBody
     ): RawResult<String>
 
+    @Headers("Content-Type: application/json")
     @POST("Recipe/EditPrescription")
     suspend fun editPrescription(
         @Body editPrescription: PrescriptionInfoEditBody

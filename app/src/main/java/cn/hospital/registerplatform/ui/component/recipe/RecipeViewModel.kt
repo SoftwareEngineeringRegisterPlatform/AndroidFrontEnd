@@ -2,13 +2,13 @@ package cn.hospital.registerplatform.ui.component.recipe
 
 import android.util.Log
 import androidx.lifecycle.asLiveData
-import cn.hospital.registerplatform.data.dto.ExamInfoEdit
 import cn.hospital.registerplatform.data.dto.LoadType
 import cn.hospital.registerplatform.data.repository.RecipeRepository
 import cn.hospital.registerplatform.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import cn.hospital.registerplatform.data.dto.RecipeInfoEdit
+import cn.hospital.registerplatform.data.dto.RecipeInfoSubmit
 
 @HiltViewModel
 class RecipeViewModel
@@ -29,9 +29,8 @@ class RecipeViewModel
             RecipeInfoEdit(newRecipeDiag, newRecipeSuggestion)
         ).asLiveData()
 
-    fun editExamInfo(examId: Int, diag: String, content: String) =
-        recipeRepository.editExamInfo(
-            examId,
-            ExamInfoEdit(diag, content)
+    fun submitRecipeInfo(user: Int, regist: Int, newRecipeDiag: String, newRecipeSuggestion: String) =
+        recipeRepository.submitRecipeInfo(
+            RecipeInfoSubmit(user, regist, newRecipeDiag, newRecipeSuggestion)
         ).asLiveData()
 }

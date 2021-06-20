@@ -33,7 +33,7 @@ data class RecipeCombinedListItem(
 @Parcelize
 data class RecipeDoctorCombinedListItem(
     override val id: Int,
-    var recipeInfo: RecipeInfo?,
+    var recipeInfo: RecipeInfo,
     val userInfo: UserInfo,
     val hasRecipe: Boolean
 ) : Parcelable, ListItem
@@ -58,7 +58,7 @@ data class RegistWithRecipeListItem(
 @Parcelize
 data class RecipeInfo(
     @SerializedName("user")
-    val user: String,
+    val user: Int,
     @SerializedName("date")
     val date: Date,
     @SerializedName("regist")
@@ -77,7 +77,7 @@ data class RecipeInfo(
 @Parcelize
 data class RecipeInfoSubmit(
     @SerializedName("user")
-    val user: String,
+    val user: Int,
     @SerializedName("regist")
     val regist: Int,
     @SerializedName("diag")
