@@ -30,6 +30,7 @@ class RecipeDetailActivity : ActionBarActivity("病历详情") {
             binding.date = data.date
             binding.content = if (data.isExam) data.examInfo?.diag else data.prescriptionInfo?.medicine
             binding.type = if (data.isExam) "检查结果" else "处方"
+
         }
 
         mBinding.apply {

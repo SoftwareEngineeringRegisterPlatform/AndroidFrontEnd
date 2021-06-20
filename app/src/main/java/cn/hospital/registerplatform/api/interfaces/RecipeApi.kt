@@ -53,21 +53,19 @@ interface RecipeApi {
     @Headers("Content-Type: application/json")
     @POST("Recipe/SubmitRecipe")
     suspend fun submitRecipe(
-        @Field("token") token: String,
-        @Field("recipe_info") recipe_info: RecipeInfoSubmit
+        @Body recipe: RecipeInfoSubmitBody
     ): RawResult<String>
 
     @Headers("Content-Type: application/json")
     @POST("Recipe/SubmitExam")
     suspend fun submitExam(
-        @Field("token") token: String,
-        @Field("exam_info") exam_info: ExamInfoSubmit
+        @Body exam: ExamInfoSubmitBody
     ): RawResult<String>
+
     @Headers("Content-Type: application/json")
     @POST("Recipe/SubmitPrescription")
     suspend fun submitPrescription(
-        @Field("token") token: String,
-        @Field("prescription_info") prescription_info: PrescriptionInfoSubmit
+        @Body prescription: PrescriptionInfoSubmitBody
     ): RawResult<String>
 
     @Headers("Content-Type: application/json")
