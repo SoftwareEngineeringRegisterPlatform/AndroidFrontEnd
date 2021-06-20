@@ -29,11 +29,8 @@
     <string name="hospital_detail_introduction_title">医院介绍</string>
     <string name="hospital_detail_register_title">预约挂号</string>
     <string name="generic_schedule_limit_remain">总%1$d剩%2$d</string>
-    <string name="user_comment">用户评论</string>
-    <string name="comment_overview_title">综合评分：</string>
-    <string name="comment_overview_score_default">0.0</string>
-    <string name="comment_overview_title2">评价人数：</string>
-    <string name="comment_overview_people_default">0人</string>
+    <string name="user_comment">用户评论(%1$d)</string>
+    <string name="comment_overview_title">综合评分：</string>>
     <string name="update_user_info">更新用户信息</string>
     <string name="logout">登出</string>
     <string name="schedule_department">就诊科室</string>

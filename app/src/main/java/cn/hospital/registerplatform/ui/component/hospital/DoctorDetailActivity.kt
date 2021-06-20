@@ -15,6 +15,8 @@ import cn.hospital.registerplatform.R
 import cn.hospital.registerplatform.api.doSuccess
 import cn.hospital.registerplatform.data.dto.CommentListItem
 import cn.hospital.registerplatform.data.dto.ScheduleInfo
+import cn.hospital.registerplatform.data.repository.COMMENT_SELECT_METHOD
+import cn.hospital.registerplatform.data.repository.COMMENT_SORT_METHOD
 import cn.hospital.registerplatform.databinding.ActivityDoctorDetailBinding
 import cn.hospital.registerplatform.databinding.ItemCommentListBinding
 import cn.hospital.registerplatform.databinding.ItemScheduleDetailBinding
@@ -50,9 +52,6 @@ class DoctorDetailActivity : ActionBarActivity("医生详情") {
         }
     }
 
-//    private var user_comment_sort_method_spinner = findViewById<Spinner>(R.id.user_comment_sort_method)
-//    private var user_comment_select_method_spinner = findViewById<Spinner>(R.id.user_comment_select_method)
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         doctorId = intent.getIntExtra(KEY_DOCTOR_ID, 0)
@@ -79,8 +78,9 @@ class DoctorDetailActivity : ActionBarActivity("医生详情") {
             res.doSuccess {
                 mBinding.info = it
                 mBinding.executePendingBindings()
-                findViewById<AppCompatTextView>(R.id.comment_overview_score).text = it.averageRating.toString()
-                findViewById<AppCompatTextView>(R.id.comment_overview_people).text = it.commentsNum.toString() + "人"
+                Log.d("rating", it.averageRating.toString())
+                mBinding.ratingBar.rating = it.averageRating
+                mBinding.commentTitle.text = getString(R.string.user_comment, it.commentsNum)
             }
         }
         hospitalViewModel.getDoctorScheduleList(doctorId)
@@ -91,47 +91,23 @@ class DoctorDetailActivity : ActionBarActivity("医生详情") {
             }
 
 
-        findViewById<Spinner>(R.id.user_comment_sort_method).onItemSelectedListener = object:
+        mBinding.userCommentSortMethod.onItemSelectedListener = object:
             AdapterView.OnItemSelectedListener {
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                    val selectedItem = parent?.getItemAtPosition(position).toString()
-                    if (selectedItem.equals("最新评论优先")) {
-                        sortMethod = "-last_edit_time"
-                    } else if (selectedItem.equals("最旧评论优先")) {
-                        sortMethod = "last_edit_time"
-                    } else if (selectedItem.equals("最高评价优先")) {
-                        sortMethod = "-rating"
-                    } else if (selectedItem.equals("最低评价优先")) {
-                        sortMethod = "rating"
-                    }
-                    mBinding.apply {
-                        lifecycleOwner = this@DoctorDetailActivity
-                        scheduleContainer.adapter = scheduleAdapter
-                        commentContainer.adapter = commentListItemAdapter
-                        getList()
-                    }
-                }
-            }
-
-        findViewById<Spinner>(R.id.user_comment_select_method).onItemSelectedListener = object:
-            AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {}
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val selectedItem = parent?.getItemAtPosition(position).toString()
-                if (selectedItem.equals("全部评论")) { sortSelect = 0 }
-                else if (selectedItem.equals("五星评论")) { sortSelect = 5 }
-                else if (selectedItem.equals("四星评论")) { sortSelect = 4 }
-                else if (selectedItem.equals("三星评论")) { sortSelect = 3 }
-                else if (selectedItem.equals("二星评论")) { sortSelect = 2 }
-                else if (selectedItem.equals("一星评论")) { sortSelect = 1 }
-                mBinding.apply {
-                    lifecycleOwner = this@DoctorDetailActivity
-                    scheduleContainer.adapter = scheduleAdapter
-                    commentContainer.adapter = commentListItemAdapter
+                    sortMethod = COMMENT_SORT_METHOD.fromInt(position)!!.value
+                    Log.d("sortMethod", sortMethod)
                     getList()
                 }
             }
+
+        mBinding.userCommentSelectMethod.onItemSelectedListener = object:
+            AdapterView.OnItemSelectedListener {
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
+                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                    sortSelect = COMMENT_SELECT_METHOD.fromInt(position)!!.value
+                    getList()
+                }
         }
     }
 
