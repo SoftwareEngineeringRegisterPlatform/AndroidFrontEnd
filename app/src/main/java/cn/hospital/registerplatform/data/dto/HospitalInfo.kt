@@ -103,11 +103,6 @@ data class DoctorInfo(
     val hospitalId: Int,
     @SerializedName("department__id")
     val departmentId: Int,
-    @SerializedName("rating")
-    val averageRating: Float,
-    @SerializedName("n_rating")
-    val commentsNum: Int,
-) : Parcelable
 ) : Parcelable {
     companion object {
         fun emptyDoctorInfo(): DoctorInfo {
@@ -121,8 +116,6 @@ data class DoctorInfo(
                 "",
                 "",
                 0,
-                0,
-                0.0,
                 0
             )
         }
