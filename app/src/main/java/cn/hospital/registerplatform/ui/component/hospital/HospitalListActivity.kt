@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import cn.hospital.registerplatform.R
@@ -21,7 +23,7 @@ import kotlinx.coroutines.launch
 class HospitalListActivity : ActionBarActivity("医院列表") {
     private val mBinding: ActivityHospitalListBinding by databind(R.layout.activity_hospital_list)
     private val mViewModel: HospitalViewModel by viewModels()
-
+    private lateinit var conditionArray: Array<String>
     private lateinit var hospitalAdapter: HospitalPagingAdapter<HospitalListItem, ItemHospitalListBinding>
 
     private var getListJob: Job? = null
@@ -34,8 +36,18 @@ class HospitalListActivity : ActionBarActivity("医院列表") {
         }
     }
 
+    private fun getList(type: String) {
+        getListJob?.cancel()
+        getListJob = lifecycleScope.launch {
+            mViewModel.getHospitalFilterList(type).collect {
+                hospitalAdapter.submitData(it)
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        conditionArray = resources.getStringArray(R.array.hospital_search_condition)
         hospitalAdapter = HospitalPagingAdapter(R.layout.item_hospital_list) { binding, data ->
             binding.item = data
             binding.onClick = View.OnClickListener {
@@ -51,6 +63,25 @@ class HospitalListActivity : ActionBarActivity("医院列表") {
             lifecycleOwner = this@HospitalListActivity
             container.adapter = hospitalAdapter
             getList()
+            hospitalSearchSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    if (position == 0) {
+                        getList()
+                    } else {
+                        getList(conditionArray[position])
+                    }
+//                    ToastUtils.show(this@HospitalListActivity, conditionArray[position])
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                }
+            }
+
         }
     }
 
