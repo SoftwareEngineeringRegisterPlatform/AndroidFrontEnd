@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: connectedCheck
+name: generateBundle
 
 on:
   push:
@@ -46,28 +46,4 @@ jobs:
     
     - name: Echo cos address
       shell: bash
-      run: echo "##[Download address]$(echo https://${{ secrets.BUCKET }}.cos.ap-shanghai.myqcloud.com/apk/debug-${{ steps.extract_branch.outputs.branch }}.apk)"
-    
-  test:
-    runs-on: macos-latest
-    steps:
-    - name: checkout
-      uses: actions/checkout@v2
-      
-    - uses: actions/cache@v2
-      with:
-        path: |
-          ~/.gradle/caches
-          ~/.gradle/wrapper
-        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-        restore-keys: |
-          ${{ runner.os }}-gradle-
-          
-    - name: connectedCheck
-      uses: reactivecircus/android-emulator-runner@v2
-      with:
-        api-level: 29
-        script:
-          chmod +x ./gradlew && ./gradlew connectedCheck
-  
-    
+      run: echo "##[Download address]$(echo https://se-cos.borealin.cn/apk/debug-${{ steps.extract_branch.outputs.branch }}.apk)"
