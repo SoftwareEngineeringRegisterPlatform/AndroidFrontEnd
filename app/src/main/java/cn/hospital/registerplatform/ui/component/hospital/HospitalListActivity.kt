@@ -48,7 +48,7 @@ class HospitalListActivity : ActionBarActivity("医院列表") {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        conditionArray = resources.getStringArray(R.array.search_condition)
+        conditionArray = resources.getStringArray(R.array.hospital_search_condition)
         hospitalAdapter = HospitalPagingAdapter(R.layout.item_hospital_list) { binding, data ->
             binding.item = data
             binding.onClick = View.OnClickListener {
@@ -71,7 +71,11 @@ class HospitalListActivity : ActionBarActivity("医院列表") {
                     position: Int,
                     id: Long
                 ) {
-                    getList(conditionArray[position])
+                    if (position == 0) {
+                        getList()
+                    } else {
+                        getList(conditionArray[position])
+                    }
 //                    ToastUtils.show(this@HospitalListActivity, conditionArray[position])
                 }
 
