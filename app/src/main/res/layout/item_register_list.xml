@@ -97,7 +97,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/black"
             android:layout_marginStart="12dp"
-            app:loadText="@{info.date}"
+            app:loadDateText="@{info.date}"
             android:textSize="16sp"
             app:layout_constraintTop_toTopOf="@id/info_leading_icon"
             app:layout_constraintBottom_toBottomOf="@id/info_leading_icon"

@@ -1,9 +1,10 @@
 <resources>
+    <string name="super_doc_phone_number">1887151902</string>
     <string name="app_name">挂号平台</string>
     <string name="title_home">首页</string>
     <string name="title_empty" />
     <string name="title_profile">我的</string>
-    <string name="prompt_email">手机号或用户名</string>
+    <string name="prompt_email">手机号</string>
     <string name="prompt_password">密码</string>
     <string name="prompt_verification_code">验证码</string>
     <string name="send_verification_code">发送验证码</string>
@@ -29,7 +30,8 @@
     <string name="hospital_detail_introduction_title">医院介绍</string>
     <string name="hospital_detail_register_title">预约挂号</string>
     <string name="generic_schedule_limit_remain">总%1$d剩%2$d</string>
-    <string name="user_comment">用户评论</string>
+    <string name="user_comment">用户评论(%1$d)</string>
+    <string name="comment_overview_title">综合评分(%1$.2f)</string>>
     <string name="update_user_info">更新用户信息</string>
     <string name="logout">登出</string>
     <string name="schedule_department">就诊科室</string>
@@ -42,4 +44,13 @@
     <string name="recipe_diag_label">诊疗结果:</string>
     <string name="recipe_suggestion_label">医嘱:</string>
     <string name="detail_button_label">检查结果和处方请查看详情</string>
+    <string name="recipe_edit_button">编辑</string>
+    <string name="edit_button_label">编辑处方请点击右侧按钮</string>
+    <string name="recipe_submit_button">上传</string>
+    <string name="success_msg">
+"建议在预约时间提前15分钟到达预约科室候诊
+带好证件和预约凭证
+预约记录可在 我的 > 我的预约 栏目查看
+"
+    </string>
 </resources>

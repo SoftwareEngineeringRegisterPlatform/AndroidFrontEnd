@@ -52,7 +52,7 @@
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="@id/comment_rate"
             app:layout_constraintTop_toBottomOf="@id/comment_rate"
-            app:loadText="@{item.last_edit_time}" />
+            app:loadDateText="@{item.last_edit_time}" />
 
         <TextView
             android:id="@+id/comment_detail"

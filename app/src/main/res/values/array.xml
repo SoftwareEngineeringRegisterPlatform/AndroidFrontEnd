@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="user_comment_sort_method">
+        <item>最新评论优先</item>
+        <item>最旧评论优先</item>
+        <item>最高评价优先</item>
+        <item>最低评价优先</item>
+
+    </string-array>
+    <string-array name="user_comment_select_method">
+        <item>全部评论</item>
+        <item>一星评论</item>
+        <item>二星评论</item>
+        <item>三星评论</item>
+        <item>四星评论</item>
+        <item>五星评论</item>
+    </string-array>
+</resources>
