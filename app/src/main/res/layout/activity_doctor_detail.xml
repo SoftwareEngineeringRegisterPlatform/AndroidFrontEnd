@@ -60,6 +60,16 @@
                 app:layout_constraintTop_toTopOf="@id/doctor_name" />
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/doctor_qualification"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@{info.qualification}"
+                android:textSize="16sp"
+                app:layout_constraintStart_toEndOf="@+id/doctor_department"
+                app:layout_constraintTop_toTopOf="@+id/doctor_department" />
+
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/doctor_hospital"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
