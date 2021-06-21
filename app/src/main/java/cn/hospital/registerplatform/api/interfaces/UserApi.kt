@@ -43,4 +43,10 @@ interface UserApi {
     suspend fun getInfo(
         @Query("token") token: String
     ): RawResult<UserInfo>
+
+
+    @GET("User/GetUserById")
+    suspend fun getInfoById(
+        @Query("user_id") user_id: Int
+    ): RawResult<UserInfo>
 }
