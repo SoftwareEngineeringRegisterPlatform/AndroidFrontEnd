@@ -13,7 +13,7 @@ import cn.hospital.registerplatform.data.dto.HospitalListItem
 import cn.hospital.registerplatform.data.dto.HospitalSearchCondition
 import cn.hospital.registerplatform.databinding.ActivityHospitalListBinding
 import cn.hospital.registerplatform.databinding.ItemHospitalListBinding
-import cn.hospital.registerplatform.ui.base.ActionBarActivity
+import cn.hospital.registerplatform.ui.base.BaseActivity
 import cn.hospital.registerplatform.utils.afterTextChanged
 import com.hi.dhl.binding.databind
 import dagger.hilt.android.AndroidEntryPoint
@@ -22,10 +22,9 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class HospitalListActivity : ActionBarActivity("医院列表") {
+class HospitalListActivity : BaseActivity() {
     private val mBinding: ActivityHospitalListBinding by databind(R.layout.activity_hospital_list)
     private val mViewModel: HospitalViewModel by viewModels()
-    private lateinit var conditionArray: Array<String>
     private lateinit var hospitalAdapter: HospitalPagingAdapter<HospitalListItem, ItemHospitalListBinding>
 
     private var hospitalFilter = HospitalFilter.fromData("", 0)
@@ -41,9 +40,13 @@ class HospitalListActivity : ActionBarActivity("医院列表") {
         }
     }
 
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return true
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        conditionArray = resources.getStringArray(R.array.hospital_search_condition)
         hospitalAdapter = HospitalPagingAdapter(R.layout.item_hospital_list) { binding, data ->
             binding.item = data
             binding.onClick = View.OnClickListener {
@@ -57,6 +60,8 @@ class HospitalListActivity : ActionBarActivity("医院列表") {
         }
         mBinding.apply {
             lifecycleOwner = this@HospitalListActivity
+            setSupportActionBar(toolbar)
+            supportActionBar?.setDisplayHomeAsUpEnabled(true)
             container.adapter = hospitalAdapter
             getList()
             hospitalSearchSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
