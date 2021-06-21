@@ -88,7 +88,6 @@
                 app:layout_constraintTop_toBottomOf="@id/doctor_name" />
 
             <ScrollView
-                android:id="@+id/scrollView2"
                 android:layout_width="0dp"
                 android:layout_height="80dp"
                 android:layout_marginTop="6dp"
@@ -105,7 +104,6 @@
                     android:layout_height="wrap_content"
                     android:text="@{info.introduction}"/>
             </ScrollView>
-
             <RatingBar
                 android:id="@+id/ratingBar"
                 style="?android:attr/ratingBarStyleSmall"
@@ -142,13 +140,13 @@
             android:id="@+id/comment_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:background="@color/white"
             android:padding="8dp"
             android:text="@string/user_comment"
             android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/schedule_container"/>
 
@@ -189,6 +187,5 @@
             app:layout_constraintVertical_bias="0.0"
             tools:layout_editor_absoluteX="0dp"
             tools:listitem="@layout/item_comment_list"/>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

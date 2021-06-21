@@ -61,6 +61,10 @@ class DoctorDetailActivity : ActionBarActivity("医生详情") {
             HospitalPagingAdapter(R.layout.item_comment_list) { binding, data ->
                 binding.item = data
             }
+        }
+        commentListItemAdapter = HospitalPagingAdapter(R.layout.item_comment_list) { binding, data ->
+            binding.item = data
+        }
         mBinding.apply {
             lifecycleOwner = this@DoctorDetailActivity
             scheduleContainer.adapter = scheduleAdapter
@@ -69,16 +73,17 @@ class DoctorDetailActivity : ActionBarActivity("医生详情") {
         }
         hospitalViewModel.getDoctorInfo(doctorId).observe(this@DoctorDetailActivity) { res ->
             res.doSuccess {
-                mBinding.info = it
-                mBinding.executePendingBindings()
-                Log.d("dept", it.departmentName)
-                Log.d("rating", it.averageRating.toString())
-                mBinding.ratingBar.rating = it.averageRating
-                mBinding.commentTitle.text = getString(R.string.user_comment, it.commentsNum)
-                mBinding.scoreOverview.text = getString(R.string.comment_overview_title, it.averageRating)
-                mBinding.doctorDepartment.setSelected(true)
-                mBinding.doctorHospital.setSelected(true)
-
+                mBinding.apply{
+                    info = it
+                    Log.d("dept", it.departmentName)
+                    Log.d("rating", it.averageRating.toString())
+                    ratingBar.rating = it.averageRating
+                    commentTitle.text = getString(R.string.user_comment, it.commentsNum)
+                    scoreOverview.text = getString(R.string.comment_overview_title, it.averageRating)
+                    doctorDepartment.setSelected(true)
+                    doctorHospital.setSelected(true)
+                    executePendingBindings()
+                }
             }
         }
         hospitalViewModel.getDoctorScheduleList(doctorId)

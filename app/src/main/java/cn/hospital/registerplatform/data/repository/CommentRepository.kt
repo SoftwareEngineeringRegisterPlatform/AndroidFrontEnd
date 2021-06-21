@@ -1,6 +1,5 @@
 package cn.hospital.registerplatform.data.repository
 
-import android.util.Log
 import androidx.paging.PagingConfig
 import cn.hospital.registerplatform.api.interfaces.CommentApi
 import cn.hospital.registerplatform.data.UserPreference
@@ -40,7 +39,6 @@ enum class CommentRatingFilter(val value: Int) {
         fun fromInt(value: Int) = values().firstOrNull { it.value == value } ?: NO_SELECT_FILTER
     }
 }
-
 class CommentRepository(
     private val commentApi: CommentApi,
     private val userPreference: UserPreference,
