@@ -44,6 +44,14 @@ interface HospitalApi {
         @Query("loadType") LoadType: LoadType = cn.hospital.registerplatform.data.dto.LoadType.ALL
     ): RawResult<List<DoctorListItem>>
 
+    @GET("Hospital/HospitalFilter")
+    suspend fun getHospitalFilterList(
+        @Query("hospital_info") typeInfo: String,
+        @Query("loadType") LoadType: LoadType,
+        @Query("page") page: Int,
+        @Query("size") size: Int
+    ): RawResult<List<HospitalListItem>>
+
     @GET("Hospital/DoctorInfo")
     suspend fun getDoctorInfo(
         @Query("doctor_id") doctorId: Int

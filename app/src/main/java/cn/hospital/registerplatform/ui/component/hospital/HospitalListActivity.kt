@@ -5,7 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
-import android.widget.Toast
+import android.widget.ArrayAdapter
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import cn.hospital.registerplatform.R
@@ -13,7 +13,6 @@ import cn.hospital.registerplatform.data.dto.HospitalListItem
 import cn.hospital.registerplatform.databinding.ActivityHospitalListBinding
 import cn.hospital.registerplatform.databinding.ItemHospitalListBinding
 import cn.hospital.registerplatform.ui.base.ActionBarActivity
-import cn.hospital.registerplatform.utils.ToastUtils
 import com.hi.dhl.binding.databind
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
@@ -64,7 +63,7 @@ class HospitalListActivity : ActionBarActivity("医院列表") {
             lifecycleOwner = this@HospitalListActivity
             container.adapter = hospitalAdapter
             getList()
-            hospitalSearchSpinner.onItemSelectedListener = object:AdapterView.OnItemSelectedListener{
+            hospitalSearchSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
                     parent: AdapterView<*>?,
                     view: View?,
