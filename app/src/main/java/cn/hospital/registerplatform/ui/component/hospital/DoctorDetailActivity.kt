@@ -3,20 +3,12 @@ package cn.hospital.registerplatform.ui.component.hospital
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.view.View
-import android.widget.Spinner
-import android.widget.AdapterView
-import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.appcompat.widget.AppCompatTextView
 import androidx.lifecycle.lifecycleScope
 import cn.hospital.registerplatform.R
 import cn.hospital.registerplatform.api.doSuccess
 import cn.hospital.registerplatform.data.dto.CommentListItem
 import cn.hospital.registerplatform.data.dto.ScheduleInfo
-import cn.hospital.registerplatform.data.repository.COMMENT_SELECT_METHOD
-import cn.hospital.registerplatform.data.repository.COMMENT_SORT_METHOD
 import cn.hospital.registerplatform.databinding.ActivityDoctorDetailBinding
 import cn.hospital.registerplatform.databinding.ItemCommentListBinding
 import cn.hospital.registerplatform.databinding.ItemScheduleDetailBinding
@@ -39,14 +31,12 @@ class DoctorDetailActivity : ActionBarActivity("医生详情") {
     private lateinit var scheduleAdapter: HospitalListAdapter<ScheduleInfo, ItemScheduleDetailBinding>
     private lateinit var commentListItemAdapter: HospitalPagingAdapter<CommentListItem, ItemCommentListBinding>
     private var doctorId by Delegates.notNull<Int>()
-    private var sortMethod by Delegates.notNull<String>()
-    private var sortSelect by Delegates.notNull<Int>()
 
     private var getListJob: Job? = null
     private fun getList() {
         getListJob?.cancel()
         getListJob = lifecycleScope.launch {
-            commentViewModel.getCommentList(doctorId, sortMethod, sortSelect).collect {
+            commentViewModel.getCommentList(doctorId).collect {
                 commentListItemAdapter.submitData(it)
             }
         }
@@ -55,19 +45,15 @@ class DoctorDetailActivity : ActionBarActivity("医生详情") {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         doctorId = intent.getIntExtra(KEY_DOCTOR_ID, 0)
-        sortMethod = "rating"
-        sortSelect = 0
-        scheduleAdapter =
-            HospitalListAdapter(listOf(), R.layout.item_schedule_detail) { binding, data ->
-                binding.info = data
-                binding.scheduleButton.setOnClickListener {
-                    startActivity(RegisterScheduleActivity.newIntent(this, data))
-                }
+        scheduleAdapter = HospitalListAdapter(listOf(), R.layout.item_schedule_detail) { binding, data ->
+            binding.info = data
+            binding.scheduleButton.setOnClickListener {
+                startActivity(RegisterScheduleActivity.newIntent(this, data))
             }
-        commentListItemAdapter =
-            HospitalPagingAdapter(R.layout.item_comment_list) { binding, data ->
-                binding.item = data
-            }
+        }
+        commentListItemAdapter = HospitalPagingAdapter(R.layout.item_comment_list) { binding, data ->
+            binding.item = data
+        }
         mBinding.apply {
             lifecycleOwner = this@DoctorDetailActivity
             scheduleContainer.adapter = scheduleAdapter
@@ -78,36 +64,12 @@ class DoctorDetailActivity : ActionBarActivity("医生详情") {
             res.doSuccess {
                 mBinding.info = it
                 mBinding.executePendingBindings()
-                Log.d("rating", it.averageRating.toString())
-                mBinding.ratingBar.rating = it.averageRating
-                mBinding.commentTitle.text = getString(R.string.user_comment, it.commentsNum)
             }
         }
-        hospitalViewModel.getDoctorScheduleList(doctorId)
-            .observe(this@DoctorDetailActivity) { res ->
-                res.doSuccess {
-                    scheduleAdapter.updateList(it.sortedBy { info -> info.begin_time })
-                }
+        hospitalViewModel.getDoctorScheduleList(doctorId).observe(this@DoctorDetailActivity) { res ->
+            res.doSuccess {
+                scheduleAdapter.updateList(it.sortedBy { info -> info.begin_time })
             }
-
-
-        mBinding.userCommentSortMethod.onItemSelectedListener = object:
-            AdapterView.OnItemSelectedListener {
-                override fun onNothingSelected(parent: AdapterView<*>?) {}
-                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                    sortMethod = COMMENT_SORT_METHOD.fromInt(position)!!.value
-                    Log.d("sortMethod", sortMethod)
-                    getList()
-                }
-            }
-
-        mBinding.userCommentSelectMethod.onItemSelectedListener = object:
-            AdapterView.OnItemSelectedListener {
-                override fun onNothingSelected(parent: AdapterView<*>?) {}
-                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                    sortSelect = COMMENT_SELECT_METHOD.fromInt(position)!!.value
-                    getList()
-                }
         }
     }
 

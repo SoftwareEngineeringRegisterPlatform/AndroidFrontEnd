@@ -15,7 +15,7 @@ class CommentViewModel @Inject constructor(
     private val userPreference: UserPreference
 ) :
     BaseViewModel() {
-    fun getCommentList(doctorId: Int, sort_method: String, sort_select: Int) = commentRepository.getCommentList(doctorId, sort_method, sort_select)
+    fun getCommentList(doctorId: Int) = commentRepository.getCommentList(doctorId)
 
     fun uploadComment(
         recipeId: Int,
