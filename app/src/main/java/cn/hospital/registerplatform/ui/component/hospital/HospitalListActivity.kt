@@ -5,14 +5,16 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import cn.hospital.registerplatform.R
+import cn.hospital.registerplatform.data.dto.HospitalFilter
 import cn.hospital.registerplatform.data.dto.HospitalListItem
+import cn.hospital.registerplatform.data.dto.HospitalSearchCondition
 import cn.hospital.registerplatform.databinding.ActivityHospitalListBinding
 import cn.hospital.registerplatform.databinding.ItemHospitalListBinding
-import cn.hospital.registerplatform.ui.base.ActionBarActivity
+import cn.hospital.registerplatform.ui.base.BaseActivity
+import cn.hospital.registerplatform.utils.afterTextChanged
 import com.hi.dhl.binding.databind
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
@@ -20,34 +22,31 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class HospitalListActivity : ActionBarActivity("医院列表") {
+class HospitalListActivity : BaseActivity() {
     private val mBinding: ActivityHospitalListBinding by databind(R.layout.activity_hospital_list)
     private val mViewModel: HospitalViewModel by viewModels()
-    private lateinit var conditionArray: Array<String>
     private lateinit var hospitalAdapter: HospitalPagingAdapter<HospitalListItem, ItemHospitalListBinding>
 
+    private var hospitalFilter = HospitalFilter.fromData("", 0)
+
     private var getListJob: Job? = null
+
     private fun getList() {
         getListJob?.cancel()
         getListJob = lifecycleScope.launch {
-            mViewModel.getHospitalList().collect {
+            mViewModel.getHospitalFilterList(hospitalFilter.toJsonString(this@HospitalListActivity)).collect {
                 hospitalAdapter.submitData(it)
             }
         }
     }
 
-    private fun getList(type: String) {
-        getListJob?.cancel()
-        getListJob = lifecycleScope.launch {
-            mViewModel.getHospitalFilterList(type).collect {
-                hospitalAdapter.submitData(it)
-            }
-        }
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return true
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        conditionArray = resources.getStringArray(R.array.hospital_search_condition)
         hospitalAdapter = HospitalPagingAdapter(R.layout.item_hospital_list) { binding, data ->
             binding.item = data
             binding.onClick = View.OnClickListener {
@@ -61,6 +60,8 @@ class HospitalListActivity : ActionBarActivity("医院列表") {
         }
         mBinding.apply {
             lifecycleOwner = this@HospitalListActivity
+            setSupportActionBar(toolbar)
+            supportActionBar?.setDisplayHomeAsUpEnabled(true)
             container.adapter = hospitalAdapter
             getList()
             hospitalSearchSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -70,16 +71,17 @@ class HospitalListActivity : ActionBarActivity("医院列表") {
                     position: Int,
                     id: Long
                 ) {
-                    if (position == 0) {
-                        getList()
-                    } else {
-                        getList(conditionArray[position])
-                    }
-//                    ToastUtils.show(this@HospitalListActivity, conditionArray[position])
+                    hospitalFilter.type = HospitalSearchCondition.fromIndex(position)
+                    getList()
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {
+                    parent?.setSelection(0)
                 }
+            }
+            hospitalSearchName.afterTextChanged { text ->
+                hospitalFilter.name = text
+                getList()
             }
 
         }

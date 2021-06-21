@@ -53,4 +53,5 @@
 预约记录可在 我的 > 我的预约 栏目查看
 "
     </string>
+    <string name="hint_search_hospital_name">输入医院名搜索</string>
 </resources>

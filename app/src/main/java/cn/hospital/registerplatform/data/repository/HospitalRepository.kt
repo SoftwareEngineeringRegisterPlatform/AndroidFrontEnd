@@ -7,7 +7,6 @@ import cn.hospital.registerplatform.api.interfaces.HospitalApi
 import cn.hospital.registerplatform.data.UserPreference
 import cn.hospital.registerplatform.data.dto.*
 import cn.hospital.registerplatform.data.pagingsource.getRawResultList
-import com.google.gson.Gson
 
 class HospitalRepository(
     private val hospitalApi: HospitalApi,
@@ -18,8 +17,8 @@ class HospitalRepository(
         hospitalApi.getHospitalList(loadType, page, size)
     }
 
-    fun getHospitalFilterList(type: String) = getRawResultList(pagingConfig) { loadType, page, size ->
-            hospitalApi.getHospitalFilterList(Gson().toJson(mapOf("type" to type)), loadType, page, size)
+    fun getHospitalFilterList(hospitalFilter: String) = getRawResultList(pagingConfig) { loadType, page, size ->
+        hospitalApi.getHospitalFilterList(hospitalFilter, loadType, page, size)
     }
 
     fun getDepartmentList(hospitalId: Int) = getRawResultList(pagingConfig) { loadType, page, size ->

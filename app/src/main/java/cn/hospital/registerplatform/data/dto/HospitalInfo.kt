@@ -1,10 +1,49 @@
 package cn.hospital.registerplatform.data.dto
 
+import android.content.Context
 import android.os.Parcelable
 import androidx.recyclerview.widget.DiffUtil
+import cn.hospital.registerplatform.R
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 import java.util.*
+
+@Parcelize
+data class HospitalFilter(
+    @SerializedName("name")
+    var name: String,
+    @SerializedName("type")
+    var type: HospitalSearchCondition
+) : Parcelable {
+    companion object {
+        fun fromData(searchInput: String, searchConditionIndex: Int = 0): HospitalFilter {
+            return HospitalFilter(
+                name = searchInput,
+                type = HospitalSearchCondition.fromIndex(searchConditionIndex)
+            )
+        }
+    }
+
+    fun toJsonString(context: Context): String {
+        val searchConditionArray = context.resources.getStringArray(R.array.hospital_search_condition)
+        return "{${"\"name\":\"$name\""}${if (type == HospitalSearchCondition.ALL) "" else ",\"type\":\"${searchConditionArray[type.index]}\""}}"
+    }
+}
+
+enum class HospitalSearchCondition(val index: Int) {
+    ALL(0),
+    SPECIALIZED(1),
+    GENERAL(2),
+    CHINESE_MEDICINE(3),
+    INTEGRATED_CHINESE_AND_WESTERN_MEDICINE(4),
+    MATERNITY_AND_CHILD(5);
+
+    companion object {
+        fun fromIndex(index: Int): HospitalSearchCondition {
+            return values().firstOrNull { it.index == index } ?: ALL
+        }
+    }
+}
 
 @Parcelize
 data class HospitalListItem(

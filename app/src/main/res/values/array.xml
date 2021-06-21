@@ -5,7 +5,6 @@
         <item>最旧评论优先</item>
         <item>最高评价优先</item>
         <item>最低评价优先</item>
-
     </string-array>
     <string-array name="user_comment_select_method">
         <item>全部评论</item>
