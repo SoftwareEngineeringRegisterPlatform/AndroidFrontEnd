@@ -111,6 +111,17 @@ class LoginViewModel
             )
         )
     ).asLiveData()
+
+    fun changPwd(
+        oldpwd: String,
+        newpwd: String
+    ) = userRepository.changePwd(oldpwd, newpwd).asLiveData()
+
+    fun resetPwd(
+        phone: String,
+        veri: String,
+        npwd: String
+    ) = userRepository.resetPwd(phone,veri, npwd).asLiveData()
 }
 
 

@@ -104,6 +104,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="32dp"
             android:hint="密码"
+            android:inputType="textPassword"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/password_input_text"

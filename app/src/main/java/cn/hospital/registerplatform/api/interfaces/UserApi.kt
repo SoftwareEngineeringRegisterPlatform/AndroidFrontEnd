@@ -14,6 +14,22 @@ interface UserApi {
     ): RawResult<String>
 
     @FormUrlEncoded
+    @POST("User/UpdatePwd")
+    suspend fun changPwd(
+        @Field("token") token: String,
+        @Field("oldpwd") oldpwd: String,
+        @Field("newpwd") newpwd: String,
+    ): RawResult<String>
+
+    @FormUrlEncoded
+    @POST("User/ResetPwd")
+    suspend fun resetPwd(
+        @Field("phone_number") phone: String,
+        @Field("verification") veri: String,
+        @Field("new_password") npwd: String,
+    ): RawResult<String>
+
+    @FormUrlEncoded
     @POST("User/SignIn")
     suspend fun logInViaPassword(
         @Field("phone_number") phoneNumber: String,

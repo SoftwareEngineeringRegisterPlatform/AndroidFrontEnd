@@ -17,6 +17,14 @@ class UserRepository(
         userApi.newUser(NewUserData(userName, phoneNumber, password))
     }
 
+    fun changePwd(oldpwd: String, newpwd: String) = suspendFunctionToFlow<String> {
+        userApi.changPwd(getToken(),oldpwd, newpwd)
+    }
+
+    fun resetPwd(phone: String, veri: String, npwd: String) = suspendFunctionToFlow<String> {
+        userApi.resetPwd(phone,veri, npwd)
+    }
+
     fun logInViaPassword(phoneNumber: String, password: String) = suspendFunctionToFlow<String, String>(
         successHandler = { flowCollector, s ->
             userPreference.cacheToken(s)
