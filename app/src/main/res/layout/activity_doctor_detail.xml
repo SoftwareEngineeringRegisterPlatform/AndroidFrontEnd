@@ -50,24 +50,42 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/doctor_department"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="6dp"
+                android:layout_marginEnd="8dp"
+                android:ellipsize="marquee"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:freezesText="true"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
                 android:text="@{info.departmentName}"
                 android:textSize="16sp"
+                app:layout_constraintEnd_toStartOf="@+id/scoreOverview"
                 app:layout_constraintStart_toEndOf="@id/doctor_name"
-                app:layout_constraintTop_toTopOf="@id/doctor_name"/>
+                app:layout_constraintTop_toTopOf="@id/doctor_name" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/doctor_hospital"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
+                android:layout_marginEnd="8dp"
+                android:ellipsize="marquee"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:freezesText="true"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
                 android:text="@{info.hospitalName}"
                 android:textSize="16sp"
+                app:layout_constraintEnd_toStartOf="@+id/scoreOverview"
                 app:layout_constraintStart_toStartOf="@id/doctor_name"
-                app:layout_constraintTop_toBottomOf="@id/doctor_name"/>
+                app:layout_constraintTop_toBottomOf="@id/doctor_name" />
 
             <ScrollView
                 android:id="@+id/scrollView2"
@@ -98,15 +116,17 @@
                 android:rating="0"
                 android:stepSize="0.001"
                 app:layout_constraintEnd_toEndOf="@+id/scrollView2"
-                app:layout_constraintTop_toBottomOf="@+id/textView"/>
+                app:layout_constraintStart_toStartOf="@+id/scoreOverview"
+                app:layout_constraintTop_toBottomOf="@+id/scoreOverview" />
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/scoreOverview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
                 android:text="@string/comment_overview_title"
-                app:layout_constraintStart_toStartOf="@+id/ratingBar"
-                app:layout_constraintTop_toTopOf="@+id/doctor_department"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/doctor_department" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.recyclerview.widget.RecyclerView

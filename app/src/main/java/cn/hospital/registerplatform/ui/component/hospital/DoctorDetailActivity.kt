@@ -71,9 +71,14 @@ class DoctorDetailActivity : ActionBarActivity("医生详情") {
             res.doSuccess {
                 mBinding.info = it
                 mBinding.executePendingBindings()
+                Log.d("dept", it.departmentName)
                 Log.d("rating", it.averageRating.toString())
                 mBinding.ratingBar.rating = it.averageRating
                 mBinding.commentTitle.text = getString(R.string.user_comment, it.commentsNum)
+                mBinding.scoreOverview.text = getString(R.string.comment_overview_title, it.averageRating)
+                mBinding.doctorDepartment.setSelected(true)
+                mBinding.doctorHospital.setSelected(true)
+
             }
         }
         hospitalViewModel.getDoctorScheduleList(doctorId)
