@@ -11,7 +11,7 @@ import javax.inject.Inject
 class HospitalViewModel @Inject constructor(private val hospitalRepository: HospitalRepository) : BaseViewModel() {
     fun getHospitalList() = hospitalRepository.getHospitalList()
 
-    fun getHospitalFilterList(name: String, type: String) = hospitalRepository.getHospitalFilterList(name, type)
+    fun getHospitalFilterList(hospitalFilter: String) = hospitalRepository.getHospitalFilterList(hospitalFilter)
 
     fun getDepartmentList(hospitalId: Int) = hospitalRepository.getDepartmentList(hospitalId)
 
