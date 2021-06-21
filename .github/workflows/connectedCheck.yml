@@ -1,52 +1,12 @@
-# This is a basic workflow to help you get started with Actions
 
 name: connectedCheck
-
 on:
   push:
     branches: [ master ]
 
   workflow_dispatch:
-
+  
 jobs:
-  assemble:
-    runs-on: ubuntu-latest
-    steps: 
-    - name: checkout
-      uses: actions/checkout@v2
-      
-    - uses: actions/cache@v2
-      with:
-        path: |
-          ~/.gradle/caches
-          ~/.gradle/wrapper
-        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-        restore-keys: |
-          ${{ runner.os }}-gradle-
-
-    - name: assembleDebug
-      uses: vgaidarji/android-github-actions-build@v1.0.1
-      with:
-        args: "./gradlew assembleDebug"
-        
-    - name: Extract branch name
-      shell: bash
-      run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
-      id: extract_branch
-      
-    - name: Upload Debug apk
-      uses: zkqiang/tencent-cos-action@v0.1.0
-      with:
-        args: delete -f /apk/debug-${{ steps.extract_branch.outputs.branch }}.apk && upload ./app/build/outputs/apk/debug/app-debug.apk /apk/debug-${{ steps.extract_branch.outputs.branch }}.apk
-        secret_id: ${{ secrets.SECRET_ID }}
-        secret_key: ${{ secrets.SECRET_KEY }}
-        bucket: ${{ secrets.BUCKET }}
-        region: ap-shanghai
-    
-    - name: Echo cos address
-      shell: bash
-      run: echo "##[Download address]$(echo https://${{ secrets.BUCKET }}.cos.ap-shanghai.myqcloud.com/apk/debug-${{ steps.extract_branch.outputs.branch }}.apk)"
-    
   test:
     runs-on: macos-latest
     steps:
