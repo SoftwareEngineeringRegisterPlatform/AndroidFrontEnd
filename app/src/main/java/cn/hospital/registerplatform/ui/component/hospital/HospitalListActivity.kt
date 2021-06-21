@@ -5,7 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
-import android.widget.Toast
+import android.widget.ArrayAdapter
 import androidx.activity.viewModels
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.lifecycleScope
@@ -55,7 +55,7 @@ class HospitalListActivity : ActionBarActivity("医院列表") {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        conditionArray = resources.getStringArray(R.array.search_condition)
+        conditionArray = resources.getStringArray(R.array.hospital_search_condition)
         hospitalAdapter = HospitalPagingAdapter(R.layout.item_hospital_list) { binding, data ->
             binding.item = data
             binding.onClick = View.OnClickListener {
@@ -71,7 +71,7 @@ class HospitalListActivity : ActionBarActivity("医院列表") {
             lifecycleOwner = this@HospitalListActivity
             container.adapter = hospitalAdapter
             getList()
-            hospitalSearchSpinner.onItemSelectedListener = object:AdapterView.OnItemSelectedListener{
+            hospitalSearchSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
                     parent: AdapterView<*>?,
                     view: View?,

@@ -1,20 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
-        <import type="cn.hospital.registerplatform.data.dto.RecipeInfo" />
+        <import type="cn.hospital.registerplatform.data.dto.RecipeInfo"/>
 
         <variable
             name="info"
-            type="RecipeInfo" />
+            type="RecipeInfo"/>
 
-        <import type="cn.hospital.registerplatform.data.dto.DoctorInfo" />
+        <import type="cn.hospital.registerplatform.data.dto.UserInfo"/>
 
         <variable
-            name="doctorInfo"
-            type="DoctorInfo" />
+            name="userInfo"
+            type="UserInfo"/>
+        <variable
+            name="isFinish"
+            type="Boolean"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -25,7 +28,7 @@
         android:layout_marginBottom="4dp">
 
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/doctor_info_container"
+            android:id="@+id/patient_info_container"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -50,29 +53,29 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:loadImage="@{doctorInfo.picture}" />
+                    app:loadImage="@{userInfo.portrait}"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/user_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
-                    android:text="@{doctorInfo.name}"
+                    android:text="@{userInfo.name}"
                     android:textColor="@color/black"
                     android:textSize="22sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toEndOf="@id/doctor_avatar"
-                    app:layout_constraintTop_toTopOf="@id/doctor_avatar" />
+                    app:layout_constraintTop_toTopOf="@id/doctor_avatar"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/recipe_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
-                    android:text="@{doctorInfo.hospitalName}"
+                    android:text="@{userInfo.phoneNumber}"
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="@id/user_name"
-                    app:layout_constraintTop_toBottomOf="@id/user_name" />
+                    app:layout_constraintTop_toBottomOf="@id/user_name"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -84,9 +87,9 @@
             app:tint="@color/blue_500"
             android:layout_marginTop="12dp"
             app:srcCompat="@drawable/ic_baseline_access_time_24"
-            app:layout_constraintTop_toBottomOf="@id/doctor_info_container"
+            app:layout_constraintTop_toBottomOf="@id/patient_info_container"
             app:layout_constraintBottom_toTopOf="@id/diag_result_label"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"/>
 
         <TextView
             android:id="@+id/exam_number"
@@ -98,7 +101,7 @@
             android:textSize="16sp"
             app:layout_constraintTop_toTopOf="@id/info_leading_icon"
             app:layout_constraintBottom_toBottomOf="@id/info_leading_icon"
-            app:layout_constraintStart_toEndOf="@id/info_leading_icon" />
+            app:layout_constraintStart_toEndOf="@id/info_leading_icon"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/diag_result_label"
@@ -111,7 +114,7 @@
             android:textStyle="bold"
 
             app:layout_constraintTop_toBottomOf="@id/info_leading_icon"
-            app:layout_constraintStart_toStartOf="@id/info_leading_icon" />
+            app:layout_constraintStart_toStartOf="@id/info_leading_icon"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/diag_result"
@@ -124,7 +127,7 @@
 
             app:layout_constraintTop_toTopOf="@id/diag_result_label"
             app:layout_constraintBottom_toBottomOf="@id/diag_result_label"
-            app:layout_constraintStart_toEndOf="@id/diag_result_label" />
+            app:layout_constraintStart_toEndOf="@id/diag_result_label"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/suggestion_result_label"
@@ -138,7 +141,7 @@
             android:textStyle="bold"
 
             app:layout_constraintTop_toBottomOf="@id/diag_result_label"
-            app:layout_constraintStart_toStartOf="@id/diag_result_label" />
+            app:layout_constraintStart_toStartOf="@id/diag_result_label"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/suggestion_result"
@@ -151,20 +154,8 @@
 
             app:layout_constraintTop_toTopOf="@id/suggestion_result_label"
             app:layout_constraintBottom_toBottomOf="@id/suggestion_result_label"
-            app:layout_constraintStart_toEndOf="@id/suggestion_result_label" />
+            app:layout_constraintStart_toEndOf="@id/suggestion_result_label"/>
 
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/detail_button_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/detail_button_label"
-            android:textColor="@color/grey"
-            android:textSize="12sp"
-            android:layout_marginEnd="12dp"
-            app:layout_constraintTop_toTopOf="@id/detail_button"
-            app:layout_constraintBottom_toBottomOf="@id/detail_button"
-            app:layout_constraintEnd_toStartOf="@id/detail_button" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/detail_button"
@@ -175,7 +166,18 @@
             android:text="@string/recipe_detail_button"
             android:layout_marginEnd="12dp"
             app:layout_constraintTop_toBottomOf="@id/suggestion_result_label"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/edit_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="116dp"
+            android:backgroundTint="@color/blue_500"
+            android:text="@string/recipe_edit_button"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/suggestion_result_label"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

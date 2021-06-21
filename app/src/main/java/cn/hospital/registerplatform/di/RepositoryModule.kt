@@ -62,12 +62,14 @@ class RepositoryModule {
         recipeApi: RecipeApi,
         registerApi: RegisterApi,
         hospitalApi: HospitalApi,
+        userApi: UserApi,
         userPreference: UserPreference,
         pagingConfig: PagingConfig
     ): RecipeRepository = RecipeRepository(
         recipeApi,
         registerApi,
         hospitalApi,
+        userApi,
         userPreference,
         pagingConfig
     )
