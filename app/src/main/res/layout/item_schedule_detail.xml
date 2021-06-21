@@ -22,7 +22,7 @@
             android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold"
-            app:loadText="@{info.begin_time}"
+            app:loadDateTextWithWeekNumber="@{info.begin_time}"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"

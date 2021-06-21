@@ -48,9 +48,15 @@ fun loadText(view: TextView, @StringRes res: Int) {
     view.text = view.context.getString(res)
 }
 
+
+@BindingAdapter("loadDateText")
+fun loadDateText(view: TextView, date: Date) {
+    view.text = DateFormat.format("MM-dd", date).toString()
+}
+
 const val ZH_WEEKDAY = "一二三四五六日"
 
-@BindingAdapter("loadText")
-fun loadText(view: TextView, date: Date) {
-    view.text = DateFormat.format("MM-dd", date).toString() + " 周" + ZH_WEEKDAY[date.day]
+@BindingAdapter("loadDateTextWithWeekNumber")
+fun loadDateTextWithWeekNumber(view: TextView, date: Date) {
+    view.text = DateFormat.format("MM-dd E", date).toString()
 }
