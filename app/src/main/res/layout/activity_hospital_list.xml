@@ -16,7 +16,7 @@
             android:id="@+id/hospital_search_spinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:entries="@array/search_condition"
+            android:entries="@array/hospital_search_condition"
             app:layout_constraintTop_toTopOf="parent"
             />
 
