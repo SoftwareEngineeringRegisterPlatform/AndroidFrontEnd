@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
-        <import type="cn.hospital.registerplatform.data.dto.DoctorInfo" />
+        <import type="cn.hospital.registerplatform.data.dto.DoctorInfo"/>
 
         <variable
             name="info"
-            type="DoctorInfo" />
+            type="DoctorInfo"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -34,7 +34,7 @@
                 android:scaleType="fitCenter"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:loadImage="@{info.picture}" />
+                app:loadImage="@{info.picture}"/>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/doctor_name"
@@ -46,16 +46,25 @@
                 android:textSize="22sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@id/doctor_avatar"
-                app:layout_constraintTop_toTopOf="@id/doctor_avatar" />
+                app:layout_constraintTop_toTopOf="@id/doctor_avatar"/>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/doctor_department"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="6dp"
+                android:layout_marginEnd="8dp"
+                android:ellipsize="marquee"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:freezesText="true"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
                 android:text="@{info.departmentName}"
                 android:textSize="16sp"
+                app:layout_constraintEnd_toStartOf="@+id/scoreOverview"
                 app:layout_constraintStart_toEndOf="@id/doctor_name"
                 app:layout_constraintTop_toTopOf="@id/doctor_name" />
 
@@ -71,11 +80,20 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/doctor_hospital"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
+                android:layout_marginEnd="8dp"
+                android:ellipsize="marquee"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:freezesText="true"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
                 android:text="@{info.hospitalName}"
                 android:textSize="16sp"
+                app:layout_constraintEnd_toStartOf="@+id/scoreOverview"
                 app:layout_constraintStart_toStartOf="@id/doctor_name"
                 app:layout_constraintTop_toBottomOf="@id/doctor_name" />
 
@@ -94,8 +112,29 @@
                     android:id="@+id/doctor_introduction"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@{info.introduction}" />
+                    android:text="@{info.introduction}"/>
             </ScrollView>
+            <RatingBar
+                android:id="@+id/ratingBar"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:numStars="5"
+                android:rating="0"
+                android:stepSize="0.001"
+                app:layout_constraintEnd_toEndOf="@+id/scrollView2"
+                app:layout_constraintStart_toStartOf="@+id/scoreOverview"
+                app:layout_constraintTop_toBottomOf="@+id/scoreOverview" />
+
+            <TextView
+                android:id="@+id/scoreOverview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:text="@string/comment_overview_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/doctor_department" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.recyclerview.widget.RecyclerView
@@ -105,7 +144,7 @@
             android:background="@color/white"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintTop_toBottomOf="@id/doctor_info_container"
-            tools:listitem="@layout/item_schedule_detail" />
+            tools:listitem="@layout/item_schedule_detail"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/comment_title"
@@ -119,7 +158,33 @@
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/schedule_container" />
+            app:layout_constraintTop_toBottomOf="@+id/schedule_container"/>
+
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/user_comment_sort_method"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_transparent"
+            android:entries="@array/user_comment_sort_method"
+            android:padding="8dp"
+            android:spinnerMode="dropdown"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toStartOf="@+id/user_comment_select_method"
+            app:layout_constraintTop_toTopOf="@+id/comment_title"/>
+
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/user_comment_select_method"
+            android:layout_width="wrap_content"
+            android:background="@drawable/background_transparent"
+            android:layout_height="wrap_content"
+            android:entries="@array/user_comment_select_method"
+            android:padding="8dp"
+            android:spinnerMode="dropdown"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/comment_title"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/comment_container"
@@ -128,7 +193,9 @@
             android:background="@color/white"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/comment_title"
-            tools:listitem="@layout/item_comment_list" />
+            app:layout_constraintTop_toBottomOf="@+id/comment_title"
+            app:layout_constraintVertical_bias="0.0"
+            tools:layout_editor_absoluteX="0dp"
+            tools:listitem="@layout/item_comment_list"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
