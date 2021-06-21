@@ -26,12 +26,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 ToastUtils.show(requireContext(), R.string.waiting_for_backend_complete)
             }
             searchContainer.apply {
-                // startActivity(HospitalListActivity.newIntent(MainActivity))
-//                it.context.apply {
-//                    startActivity(HospitalListActivity.newIntent(this))
-//                }
                 setOnClickListener {
-                    startActivity(HospitalListActivity.newIntent(view.context))
+                    startActivity(HospitalListActivity.newIntent(requireContext()))
                 }
             }
             buttonContainer.apply {

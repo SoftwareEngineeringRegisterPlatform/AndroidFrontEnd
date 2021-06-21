@@ -21,7 +21,7 @@ class HospitalRepository(
     fun getHospitalFilterList(name: String, type: String) = getRawResultList(pagingConfig) { loadType, page, size ->
         if (type == "所有") {
             // hospitalApi.getHospitalList(loadType, page, size)
-            hospitalApi.getHospitalFilterList(Gson().toJson(mapOf("name" to name)), loadType, page, size)
+            hospitalApi.getHospitalFilterList(name, loadType, page, size)
         } else {
             hospitalApi.getHospitalFilterList(Gson().toJson(mapOf("name" to name, "type" to type)), loadType, page, size)
         }
