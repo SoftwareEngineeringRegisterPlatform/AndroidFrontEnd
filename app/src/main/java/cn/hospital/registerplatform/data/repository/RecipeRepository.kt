@@ -48,13 +48,13 @@ class RecipeRepository(
 
             val res = (if (registWithRecipe.success) registWithRecipe.content.mapIndexed { index, it ->
                 RecipeDoctorCombinedListItem(
-                    index, recipeApi.getRecipeInfo(userPreference.getCachedToken(), it.id).content,
+                    index, recipeApi.getRecipeInfo(userPreference.getCachedToken(), it.recipeId).content,
                     userApi.getInfoById(it.user).content, true
                 )
             } else listOf()) +
                     (if (registWithoutRecipe.success) registWithoutRecipe.content.mapIndexed { index, it ->
                         RecipeDoctorCombinedListItem(
-                            index, RecipeInfo(0, Date(), 0, "", "", listOf(), listOf()),
+                            index, RecipeInfo(it.user, Date(), it.id, "", "", listOf(), listOf()),
                             userApi.getInfoById(it.user).content, false
                         )
                     } else listOf())

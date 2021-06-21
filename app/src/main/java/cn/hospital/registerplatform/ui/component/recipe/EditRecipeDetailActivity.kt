@@ -27,10 +27,17 @@ class EditRecipeDetailActivity : BaseActivity() {
     private val mViewModel: RecipeViewModel by viewModels()
 
     private var recipeDetailItem by Delegates.notNull<RecipeDetailCombinedListItem>()
+    private var registId by Delegates.notNull<Int>()
+    private var userId by Delegates.notNull<Int>()
+    private var isSubmit by Delegates.notNull<Boolean>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         recipeDetailItem = intent.getParcelableExtra(KEY_RECIPE_DETAIL)!!
+        registId = intent.getIntExtra(KEY_REGIST_ID, 0)
+        userId = intent.getIntExtra(KEY_USER_ID, 0)
+        isSubmit = intent.getBooleanExtra(KEY_IS_SUBMIT, false)
+
         mBinding.apply {
             lifecycleOwner = this@EditRecipeDetailActivity
             recipeDiagPrompt.text = "病历条目类型"
@@ -41,7 +48,25 @@ class EditRecipeDetailActivity : BaseActivity() {
             recipeSuggestion.setText(recipeDetailItem.examInfo?.content)
 
             submitAbstract.setOnClickListener {
-                mViewModel.editExamInfo(
+                if (isSubmit) mViewModel.submitExamInfo(
+                    userId,
+                    registId,
+                    recipeDiag.text.toString(),
+                    recipeSuggestion.text.toString()
+                ).observe(this@EditRecipeDetailActivity) {
+                    it.doSuccess {
+                        ToastUtils.show(this@EditRecipeDetailActivity, "修改病历成功")
+                        lifecycleScope.launch {
+                            delay(1000)
+                            startActivity(MainActivity.newClearIntent(this@EditRecipeDetailActivity))
+                        }
+                    }
+                    it.doFailure {
+                        ToastUtils.show(this@EditRecipeDetailActivity, "修改病历失败")
+
+                    }
+                }
+                else mViewModel.editExamInfo(
                     recipeDetailItem.examId,
                     recipeDiag.text.toString(),
                     recipeSuggestion.text.toString()
@@ -64,9 +89,15 @@ class EditRecipeDetailActivity : BaseActivity() {
 
     companion object {
         private const val KEY_RECIPE_DETAIL = "key_recipe_detail"
-        fun newIntent(context: Context, recipeDetail: RecipeDetailCombinedListItem): Intent {
+        private const val KEY_REGIST_ID = "key_regist_id"
+        private const val KEY_USER_ID = "key_user_id"
+        private const val KEY_IS_SUBMIT = "key_is_submit"
+        fun newIntent(context: Context, recipeDetail: RecipeDetailCombinedListItem, registId: Int, userId: Int, isSubmit: Boolean): Intent {
             return Intent(context, EditRecipeDetailActivity::class.java).apply {
                 putExtra(KEY_RECIPE_DETAIL, recipeDetail)
+                putExtra(KEY_REGIST_ID, registId)
+                putExtra(KEY_USER_ID, userId)
+                putExtra(KEY_IS_SUBMIT, isSubmit)
             }
         }
     }

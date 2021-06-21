@@ -13,6 +13,7 @@ import cn.hospital.registerplatform.ui.base.ActionBarActivity
 import cn.hospital.registerplatform.ui.component.hospital.HospitalListAdapter
 import com.hi.dhl.binding.databind
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
 import kotlin.properties.Delegates
 
 @AndroidEntryPoint
@@ -31,7 +32,7 @@ class RecipeDetailEditListActivity : ActionBarActivity("病历详情") {
             binding.content = data.examInfo?.content
             binding.type = data.examInfo?.diag
             binding.button.setOnClickListener {
-                startActivity(EditRecipeDetailActivity.newIntent(this, data))
+                startActivity(EditRecipeDetailActivity.newIntent(this, data, 0, 0, false))
             }
         }
 
@@ -42,6 +43,9 @@ class RecipeDetailEditListActivity : ActionBarActivity("病历详情") {
                 .observe(this@RecipeDetailEditListActivity) {
                     recipeAdapter.updateList(it)
                 }
+        }
+        mBinding.addExamButton.setOnClickListener {
+            startActivity(EditRecipeDetailActivity.newIntent(this, RecipeDetailCombinedListItem(0, 0, Date(), false, null, null), recipeInfo.regist, recipeInfo.user, true))
         }
     }
 

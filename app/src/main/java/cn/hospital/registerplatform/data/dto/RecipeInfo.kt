@@ -47,6 +47,8 @@ data class RegistWithRecipeListItem(
     val user: Int,
     @SerializedName("date")
     val date: Date,
+    @SerializedName("recipe")
+    val recipeId: Int,
     @SerializedName("schedule__doctor__id")
     val doctorId: Int,
     @SerializedName("schedule")
