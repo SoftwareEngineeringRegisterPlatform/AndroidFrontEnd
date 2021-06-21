@@ -15,6 +15,7 @@ import cn.hospital.registerplatform.databinding.ItemDoctorListBinding
 import cn.hospital.registerplatform.databinding.ItemScheduleDateBinding
 import cn.hospital.registerplatform.ui.base.ActionBarActivity
 import cn.hospital.registerplatform.utils.CombinedLiveData
+import cn.hospital.registerplatform.utils.ToastUtils
 import com.hi.dhl.binding.databind
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.properties.Delegates
@@ -71,14 +72,22 @@ class DoctorListActivity : ActionBarActivity("医生列表") {
             if (it.first != null && it.second != null) {
                 it.first!!.doSuccess { list ->
                     this@DoctorListActivity.doctorList = list
-                    it.second!!.doSuccess { map ->
-                        val dateList = map.keys.sorted().toList()
-                        dateAdapter.updateList(dateList)
-                        scheduleMap = map
-                        doctorAdapter.updateList(list.filter { doctorListItem ->
-                            map[dateList.getOrElse(0) { "" }]?.map { scheduleInfo -> scheduleInfo.doctorName }
-                                ?.contains(doctorListItem.name) ?: false
-                        })
+                    if (list.size > 0) {
+                        it.second!!.doSuccess { map ->
+                            val dateList = map.keys.sorted().toList()
+                            if (dateList.size > 0) {
+                                dateAdapter.updateList(dateList)
+                                scheduleMap = map
+                                doctorAdapter.updateList(list.filter { doctorListItem ->
+                                    map[dateList.getOrElse(0) { "" }]?.map { scheduleInfo -> scheduleInfo.doctorName }
+                                        ?.contains(doctorListItem.name) ?: false
+                                })
+                            } else {
+                                ToastUtils.show(this@DoctorListActivity, "No doctor Available.")
+                            }
+                        }
+                    } else {
+                        ToastUtils.show(this@DoctorListActivity, "No doctor in this department.")
                     }
                 }
             }

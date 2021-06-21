@@ -3,7 +3,7 @@
     <string name="title_home">首页</string>
     <string name="title_empty" />
     <string name="title_profile">我的</string>
-    <string name="prompt_email">手机号或用户名</string>
+    <string name="prompt_email">手机号</string>
     <string name="prompt_password">密码</string>
     <string name="prompt_verification_code">验证码</string>
     <string name="send_verification_code">发送验证码</string>
@@ -42,4 +42,10 @@
     <string name="recipe_diag_label">诊疗结果:</string>
     <string name="recipe_suggestion_label">医嘱:</string>
     <string name="detail_button_label">检查结果和处方请查看详情</string>
+    <string name="success_msg">
+"建议在预约时间提前15分钟到达预约科室候诊
+带好证件和预约凭证
+预约记录可在 我的 > 我的预约 栏目查看
+"
+    </string>
 </resources>
