@@ -26,7 +26,7 @@ data class HospitalFilter(
 
     fun toJsonString(context: Context): String {
         val searchConditionArray = context.resources.getStringArray(R.array.hospital_search_condition)
-        return "{${"name:$name"}${if (type == HospitalSearchCondition.ALL) "" else ",type:${searchConditionArray[type.index]}"}}"
+        return "{${"\"name\":\"$name\""}${if (type == HospitalSearchCondition.ALL) "" else ",\"type\":\"${searchConditionArray[type.index]}\""}}"
     }
 }
 
