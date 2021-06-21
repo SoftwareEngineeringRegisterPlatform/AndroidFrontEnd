@@ -61,10 +61,6 @@ class DoctorDetailActivity : ActionBarActivity("医生详情") {
             HospitalPagingAdapter(R.layout.item_comment_list) { binding, data ->
                 binding.item = data
             }
-        }
-        commentListItemAdapter = HospitalPagingAdapter(R.layout.item_comment_list) { binding, data ->
-            binding.item = data
-        }
         mBinding.apply {
             lifecycleOwner = this@DoctorDetailActivity
             scheduleContainer.adapter = scheduleAdapter
@@ -80,8 +76,8 @@ class DoctorDetailActivity : ActionBarActivity("医生详情") {
                     ratingBar.rating = it.averageRating
                     commentTitle.text = getString(R.string.user_comment, it.commentsNum)
                     scoreOverview.text = getString(R.string.comment_overview_title, it.averageRating)
-                    doctorDepartment.setSelected(true)
-                    doctorHospital.setSelected(true)
+                    doctorDepartment.isSelected = true
+                    doctorHospital.isSelected = true
                     executePendingBindings()
                 }
             }
