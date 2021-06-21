@@ -35,7 +35,7 @@ class RecipeListEditActivity : ActionBarActivity("芜湖，起飞！") {
                 binding.editButton.setOnClickListener {
                     startActivity(
                         EditRecipeAbstractActivity.newIntent(this,
-                            data.recipeInfo.regist, data.recipeInfo.user, false
+                            data.recipeId, data.recipeInfo.user, false
                         ))
                 }
                 binding.detailButton.setVisibility(View.VISIBLE)
@@ -52,7 +52,7 @@ class RecipeListEditActivity : ActionBarActivity("芜湖，起飞！") {
                 binding.editButton.setOnClickListener {
                     startActivity(
                         EditRecipeAbstractActivity.newIntent(this,
-                            data.recipeInfo.regist, data.recipeInfo.user, true
+                            data.recipeId, data.recipeInfo.user, true
                         )
                     )
                 }

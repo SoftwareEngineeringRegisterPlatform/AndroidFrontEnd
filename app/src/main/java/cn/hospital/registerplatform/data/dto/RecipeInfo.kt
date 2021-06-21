@@ -33,6 +33,7 @@ data class RecipeCombinedListItem(
 @Parcelize
 data class RecipeDoctorCombinedListItem(
     override val id: Int,
+    val recipeId: Int,
     var recipeInfo: RecipeInfo,
     val userInfo: UserInfo,
     val hasRecipe: Boolean
