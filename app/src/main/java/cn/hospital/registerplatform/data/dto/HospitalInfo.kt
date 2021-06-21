@@ -16,6 +16,8 @@ data class HospitalListItem(
     val picture: String,
     @SerializedName("type")
     val type: String,
+    @SerializedName("level")
+    val level: String,
 ) : Parcelable, ListItem
 
 @Parcelize
@@ -36,6 +38,8 @@ data class HospitalInfo(
     val picture: String,
     @SerializedName("type")
     val type: String,
+    @SerializedName("level")
+    val level: String,
 ) : Parcelable
 
 @Parcelize
@@ -59,6 +63,10 @@ data class DepartmentInfo(
     val name: String,
     @SerializedName("hospital")
     val hospital: Int,
+    @SerializedName("qualification")
+    val qualification: String,
+    @SerializedName("field")
+    val field: String,
     @SerializedName("fatherDepartment")
     val fatherDepartment: Int?,
     @SerializedName("introduction")
@@ -79,6 +87,8 @@ data class DoctorListItem(
     val department_name: String,
     @SerializedName("picture")
     val picture: String,
+    @SerializedName("qualification")
+    val qualification: String,
 ) : Parcelable, ListItem
 
 @Parcelize
@@ -103,7 +113,30 @@ data class DoctorInfo(
     val hospitalId: Int,
     @SerializedName("department__id")
     val departmentId: Int,
-) : Parcelable
+    @SerializedName("rating")
+    val averageRating: Float,
+    @SerializedName("n_rating")
+    val commentsNum: Int,
+) : Parcelable {
+    companion object {
+        fun emptyDoctorInfo(): DoctorInfo {
+            return DoctorInfo(
+                0,
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                0,
+                0,
+                0.0f,
+                0
+            )
+        }
+    }
+}
 
 @Parcelize
 data class ScheduleInfo(

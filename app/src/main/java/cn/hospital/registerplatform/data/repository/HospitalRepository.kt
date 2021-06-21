@@ -33,7 +33,7 @@ class HospitalRepository(
         suspendFunctionToFlow<List<ScheduleInfo>, Map<String, List<ScheduleInfo>>>(
             successHandler = { flowCollector, t ->
                 flowCollector.emit(Resource.Success(t.groupBy { info ->
-                    DateFormat.format("MM-dd", info.begin_time).toString()
+                    DateFormat.format("MM-dd E", info.begin_time).toString()
                 }))
             }
         ) { hospitalApi.getDepartmentSchedule(departmentId) }

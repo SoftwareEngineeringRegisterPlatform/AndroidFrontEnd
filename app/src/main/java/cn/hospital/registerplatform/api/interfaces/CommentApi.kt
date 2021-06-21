@@ -4,6 +4,8 @@ import cn.hospital.registerplatform.data.dto.CommentListItem
 import cn.hospital.registerplatform.data.dto.LoadType
 import cn.hospital.registerplatform.data.dto.RawResult
 import cn.hospital.registerplatform.data.dto.UploadComment
+import cn.hospital.registerplatform.data.repository.CommentRatingFilter
+import cn.hospital.registerplatform.data.repository.CommentSortMethod
 import retrofit2.http.*
 
 interface CommentApi {
@@ -12,7 +14,18 @@ interface CommentApi {
         @Query("doctor_id") doctorId: Int,
         @Query("loadType") loadType: LoadType,
         @Query("page") page: Int,
-        @Query("size") size: Int
+        @Query("size") size: Int,
+        @Query("sort_by") sortMethod: CommentSortMethod
+    ): RawResult<List<CommentListItem>>
+
+    @GET("Evaluate/EvaFilter")
+    suspend fun getComments(
+        @Query("doctor_id") doctorId: Int,
+        @Query("loadType") loadType: LoadType,
+        @Query("page") page: Int,
+        @Query("size") size: Int,
+        @Query("sort_by") sortMethod: CommentSortMethod,
+        @Query("rating") ratingFilter: CommentRatingFilter
     ): RawResult<List<CommentListItem>>
 
     @Headers("Content-Type: application/json")
