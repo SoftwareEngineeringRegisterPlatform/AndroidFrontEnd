@@ -50,7 +50,6 @@ class CommentRepository(
         sortMethod: CommentSortMethod,
         ratingFilter: CommentRatingFilter
     ) = getRawResultList(pagingConfig) { loadType, page, size ->
-        Log.d("sort_select", ratingFilter.toString())
         if (ratingFilter == CommentRatingFilter.NO_SELECT_FILTER) {
             commentApi.getComments(doctorId, loadType, page, size, sortMethod)
         } else {
