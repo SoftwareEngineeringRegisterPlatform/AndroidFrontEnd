@@ -19,7 +19,7 @@ class HomeAdapter(private val buttonList: List<HomeCardData>) :
 
     override fun onBindViewHolder(holder: HomeViewHolder, position: Int) {
         val button = buttonList[position]
-        holder.bindData(button, position)
+        holder.bindData(button)
     }
 
     override fun getItemCount(): Int {
@@ -30,7 +30,7 @@ class HomeAdapter(private val buttonList: List<HomeCardData>) :
 class HomeViewHolder(private val binding: ItemMainButtonBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
-    fun bindData(data: HomeCardData, position: Int) {
+    fun bindData(data: HomeCardData) {
         binding.apply {
             item = data
             executePendingBindings()
