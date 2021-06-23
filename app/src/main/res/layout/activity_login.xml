@@ -153,6 +153,16 @@
             app:layout_constraintTop_toTopOf="@id/login" />
 
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/reset_pwd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="忘记密码"
+            app:layout_constraintBottom_toBottomOf="@id/login"
+            app:layout_constraintEnd_toStartOf="@id/login"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/login" />
+
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -160,7 +170,7 @@
             android:text="@string/action_sign_in"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/register"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@id/reset_pwd"
             app:layout_constraintTop_toBottomOf="@id/switch_login_method" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

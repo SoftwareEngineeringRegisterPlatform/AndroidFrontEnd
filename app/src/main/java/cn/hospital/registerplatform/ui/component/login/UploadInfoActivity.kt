@@ -27,6 +27,20 @@ class UploadInfoActivity : ActionBarActivity("上传用户信息") {
         mBinding.apply {
             lifecycleOwner = this@UploadInfoActivity
             uploadButton.setOnClickListener {
+                mViewModel.changPwd(oldPasswordInput2.text.toString(),
+                    passwordInput2.text.toString())
+                    .observe(this@UploadInfoActivity) {
+                        it.doSuccess {
+                            ToastUtils.show(this@UploadInfoActivity, "密码修改成功")
+                            lifecycleScope.launch {
+                                delay(200)
+                            }
+                        }
+                        it.doFailure { exception ->
+                            ToastUtils.show(this@UploadInfoActivity, "密码修改失败，原因：" + exception?.message)
+                        }
+                    }
+
                 mViewModel.updateInfo(
                     usernameInput.text.toString(),
                     when (sexSelector.checkedRadioButtonId) {
