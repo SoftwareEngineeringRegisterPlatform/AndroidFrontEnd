@@ -8,7 +8,6 @@ import androidx.navigation.ui.setupWithNavController
 import cn.hospital.registerplatform.R
 import cn.hospital.registerplatform.databinding.ActivityMainBinding
 import cn.hospital.registerplatform.ui.base.BaseActivity
-import cn.hospital.registerplatform.ui.component.comment.SubmitCommentActivity
 import cn.hospital.registerplatform.ui.component.hospital.HospitalListActivity
 import com.hi.dhl.binding.databind
 import dagger.hilt.android.AndroidEntryPoint

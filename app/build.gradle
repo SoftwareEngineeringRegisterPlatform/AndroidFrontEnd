@@ -31,6 +31,18 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    flavorDimensions "user_type"
+    productFlavors {
+        patient {
+            dimension "user_type"
+        }
+        doctor {
+            dimension "user_type"
+            applicationIdSuffix ".doctor"
+        }
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -43,6 +55,12 @@ android {
     }
     packagingOptions {
         exclude 'META-INF/DEPENDENCIES'
+    }
+    sourceSets {
+        doctor {
+            java.srcDirs = ['src/doctor/java']
+            res.srcDirs = ['src/doctor/res']
+        }
     }
 }
 hilt {

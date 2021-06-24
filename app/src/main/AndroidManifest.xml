@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RegisterPlatform"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.component.login.ResetPwdActivity"></activity>
+        <activity android:name=".ui.component.login.ResetPwdActivity"/>
         <activity android:name=".ui.component.recipe.RecipeListActivity" />
         <activity android:name=".ui.component.recipe.RecipeListEditActivity" />
         <activity android:name=".ui.component.recipe.RecipeDetailActivity" />

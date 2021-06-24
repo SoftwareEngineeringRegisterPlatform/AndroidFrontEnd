@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
 import cn.hospital.registerplatform.R
 import cn.hospital.registerplatform.databinding.FragmentProfileBinding
@@ -71,6 +73,17 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             }
             updateUserInfo.setOnClickListener {
                 startActivity(UploadInfoActivity.newIntent(requireContext()))
+            }
+        }
+    }
+
+    companion object {
+        fun addFragment(
+            manager: FragmentManager,
+            fragmentContainerId: Int
+        ) {
+            manager.commit {
+                replace(fragmentContainerId, ProfileFragment::class.java, null)
             }
         }
     }
