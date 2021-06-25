@@ -13,7 +13,7 @@ import cn.hospital.registerplatform.data.dto.DepartmentListItem
 import cn.hospital.registerplatform.databinding.ActivityDepartmentListBinding
 import cn.hospital.registerplatform.databinding.ItemDepartmentListBinding
 import cn.hospital.registerplatform.ui.base.ActionBarActivity
-import cn.hospital.registerplatform.ui.base.BaseActivity
+import cn.hospital.registerplatform.ui.base.BasePagingAdapter
 import com.hi.dhl.binding.databind
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
@@ -27,7 +27,7 @@ class DepartmentListActivity : ActionBarActivity("科室列表") {
     private val mViewModel: HospitalViewModel by viewModels()
     private var hospitalId by Delegates.notNull<Int>()
 
-    private lateinit var departmentAdapter: HospitalPagingAdapter<DepartmentListItem, ItemDepartmentListBinding>
+    private lateinit var departmentAdapter: BasePagingAdapter<DepartmentListItem, ItemDepartmentListBinding>
 
     private var getListJob: Job? = null
     private fun getList() {
@@ -42,7 +42,7 @@ class DepartmentListActivity : ActionBarActivity("科室列表") {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         hospitalId = intent.getIntExtra(KEY_HOSPITAL_ID, 0)
-        departmentAdapter = HospitalPagingAdapter(R.layout.item_department_list) { binding, data ->
+        departmentAdapter = BasePagingAdapter(R.layout.item_department_list) { binding, data ->
             binding.item = data
             binding.onClick = View.OnClickListener {
                 startActivity(DoctorListActivity.newIntent(this, data.id))

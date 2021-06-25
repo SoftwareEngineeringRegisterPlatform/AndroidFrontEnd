@@ -14,6 +14,7 @@ import cn.hospital.registerplatform.data.dto.HospitalSearchCondition
 import cn.hospital.registerplatform.databinding.ActivityHospitalListBinding
 import cn.hospital.registerplatform.databinding.ItemHospitalListBinding
 import cn.hospital.registerplatform.ui.base.BaseActivity
+import cn.hospital.registerplatform.ui.base.BasePagingAdapter
 import cn.hospital.registerplatform.utils.afterTextChanged
 import com.hi.dhl.binding.databind
 import dagger.hilt.android.AndroidEntryPoint
@@ -25,7 +26,7 @@ import kotlinx.coroutines.launch
 class HospitalListActivity : BaseActivity() {
     private val mBinding: ActivityHospitalListBinding by databind(R.layout.activity_hospital_list)
     private val mViewModel: HospitalViewModel by viewModels()
-    private lateinit var hospitalAdapter: HospitalPagingAdapter<HospitalListItem, ItemHospitalListBinding>
+    private lateinit var hospitalAdapter: BasePagingAdapter<HospitalListItem, ItemHospitalListBinding>
 
     private var hospitalFilter = HospitalFilter.fromData("", 0)
 
@@ -47,7 +48,7 @@ class HospitalListActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        hospitalAdapter = HospitalPagingAdapter(R.layout.item_hospital_list) { binding, data ->
+        hospitalAdapter = BasePagingAdapter(R.layout.item_hospital_list) { binding, data ->
             binding.item = data
             binding.onClick = View.OnClickListener {
                 startActivity(

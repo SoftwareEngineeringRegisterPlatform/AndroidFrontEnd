@@ -14,6 +14,7 @@ import cn.hospital.registerplatform.databinding.ActivityDoctorListBinding
 import cn.hospital.registerplatform.databinding.ItemDoctorListBinding
 import cn.hospital.registerplatform.databinding.ItemScheduleDateBinding
 import cn.hospital.registerplatform.ui.base.ActionBarActivity
+import cn.hospital.registerplatform.ui.base.BaseListAdapter
 import cn.hospital.registerplatform.utils.CombinedLiveData
 import cn.hospital.registerplatform.utils.ToastUtils
 import com.hi.dhl.binding.databind
@@ -28,8 +29,8 @@ class DoctorListActivity : ActionBarActivity("医生列表") {
 
     private var departmentId by Delegates.notNull<Int>()
 
-    private lateinit var dateAdapter: HospitalListAdapter<String, ItemScheduleDateBinding>
-    private lateinit var doctorAdapter: HospitalListAdapter<DoctorListItem, ItemDoctorListBinding>
+    private lateinit var dateAdapter: BaseListAdapter<String, ItemScheduleDateBinding>
+    private lateinit var doctorAdapter: BaseListAdapter<DoctorListItem, ItemDoctorListBinding>
 
     private lateinit var doctorList: List<DoctorListItem>
     private lateinit var scheduleMap: Map<String, List<ScheduleInfo>>
@@ -37,7 +38,7 @@ class DoctorListActivity : ActionBarActivity("医生列表") {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         departmentId = intent.getIntExtra(KEY_DEPARTMENT_ID, 0)
-        dateAdapter = HospitalListAdapter(
+        dateAdapter = BaseListAdapter(
             listOf(),
             R.layout.item_schedule_date,
         ) { binding, data ->
@@ -49,7 +50,7 @@ class DoctorListActivity : ActionBarActivity("医生列表") {
                 })
             }
         }
-        doctorAdapter = HospitalListAdapter(
+        doctorAdapter = BaseListAdapter(
             listOf(),
             R.layout.item_doctor_list,
         ) { binding, data ->

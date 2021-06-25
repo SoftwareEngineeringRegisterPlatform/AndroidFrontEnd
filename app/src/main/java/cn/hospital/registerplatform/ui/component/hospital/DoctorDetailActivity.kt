@@ -18,6 +18,8 @@ import cn.hospital.registerplatform.databinding.ActivityDoctorDetailBinding
 import cn.hospital.registerplatform.databinding.ItemCommentListBinding
 import cn.hospital.registerplatform.databinding.ItemScheduleDetailBinding
 import cn.hospital.registerplatform.ui.base.ActionBarActivity
+import cn.hospital.registerplatform.ui.base.BaseListAdapter
+import cn.hospital.registerplatform.ui.base.BasePagingAdapter
 import cn.hospital.registerplatform.ui.component.comment.CommentViewModel
 import cn.hospital.registerplatform.ui.component.register.RegisterScheduleActivity
 import com.hi.dhl.binding.databind
@@ -33,8 +35,8 @@ class DoctorDetailActivity : ActionBarActivity("医生详情") {
     private val hospitalViewModel: HospitalViewModel by viewModels()
     private val commentViewModel: CommentViewModel by viewModels()
 
-    private lateinit var scheduleAdapter: HospitalListAdapter<ScheduleInfo, ItemScheduleDetailBinding>
-    private lateinit var commentListItemAdapter: HospitalPagingAdapter<CommentListItem, ItemCommentListBinding>
+    private lateinit var scheduleAdapter: BaseListAdapter<ScheduleInfo, ItemScheduleDetailBinding>
+    private lateinit var commentListItemAdapter: BasePagingAdapter<CommentListItem, ItemCommentListBinding>
     private var doctorId by Delegates.notNull<Int>()
 
     private var getListJob: Job? = null
@@ -51,14 +53,14 @@ class DoctorDetailActivity : ActionBarActivity("医生详情") {
         super.onCreate(savedInstanceState)
         doctorId = intent.getIntExtra(KEY_DOCTOR_ID, 0)
         scheduleAdapter =
-            HospitalListAdapter(listOf(), R.layout.item_schedule_detail) { binding, data ->
+            BaseListAdapter(listOf(), R.layout.item_schedule_detail) { binding, data ->
                 binding.info = data
                 binding.scheduleButton.setOnClickListener {
                     startActivity(RegisterScheduleActivity.newIntent(this, data))
                 }
             }
         commentListItemAdapter =
-            HospitalPagingAdapter(R.layout.item_comment_list) { binding, data ->
+            BasePagingAdapter(R.layout.item_comment_list) { binding, data ->
                 binding.item = data
             }
         mBinding.apply {
