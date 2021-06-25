@@ -17,6 +17,7 @@
     <color name="red_500">#f44336</color>
     <color name="red_700">#d32f2f</color>
     <color name="pink_500">#e91e63</color>
+    <color name="pink_700">#c2185b</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="grey">#FFAAAAAA</color>

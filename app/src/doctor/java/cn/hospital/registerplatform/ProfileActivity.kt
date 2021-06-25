@@ -15,7 +15,8 @@ class ProfileActivity : BaseActivity() {
         mBinding.apply {
             ProfileFragment.addFragment(
                 supportFragmentManager,
-                R.id.profile_fragment_container
+                R.id.profile_fragment_container,
+                true
             )
         }
     }
