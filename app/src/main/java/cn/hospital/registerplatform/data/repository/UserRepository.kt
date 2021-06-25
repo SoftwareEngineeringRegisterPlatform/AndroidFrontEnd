@@ -1,7 +1,6 @@
 package cn.hospital.registerplatform.data.repository
 
 import android.content.Context
-import androidx.lifecycle.LifecycleCoroutineScope
 import cn.hospital.registerplatform.DEFAULT_TOKEN
 import cn.hospital.registerplatform.R
 import cn.hospital.registerplatform.api.Resource
@@ -12,9 +11,7 @@ import cn.hospital.registerplatform.data.dto.UserInfo
 import cn.hospital.registerplatform.data.dto.WrapUploadUserInfo
 import cn.hospital.registerplatform.data.dto.suspendFunctionToFlow
 import cn.hospital.registerplatform.ui.base.LoginOperationInterface
-import cn.hospital.registerplatform.ui.component.login.LoginActivity
 import cn.hospital.registerplatform.utils.ToastUtils
-import cn.hospital.registerplatform.utils.delayLaunch
 
 class UserRepository(
     private val userApi: UserApi,
@@ -62,32 +59,37 @@ class UserRepository(
         userApi.updateInfo(userInfo)
     }
 
-    override fun requireLogin(): Boolean = userPreference.getCachedToken() == DEFAULT_TOKEN
+    override suspend fun requireLogin(): Boolean {
+        return if (userPreference.getCachedToken() == DEFAULT_TOKEN) {
+            true
+        } else {
+            try {
+                val info = userApi.getInfo(userPreference.getCachedToken())
+                !info.success
+            } catch (e: Exception) {
+                true
+            }
+        }
+    }
 
-    override fun needLoginToast(
+    override suspend fun needLoginToast(
         context: Context,
-        ifLoginOperation: () -> Unit
+        ifLoginOperation: () -> Unit,
+        elseOperation: (() -> Unit)?
     ) {
         if (this.requireLogin()) {
             ToastUtils.show(context, R.string.need_login_toast_content)
+            elseOperation?.invoke()
         } else {
             ifLoginOperation()
         }
     }
 
-    override fun needLoginJump(
+    override suspend fun needLoginToast(
         context: Context,
-        coroutineScope: LifecycleCoroutineScope,
         ifLoginOperation: () -> Unit
     ) {
-        if (this.requireLogin()) {
-            ToastUtils.show(context, R.string.need_login_toast_content)
-            coroutineScope.delayLaunch {
-                context.startActivity(LoginActivity.newIntent(context))
-            }
-        } else {
-            ifLoginOperation()
-        }
+        needLoginToast(context, ifLoginOperation, null)
     }
 
     fun clearToken(): Boolean = userPreference.cacheToken(DEFAULT_TOKEN)

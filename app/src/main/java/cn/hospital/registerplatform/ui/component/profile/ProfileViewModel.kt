@@ -1,10 +1,10 @@
 package cn.hospital.registerplatform.ui.component.profile
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import cn.hospital.registerplatform.R
-import cn.hospital.registerplatform.api.doFailure
 import cn.hospital.registerplatform.api.doSuccess
 import cn.hospital.registerplatform.data.dto.UserInfo
 import cn.hospital.registerplatform.data.repository.UserRepository
@@ -22,78 +22,70 @@ import javax.inject.Inject
 @HiltViewModel
 class ProfileViewModel
 @Inject constructor(private val userRepository: UserRepository) : BaseViewModel() {
+    var isDoctor: Boolean = false
     private val _userInfo = MutableLiveData<UserInfo>()
     val userInfo: LiveData<UserInfo> = _userInfo
-    private val _requireLogin = MutableLiveData(true).apply {
-        postValue(userRepository.requireLogin())
-    }
+    private val _requireLogin = MutableLiveData(true)
     val requireLogin: LiveData<Boolean> = _requireLogin
 
+    val emptyUserInfo = UserInfo(
+        "点击登陆用户",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        null,
+        null,
+        "",
+        "",
+        ""
+    )
+
+    fun setEmptyUserInfo() {
+        this._userInfo.postValue(emptyUserInfo)
+    }
+
     fun fetchUserInfo() {
-        if (!userRepository.requireLogin()) {
-            _requireLogin.postValue(false)
-            viewModelScope.launch {
+        _requireLogin.postValue(true)
+        viewModelScope.launch {
+            if (!userRepository.requireLogin()) {
+                _requireLogin.postValue(false)
                 userRepository.getUserInfo().collect {
                     it.doSuccess { info ->
                         _userInfo.postValue(info)
                     }
-                    it.doFailure {
-                        userRepository.clearToken()
-                        _requireLogin.postValue(true)
-                        _userInfo.postValue(
-                            UserInfo(
-                                "点击登陆用户",
-                                "",
-                                "",
-                                "",
-                                "",
-                                "",
-                                "",
-                                null,
-                                null,
-                                "",
-                                "",
-                                ""
-                            )
-                        )
-                    }
                 }
             }
-        } else {
-            _requireLogin.postValue(true)
-            _userInfo.postValue(
-                UserInfo(
-                    "点击登陆用户",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    null,
-                    null,
-                    "",
-                    "",
-                    ""
-                )
-            )
         }
     }
 
     fun clearToken() = userRepository.clearToken()
 
+    private fun needLoginToast(
+        context: Context,
+        ifLoginOperation: () -> Unit
+    ) {
+        viewModelScope.launch {
+            userRepository.needLoginToast(context, ifLoginOperation) {
+                setEmptyUserInfo()
+            }
+        }
+    }
+
     val patientButtonList = listOf(
         HomeCardData(R.string.profile_button_register, R.drawable.ic_baseline_calendar_today_24) {
             it.context.apply {
-                userRepository.needLoginToast(this) {
-                    startActivity(RegisterListActivity.newIntent(this))
+                needLoginToast(this@apply) {
+                    startActivity(RegisterListActivity.newIntent(this@apply))
                 }
             }
         },
         HomeCardData(R.string.profile_button_advisory, R.drawable.ic_baseline_message_24) {
             it.context.apply {
-                userRepository.needLoginToast(this) {
-                    startActivity(RecipeListActivity.newIntent(this))
+                needLoginToast(this@apply) {
+                    startActivity(RecipeListActivity.newIntent(this@apply))
                 }
             }
         },
@@ -108,15 +100,15 @@ class ProfileViewModel
     val doctorButtonList = listOf(
         HomeCardData(R.string.profile_button_register, R.drawable.ic_baseline_calendar_today_24) {
             it.context.apply {
-                userRepository.needLoginToast(this) {
-                    startActivity(RegisterListActivity.newIntent(this))
+                needLoginToast(this@apply) {
+                    startActivity(RegisterListActivity.newIntent(this@apply))
                 }
             }
         },
         HomeCardData(R.string.profile_button_advisory, R.drawable.ic_baseline_message_24) {
             it.context.apply {
-                userRepository.needLoginToast(this) {
-                    startActivity(RecipeListEditActivity.newIntent(this))
+                needLoginToast(this@apply) {
+                    startActivity(RecipeListEditActivity.newIntent(this@apply))
                 }
             }
         },

@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import cn.hospital.registerplatform.BuildConfig
 import cn.hospital.registerplatform.R
 import cn.hospital.registerplatform.databinding.ActivityMainBinding
 import cn.hospital.registerplatform.ui.base.BaseActivity
@@ -43,7 +44,10 @@ class MainActivity : BaseActivity() {
         }
 
         fun newClearIntent(context: Context): Intent {
-            return Intent(context, MainActivity::class.java).apply {
+            return Intent(
+                context,
+                if (BuildConfig.FLAVOR == "doctor") Class.forName("cn.hospital.registerplatform.ProfileActivity") else MainActivity::class.java
+            ).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             }
         }

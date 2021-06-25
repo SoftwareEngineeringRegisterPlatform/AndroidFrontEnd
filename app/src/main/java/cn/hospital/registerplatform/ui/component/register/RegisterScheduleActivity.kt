@@ -16,6 +16,7 @@ import cn.hospital.registerplatform.ui.component.hospital.HospitalViewModel
 import cn.hospital.registerplatform.utils.ToastUtils
 import com.hi.dhl.binding.databind
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import kotlin.properties.Delegates
 
 @AndroidEntryPoint
@@ -41,22 +42,24 @@ class RegisterScheduleActivity : ActionBarActivity("预约信息") {
             scheduleInfo = this@RegisterScheduleActivity.scheduleInfo
             lifecycleOwner = this@RegisterScheduleActivity
             registerButton.setOnClickListener {
-                registerViewModel.needLoginJump(this@RegisterScheduleActivity, lifecycleScope) {
-                    registerViewModel.registerSchedule(this@RegisterScheduleActivity.scheduleInfo.id)
-                        .observe(this@RegisterScheduleActivity) {
-                            it.doSuccess {
-                                startActivity(
-                                    ScheduleResultActivity.newIntent(
-                                        this@RegisterScheduleActivity,
-                                        this@RegisterScheduleActivity.doctorInfo,
-                                        this@RegisterScheduleActivity.scheduleInfo
+                lifecycleScope.launch {
+                    registerViewModel.needLoginToast(this@RegisterScheduleActivity) {
+                        registerViewModel.registerSchedule(this@RegisterScheduleActivity.scheduleInfo.id)
+                            .observe(this@RegisterScheduleActivity) {
+                                it.doSuccess {
+                                    startActivity(
+                                        ScheduleResultActivity.newIntent(
+                                            this@RegisterScheduleActivity,
+                                            this@RegisterScheduleActivity.doctorInfo,
+                                            this@RegisterScheduleActivity.scheduleInfo
+                                        )
                                     )
-                                )
+                                }
+                                it.doFailure { exception ->
+                                    ToastUtils.show(this@RegisterScheduleActivity, "预约失败，原因：" + exception?.message)
+                                }
                             }
-                            it.doFailure { exception ->
-                                ToastUtils.show(this@RegisterScheduleActivity, "预约失败，原因：" + exception?.message)
-                            }
-                        }
+                    }
                 }
             }
             executePendingBindings()

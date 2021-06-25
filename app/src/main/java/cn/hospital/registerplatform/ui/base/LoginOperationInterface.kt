@@ -1,17 +1,16 @@
 package cn.hospital.registerplatform.ui.base
 
 import android.content.Context
-import androidx.lifecycle.LifecycleCoroutineScope
 
 interface LoginOperationInterface {
-    fun requireLogin(): Boolean
-    fun needLoginToast(
+    suspend fun requireLogin(): Boolean
+    suspend fun needLoginToast(
         context: Context,
-        ifLoginOperation: () -> Unit
+        ifLoginOperation: () -> Unit,
+        elseOperation: (() -> Unit)?
     )
-    fun needLoginJump(
+    suspend fun needLoginToast(
         context: Context,
-        coroutineScope: LifecycleCoroutineScope,
         ifLoginOperation: () -> Unit
     )
 }
