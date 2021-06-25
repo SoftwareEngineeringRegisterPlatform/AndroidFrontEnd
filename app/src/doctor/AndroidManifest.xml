@@ -7,19 +7,8 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <application>
-        <activity
-            android:name=".ui.component.main.MainActivity"
-            android:theme="@style/NoActionBar">
-
-        </activity>
         <activity android:name=".ProfileActivity"
-                  android:theme="@style/NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-        </activity>
+                  android:theme="@style/NoActionBar"/>
     </application>
 
 </manifest>

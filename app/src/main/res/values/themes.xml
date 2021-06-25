@@ -31,4 +31,13 @@
     <style name="hospitalFilterSpinnerTheme">
         <item name="android:textSize">20sp</item>
     </style>
+    <style name="NoDisplay" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation</item>
+        <item name="android:windowDisablePreview">true</item>
+        <item name="android:windowNoDisplay">true</item>
+        <item name="statusBarBackground">@android:color/transparent</item>
+    </style>
 </resources>

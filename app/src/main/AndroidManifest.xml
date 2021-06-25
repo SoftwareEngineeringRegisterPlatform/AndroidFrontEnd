@@ -31,7 +31,10 @@
         <activity android:name=".ui.component.hospital.DoctorListActivity" />
         <activity
             android:name=".ui.component.main.MainActivity"
-            android:theme="@style/NoActionBar">
+            android:theme="@style/NoActionBar"/>
+        <activity android:name=".ui.base.EntryActivity"
+                  android:noHistory="true"
+                  android:theme="@style/NoDisplay">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
