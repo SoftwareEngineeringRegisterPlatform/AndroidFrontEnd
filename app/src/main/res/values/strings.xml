@@ -19,7 +19,7 @@
     <string name="login_failed">"Login failed"</string>
     <string name="search_placeholder">搜索医院、科室、医生</string>
     <string name="profile_button_register">我的预约</string>
-    <string name="profile_button_advisory">咨询记录</string>
+    <string name="profile_button_advisory">病历列表</string>
     <string name="profile_button_doctor">我的医生</string>
     <string name="profile_button_hospital">我的医院</string>
     <string name="home_fab_text">挂号</string>
@@ -54,4 +54,7 @@
 "
     </string>
     <string name="hint_search_hospital_name">输入医院名搜索</string>
+    <string name="normal_register">正常预约</string>
+    <string name="identity_doctor">医生</string>
+    <string name="need_login_toast_content">该功能需要登陆</string>
 </resources>

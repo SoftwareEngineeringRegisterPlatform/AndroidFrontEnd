@@ -10,7 +10,7 @@ import cn.hospital.registerplatform.data.dto.RecipeInfo
 import cn.hospital.registerplatform.databinding.ActivityRecipeDetailBinding
 import cn.hospital.registerplatform.databinding.ItemRecipeDetailListBinding
 import cn.hospital.registerplatform.ui.base.ActionBarActivity
-import cn.hospital.registerplatform.ui.component.hospital.HospitalListAdapter
+import cn.hospital.registerplatform.ui.base.BaseListAdapter
 import com.hi.dhl.binding.databind
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.properties.Delegates
@@ -20,13 +20,13 @@ class RecipeDetailActivity : ActionBarActivity("病历详情") {
     private val mBinding: ActivityRecipeDetailBinding by databind(R.layout.activity_recipe_detail)
     private val mViewModel: RecipeViewModel by viewModels()
 
-    private lateinit var recipeAdapter: HospitalListAdapter<RecipeDetailCombinedListItem, ItemRecipeDetailListBinding>
+    private lateinit var recipeAdapter: BaseListAdapter<RecipeDetailCombinedListItem, ItemRecipeDetailListBinding>
     private var recipeInfo by Delegates.notNull<RecipeInfo>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         recipeInfo = intent.getParcelableExtra(KEY_RECIPE_ID)!!
-        recipeAdapter = HospitalListAdapter(listOf(), R.layout.item_recipe_detail_list) { binding, data ->
+        recipeAdapter = BaseListAdapter(listOf(), R.layout.item_recipe_detail_list) { binding, data ->
             binding.date = data.date
             binding.content = data.examInfo?.content
             binding.type = data.examInfo?.diag

@@ -10,9 +10,9 @@ import cn.hospital.registerplatform.data.dto.RegisterCombinedListItem
 import cn.hospital.registerplatform.databinding.ActivityRegisterListBinding
 import cn.hospital.registerplatform.databinding.ItemRegisterListBinding
 import cn.hospital.registerplatform.ui.base.ActionBarActivity
+import cn.hospital.registerplatform.ui.base.BasePagingAdapter
 import cn.hospital.registerplatform.ui.component.comment.SubmitCommentActivity
 import cn.hospital.registerplatform.ui.component.hospital.DoctorDetailActivity
-import cn.hospital.registerplatform.ui.component.hospital.HospitalPagingAdapter
 import com.hi.dhl.binding.databind
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
@@ -24,7 +24,7 @@ class RegisterListActivity : ActionBarActivity("我的预约") {
     private val mBinding: ActivityRegisterListBinding by databind(R.layout.activity_register_list)
     private val mViewModel: RegisterViewModel by viewModels()
 
-    private lateinit var registerAdapter: HospitalPagingAdapter<RegisterCombinedListItem, ItemRegisterListBinding>
+    private lateinit var registerAdapter: BasePagingAdapter<RegisterCombinedListItem, ItemRegisterListBinding>
 
     private var getListJob: Job? = null
     private fun getList() {
@@ -38,7 +38,7 @@ class RegisterListActivity : ActionBarActivity("我的预约") {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        registerAdapter = HospitalPagingAdapter(R.layout.item_register_list) { binding, data ->
+        registerAdapter = BasePagingAdapter(R.layout.item_register_list) { binding, data ->
             binding.info = data.registerListItem
             binding.doctorInfo = data.doctorInfo
             binding.commentButton.setOnClickListener {

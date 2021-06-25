@@ -13,6 +13,7 @@ import cn.hospital.registerplatform.ui.base.ActionBarActivity
 import cn.hospital.registerplatform.ui.component.main.MainActivity
 import cn.hospital.registerplatform.utils.ToastUtils
 import cn.hospital.registerplatform.utils.afterTextChanged
+import cn.hospital.registerplatform.utils.delayLaunch
 import cn.hospital.registerplatform.utils.launchPeriodicAsync
 import com.hi.dhl.binding.databind
 import dagger.hilt.android.AndroidEntryPoint
@@ -85,8 +86,7 @@ class LoginActivity : ActionBarActivity("登陆") {
                     .observe(this@LoginActivity) {
                         it.doSuccess {
                             ToastUtils.show(this@LoginActivity, "登陆成功")
-                            lifecycleScope.launch {
-                                delay(1000)
+                            lifecycleScope.delayLaunch {
                                 startActivity(MainActivity.newClearIntent(this@LoginActivity))
                             }
                         }

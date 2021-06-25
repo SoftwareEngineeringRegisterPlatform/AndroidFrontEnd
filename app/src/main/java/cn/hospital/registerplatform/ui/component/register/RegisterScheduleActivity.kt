@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.lifecycle.lifecycleScope
 import cn.hospital.registerplatform.R
 import cn.hospital.registerplatform.api.doFailure
 import cn.hospital.registerplatform.api.doSuccess
@@ -40,19 +41,23 @@ class RegisterScheduleActivity : ActionBarActivity("预约信息") {
             scheduleInfo = this@RegisterScheduleActivity.scheduleInfo
             lifecycleOwner = this@RegisterScheduleActivity
             registerButton.setOnClickListener {
-                registerViewModel.registerSchedule(this@RegisterScheduleActivity.scheduleInfo.id)
-                    .observe(this@RegisterScheduleActivity) {
-                        it.doSuccess {
-                            startActivity(ScheduleResultActivity.newIntent(
-                                this@RegisterScheduleActivity,
-                                this@RegisterScheduleActivity.doctorInfo,
-                                this@RegisterScheduleActivity.scheduleInfo
-                            ))
+                registerViewModel.needLoginJump(this@RegisterScheduleActivity, lifecycleScope) {
+                    registerViewModel.registerSchedule(this@RegisterScheduleActivity.scheduleInfo.id)
+                        .observe(this@RegisterScheduleActivity) {
+                            it.doSuccess {
+                                startActivity(
+                                    ScheduleResultActivity.newIntent(
+                                        this@RegisterScheduleActivity,
+                                        this@RegisterScheduleActivity.doctorInfo,
+                                        this@RegisterScheduleActivity.scheduleInfo
+                                    )
+                                )
+                            }
+                            it.doFailure { exception ->
+                                ToastUtils.show(this@RegisterScheduleActivity, "预约失败，原因：" + exception?.message)
+                            }
                         }
-                        it.doFailure { exception ->
-                            ToastUtils.show(this@RegisterScheduleActivity, "预约失败，原因：" + exception?.message)
-                        }
-                    }
+                }
             }
             executePendingBindings()
         }

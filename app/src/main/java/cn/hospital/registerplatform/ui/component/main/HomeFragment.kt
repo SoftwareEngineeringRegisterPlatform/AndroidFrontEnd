@@ -1,6 +1,5 @@
 package cn.hospital.registerplatform.ui.component.main
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -8,6 +7,8 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import cn.hospital.registerplatform.R
 import cn.hospital.registerplatform.databinding.FragmentHomeBinding
+import cn.hospital.registerplatform.databinding.ItemMainButtonBinding
+import cn.hospital.registerplatform.ui.base.BaseListAdapter
 import cn.hospital.registerplatform.ui.component.hospital.HospitalListActivity
 import cn.hospital.registerplatform.utils.ToastUtils
 import com.hi.dhl.binding.databind
@@ -32,7 +33,12 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             }
             buttonContainer.apply {
                 layoutManager = GridLayoutManager(requireContext(), 2)
-                adapter = HomeAdapter(mViewModel.buttonList)
+                adapter = BaseListAdapter<HomeCardData, ItemMainButtonBinding>(
+                    mViewModel.buttonList,
+                    R.layout.item_main_button,
+                ) { binding, data ->
+                    binding.item = data
+                }
             }
             mainViewModel = mViewModel
             lifecycleOwner = this@HomeFragment

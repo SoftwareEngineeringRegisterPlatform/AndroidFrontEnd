@@ -12,6 +12,7 @@ import cn.hospital.registerplatform.databinding.ActivityRecipeAbstractEditBindin
 import cn.hospital.registerplatform.ui.base.BaseActivity
 import cn.hospital.registerplatform.ui.component.main.MainActivity
 import cn.hospital.registerplatform.utils.ToastUtils
+import cn.hospital.registerplatform.utils.delayLaunch
 import com.hi.dhl.binding.databind
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
@@ -43,8 +44,7 @@ class EditRecipeAbstractActivity : BaseActivity() {
                 ).observe(this@EditRecipeAbstractActivity) {
                     it.doSuccess {
                         ToastUtils.show(this@EditRecipeAbstractActivity, "上传病历成功")
-                        lifecycleScope.launch {
-                            delay(1000)
+                        lifecycleScope.delayLaunch {
                             startActivity(MainActivity.newClearIntent(this@EditRecipeAbstractActivity))
                         }
                     }
@@ -59,8 +59,7 @@ class EditRecipeAbstractActivity : BaseActivity() {
                 ).observe(this@EditRecipeAbstractActivity) {
                     it.doSuccess {
                         ToastUtils.show(this@EditRecipeAbstractActivity, "修改病历成功")
-                        lifecycleScope.launch {
-                            delay(1000)
+                        lifecycleScope.delayLaunch {
                             startActivity(MainActivity.newClearIntent(this@EditRecipeAbstractActivity))
                         }
                     }

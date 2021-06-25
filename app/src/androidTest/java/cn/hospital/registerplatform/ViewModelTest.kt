@@ -11,6 +11,7 @@ import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.hamcrest.BaseMatcher
 import org.hamcrest.Description
+import org.hamcrest.MatcherAssert
 import org.junit.*
 import javax.inject.Inject
 
@@ -47,7 +48,7 @@ class ViewModelTest {
     @Inject
     lateinit var hospitalRepository: HospitalRepository
 
-    lateinit var hospitalViewModel: HospitalViewModel
+    private lateinit var hospitalViewModel: HospitalViewModel
 
     @Before
     fun inject() {
@@ -64,7 +65,7 @@ class ViewModelTest {
     fun hospitalViewModelTest() {
         hospitalViewModel.getDoctorInfo(1).observeOnce {
             it.doSuccess { info ->
-                Assert.assertThat(info, object : BaseMatcher<DoctorInfo>() {
+                MatcherAssert.assertThat(info, object : BaseMatcher<DoctorInfo>() {
                     override fun describeTo(description: Description?) {
                     }
 

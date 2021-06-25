@@ -40,3 +40,11 @@ fun CoroutineScope.launchPeriodicAsync(
     }
     finishAction()
 }
+
+fun CoroutineScope.delayLaunch(
+    delayTime: Long = 1000,
+    finishAction: () -> Unit
+) = this.launch {
+    delay(delayTime)
+    finishAction()
+}

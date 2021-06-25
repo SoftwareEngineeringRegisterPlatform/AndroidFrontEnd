@@ -10,7 +10,7 @@ import cn.hospital.registerplatform.data.dto.RecipeDoctorCombinedListItem
 import cn.hospital.registerplatform.databinding.ActivityRecipeEditListBinding
 import cn.hospital.registerplatform.databinding.ItemRecipeEditListBinding
 import cn.hospital.registerplatform.ui.base.ActionBarActivity
-import cn.hospital.registerplatform.ui.component.hospital.HospitalListAdapter
+import cn.hospital.registerplatform.ui.base.BaseListAdapter
 import com.hi.dhl.binding.databind
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
@@ -20,14 +20,14 @@ class RecipeListEditActivity : ActionBarActivity("芜湖，起飞！") {
     private val mBinding: ActivityRecipeEditListBinding by databind(R.layout.activity_recipe_edit_list)
     private val mViewModel: RecipeViewModel by viewModels()
 
-    private lateinit var recipeAdapter: HospitalListAdapter<RecipeDoctorCombinedListItem, ItemRecipeEditListBinding>
+    private lateinit var recipeAdapter: BaseListAdapter<RecipeDoctorCombinedListItem, ItemRecipeEditListBinding>
 
     private var getListJob: Job? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        recipeAdapter = HospitalListAdapter(listOf(), R.layout.item_recipe_edit_list) { binding, data ->
+        recipeAdapter = BaseListAdapter(listOf(), R.layout.item_recipe_edit_list) { binding, data ->
             binding.userInfo = data.userInfo
             binding.info = data.recipeInfo
             binding.isFinish = data.hasRecipe

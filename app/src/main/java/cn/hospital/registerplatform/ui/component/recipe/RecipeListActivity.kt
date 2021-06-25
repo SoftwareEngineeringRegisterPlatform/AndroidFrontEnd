@@ -11,7 +11,7 @@ import cn.hospital.registerplatform.databinding.ActivityRecipeListBinding
 import cn.hospital.registerplatform.databinding.ItemRecipeListBinding
 import cn.hospital.registerplatform.ui.base.ActionBarActivity
 import cn.hospital.registerplatform.ui.component.hospital.DoctorDetailActivity
-import cn.hospital.registerplatform.ui.component.hospital.HospitalPagingAdapter
+import cn.hospital.registerplatform.ui.base.BasePagingAdapter
 import com.hi.dhl.binding.databind
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
@@ -24,7 +24,7 @@ class RecipeListActivity : ActionBarActivity("病历列表") {
     private val mBinding: ActivityRecipeListBinding by databind(R.layout.activity_recipe_list)
     private val mViewModel: RecipeViewModel by viewModels()
 
-    private lateinit var recipeAdapter: HospitalPagingAdapter<RecipeCombinedListItem, ItemRecipeListBinding>
+    private lateinit var recipeAdapter: BasePagingAdapter<RecipeCombinedListItem, ItemRecipeListBinding>
 
     private var getListJob: Job? = null
     private fun getList() {
@@ -38,7 +38,7 @@ class RecipeListActivity : ActionBarActivity("病历列表") {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        recipeAdapter = HospitalPagingAdapter(R.layout.item_recipe_list) { binding, data ->
+        recipeAdapter = BasePagingAdapter(R.layout.item_recipe_list) { binding, data ->
             binding.doctorInfo = data.doctorInfo
             binding.info = data.recipeInfo
             binding.detailButton.setOnClickListener {
