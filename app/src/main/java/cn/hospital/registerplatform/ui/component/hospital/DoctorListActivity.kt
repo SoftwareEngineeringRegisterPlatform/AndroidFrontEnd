@@ -73,10 +73,10 @@ class DoctorListActivity : ActionBarActivity("医生列表") {
             if (it.first != null && it.second != null) {
                 it.first!!.doSuccess { list ->
                     this@DoctorListActivity.doctorList = list
-                    if (list.size > 0) {
+                    if (list.isNotEmpty()) {
                         it.second!!.doSuccess { map ->
                             val dateList = map.keys.sorted().toList()
-                            if (dateList.size > 0) {
+                            if (dateList.isNotEmpty()) {
                                 dateAdapter.updateList(dateList)
                                 scheduleMap = map
                                 doctorAdapter.updateList(list.filter { doctorListItem ->

@@ -11,6 +11,7 @@ import cn.hospital.registerplatform.api.doSuccess
 import cn.hospital.registerplatform.databinding.ActivityNewUserBinding
 import cn.hospital.registerplatform.ui.base.ActionBarActivity
 import cn.hospital.registerplatform.utils.ToastUtils
+import cn.hospital.registerplatform.utils.delayLaunch
 import com.hi.dhl.binding.databind
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
@@ -33,8 +34,7 @@ class NewUserActivity : ActionBarActivity("新建用户") {
                     it.doSuccess { token ->
                         mViewModel.saveToken(token)
                         ToastUtils.show(this@NewUserActivity, "注册成功")
-                        lifecycleScope.launch {
-                            delay(1000)
+                        lifecycleScope.delayLaunch {
                             startActivity(UploadInfoActivity.newClearIntent(this@NewUserActivity))
                         }
                     }

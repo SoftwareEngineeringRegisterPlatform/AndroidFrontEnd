@@ -3,6 +3,7 @@ package cn.hospital.registerplatform.ui.component.main
 import androidx.lifecycle.liveData
 import cn.hospital.registerplatform.R
 import cn.hospital.registerplatform.data.UserPreference
+import cn.hospital.registerplatform.data.repository.UserRepository
 import cn.hospital.registerplatform.ui.base.BaseViewModel
 import cn.hospital.registerplatform.ui.component.hospital.HospitalListActivity
 import cn.hospital.registerplatform.ui.component.recipe.RecipeListActivity
@@ -11,7 +12,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(private val userPreference: UserPreference) :
+class MainViewModel @Inject constructor(
+    private val userRepository: UserRepository,
+    private val userPreference: UserPreference
+) :
     BaseViewModel() {
     val buttonList = listOf(
         HomeCardData(R.string.home_register_button, R.drawable.ic_baseline_calendar_today_24) {
@@ -26,12 +30,16 @@ class MainViewModel @Inject constructor(private val userPreference: UserPreferen
         },
         HomeCardData(R.string.home_register_history_button, R.drawable.ic_baseline_access_time_24) {
             it.context.apply {
-                startActivity(RegisterListActivity.newIntent(this))
+                userRepository.needLoginToast(this) {
+                    startActivity(RegisterListActivity.newIntent(this))
+                }
             }
         },
         HomeCardData(R.string.home_recipe_button, R.drawable.ic_baseline_message_24) {
             it.context.apply {
-                startActivity(RecipeListActivity.newIntent(this))
+                userRepository.needLoginToast(this) {
+                    startActivity(RecipeListActivity.newIntent(this))
+                }
             }
         }
     )

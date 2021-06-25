@@ -12,10 +12,9 @@ import cn.hospital.registerplatform.databinding.ActivitySubmitCommentBinding
 import cn.hospital.registerplatform.ui.base.BaseActivity
 import cn.hospital.registerplatform.ui.component.main.MainActivity
 import cn.hospital.registerplatform.utils.ToastUtils
+import cn.hospital.registerplatform.utils.delayLaunch
 import com.hi.dhl.binding.databind
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import kotlin.properties.Delegates
 
 @AndroidEntryPoint
@@ -39,8 +38,7 @@ class SubmitCommentActivity : BaseActivity() {
                 ).observe(this@SubmitCommentActivity) {
                     it.doSuccess {
                         ToastUtils.show(this@SubmitCommentActivity, "提交评论成功")
-                        lifecycleScope.launch {
-                            delay(1000)
+                        lifecycleScope.delayLaunch {
                             startActivity(MainActivity.newClearIntent(this@SubmitCommentActivity))
                         }
                     }
