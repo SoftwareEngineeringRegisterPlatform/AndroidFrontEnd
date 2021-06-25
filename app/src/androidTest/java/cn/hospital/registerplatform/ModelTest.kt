@@ -12,6 +12,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.BaseMatcher
 import org.hamcrest.Description
+import org.hamcrest.MatcherAssert
 import org.junit.*
 import javax.inject.Inject
 import kotlin.time.Duration
@@ -53,7 +54,7 @@ class HiltUnitTest {
     fun hospitalRepositoryTest() = runBlocking {
         hospitalRepository.getDoctorInfo(1).test(timeout = Duration.seconds(20)) {
             expectItem().doSuccess { info ->
-                Assert.assertThat(info, object : BaseMatcher<DoctorInfo>() {
+                MatcherAssert.assertThat(info, object : BaseMatcher<DoctorInfo>() {
                     override fun describeTo(description: Description?) {
                     }
 
