@@ -1,6 +1,7 @@
 package cn.hospital.registerplatform.ui.component.profile
 
 import android.content.Context
+import android.content.Intent
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -11,7 +12,6 @@ import cn.hospital.registerplatform.data.repository.UserRepository
 import cn.hospital.registerplatform.ui.base.BaseViewModel
 import cn.hospital.registerplatform.ui.component.main.HomeCardData
 import cn.hospital.registerplatform.ui.component.recipe.RecipeListActivity
-import cn.hospital.registerplatform.ui.component.recipe.RecipeListEditActivity
 import cn.hospital.registerplatform.ui.component.register.RegisterListActivity
 import cn.hospital.registerplatform.utils.ToastUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -108,7 +108,7 @@ class ProfileViewModel
         HomeCardData(R.string.profile_button_advisory, R.drawable.ic_baseline_message_24) {
             it.context.apply {
                 needLoginToast(this@apply) {
-                    startActivity(RecipeListEditActivity.newIntent(this@apply))
+                    startActivity(Intent(this, Class.forName("cn.hospital.registerplatform.RecipePatientListActivity")))
                 }
             }
         },

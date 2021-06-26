@@ -9,6 +9,10 @@
     <application>
         <activity android:name=".ProfileActivity"
                   android:theme="@style/NoActionBar"/>
+        <activity android:name=".RecipePatientListActivity"/>
+        <activity android:name=".EditRecipeAbstractActivity"/>
+        <activity android:name=".RecipePatientDetailListActivity"/>
+        <activity android:name=".EditRecipeDetailActivity"/>
     </application>
 
 </manifest>
