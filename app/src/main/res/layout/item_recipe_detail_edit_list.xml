@@ -46,7 +46,7 @@
                     android:id="@+id/info_leading_icon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:tint="@color/blue_500"
+                    app:tint="?colorPrimary"
                     app:srcCompat="@drawable/ic_baseline_access_time_24"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"/>
