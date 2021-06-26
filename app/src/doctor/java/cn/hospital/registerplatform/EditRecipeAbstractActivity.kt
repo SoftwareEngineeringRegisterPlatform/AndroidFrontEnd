@@ -1,22 +1,20 @@
-package cn.hospital.registerplatform.ui.component.recipe
+package cn.hospital.registerplatform
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
-import cn.hospital.registerplatform.R
 import cn.hospital.registerplatform.api.doFailure
 import cn.hospital.registerplatform.api.doSuccess
 import cn.hospital.registerplatform.databinding.ActivityRecipeAbstractEditBinding
 import cn.hospital.registerplatform.ui.base.BaseActivity
 import cn.hospital.registerplatform.ui.component.main.MainActivity
+import cn.hospital.registerplatform.ui.component.recipe.RecipeViewModel
 import cn.hospital.registerplatform.utils.ToastUtils
 import cn.hospital.registerplatform.utils.delayLaunch
 import com.hi.dhl.binding.databind
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import kotlin.properties.Delegates
 
 @AndroidEntryPoint
@@ -36,35 +34,24 @@ class EditRecipeAbstractActivity : BaseActivity() {
         mBinding.apply {
             lifecycleOwner = this@EditRecipeAbstractActivity
             submitAbstract.setOnClickListener {
-                if (isSubmit) mViewModel.submitRecipeInfo(
+                (if (isSubmit) mViewModel.submitRecipeInfo(
                     userId,
                     recipeId,
                     recipeDiag.text.toString(),
                     recipeSuggestion.text.toString()
-                ).observe(this@EditRecipeAbstractActivity) {
-                    it.doSuccess {
-                        ToastUtils.show(this@EditRecipeAbstractActivity, "上传病历成功")
-                        lifecycleScope.delayLaunch {
-                            startActivity(MainActivity.newClearIntent(this@EditRecipeAbstractActivity))
-                        }
-                    }
-                    it.doFailure {
-                        ToastUtils.show(this@EditRecipeAbstractActivity, "上传病历失败")
-
-                    }
-                } else mViewModel.editRecipeInfo(
+                ) else mViewModel.editRecipeInfo(
                     recipeId,
                     recipeDiag.text.toString(),
                     recipeSuggestion.text.toString()
-                ).observe(this@EditRecipeAbstractActivity) {
+                )).observe(this@EditRecipeAbstractActivity) {
                     it.doSuccess {
-                        ToastUtils.show(this@EditRecipeAbstractActivity, "修改病历成功")
+                        ToastUtils.show(this@EditRecipeAbstractActivity, "${if (isSubmit) "上传" else "修改"}病历成功")
                         lifecycleScope.delayLaunch {
                             startActivity(MainActivity.newClearIntent(this@EditRecipeAbstractActivity))
                         }
                     }
                     it.doFailure {
-                        ToastUtils.show(this@EditRecipeAbstractActivity, "修改病历失败")
+                        ToastUtils.show(this@EditRecipeAbstractActivity, "${if (isSubmit) "上传" else "修改"}病历失败")
 
                     }
                 }
