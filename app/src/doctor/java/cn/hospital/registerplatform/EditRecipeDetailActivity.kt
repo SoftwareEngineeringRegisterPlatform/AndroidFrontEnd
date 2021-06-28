@@ -10,7 +10,6 @@ import cn.hospital.registerplatform.api.doSuccess
 import cn.hospital.registerplatform.data.dto.RecipeDetailCombinedListItem
 import cn.hospital.registerplatform.databinding.ActivityRecipeAbstractEditBinding
 import cn.hospital.registerplatform.ui.base.BaseActivity
-import cn.hospital.registerplatform.ui.component.main.MainActivity
 import cn.hospital.registerplatform.ui.component.recipe.RecipeViewModel
 import cn.hospital.registerplatform.utils.ToastUtils
 import cn.hospital.registerplatform.utils.delayLaunch
@@ -58,7 +57,7 @@ class EditRecipeDetailActivity : BaseActivity() {
                     it.doSuccess {
                         ToastUtils.show(this@EditRecipeDetailActivity, "${if (isSubmit) "上传" else "修改"}病历成功")
                         lifecycleScope.delayLaunch {
-                            startActivity(MainActivity.newClearIntent(this@EditRecipeDetailActivity))
+                            finish()
                         }
                     }
                     it.doFailure {

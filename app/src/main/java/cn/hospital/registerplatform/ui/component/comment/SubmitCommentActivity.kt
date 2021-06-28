@@ -39,7 +39,7 @@ class SubmitCommentActivity : BaseActivity() {
                     it.doSuccess {
                         ToastUtils.show(this@SubmitCommentActivity, "提交评论成功")
                         lifecycleScope.delayLaunch {
-                            startActivity(MainActivity.newClearIntent(this@SubmitCommentActivity))
+                            finish()
                         }
                     }
                     it.doFailure {
