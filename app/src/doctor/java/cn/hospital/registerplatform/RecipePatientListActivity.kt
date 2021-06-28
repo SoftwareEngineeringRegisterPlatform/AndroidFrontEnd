@@ -52,7 +52,7 @@ class RecipePatientListActivity : ActionBarActivity("患者列表") {
                     startActivity(
                         EditRecipeAbstractActivity.newIntent(
                             this,
-                            data.recipeId, data.recipeInfo.user, true
+                            data.recipeInfo.regist, data.recipeInfo.user, true
                         )
                     )
                 }
