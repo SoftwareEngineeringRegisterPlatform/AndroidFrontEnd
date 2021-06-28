@@ -32,7 +32,7 @@ class RecipeRepository(
         if (rawResult.success) {
             rawResult.content.mapIndexed { index, it ->
                 RecipeCombinedListItem(
-                    it.id, it, recipeApi.getRecipeInfo(userPreference.getCachedToken(), it.regist).content,
+                    it.id, it, recipeApi.getRecipeInfo(userPreference.getCachedToken(), it.id).content,
                     hospitalApi.getDoctorInfo(rawFinishedRegister[index].doctorId).content
                 )
             }
