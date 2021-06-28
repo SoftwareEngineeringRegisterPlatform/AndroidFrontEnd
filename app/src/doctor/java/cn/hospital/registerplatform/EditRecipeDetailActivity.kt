@@ -9,7 +9,7 @@ import cn.hospital.registerplatform.api.doFailure
 import cn.hospital.registerplatform.api.doSuccess
 import cn.hospital.registerplatform.data.dto.RecipeDetailCombinedListItem
 import cn.hospital.registerplatform.databinding.ActivityRecipeAbstractEditBinding
-import cn.hospital.registerplatform.ui.base.BaseActivity
+import cn.hospital.registerplatform.ui.base.ActionBarActivity
 import cn.hospital.registerplatform.ui.component.recipe.RecipeViewModel
 import cn.hospital.registerplatform.utils.ToastUtils
 import cn.hospital.registerplatform.utils.delayLaunch
@@ -18,7 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlin.properties.Delegates
 
 @AndroidEntryPoint
-class EditRecipeDetailActivity : BaseActivity() {
+class EditRecipeDetailActivity : ActionBarActivity("病历提交") {
     private val mBinding: ActivityRecipeAbstractEditBinding by databind(R.layout.activity_recipe_abstract_edit)
     private val mViewModel: RecipeViewModel by viewModels()
 

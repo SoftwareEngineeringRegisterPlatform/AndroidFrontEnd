@@ -8,7 +8,7 @@ import androidx.lifecycle.lifecycleScope
 import cn.hospital.registerplatform.api.doFailure
 import cn.hospital.registerplatform.api.doSuccess
 import cn.hospital.registerplatform.databinding.ActivityRecipeAbstractEditBinding
-import cn.hospital.registerplatform.ui.base.BaseActivity
+import cn.hospital.registerplatform.ui.base.ActionBarActivity
 import cn.hospital.registerplatform.ui.component.recipe.RecipeViewModel
 import cn.hospital.registerplatform.utils.ToastUtils
 import cn.hospital.registerplatform.utils.delayLaunch
@@ -17,7 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlin.properties.Delegates
 
 @AndroidEntryPoint
-class EditRecipeAbstractActivity : BaseActivity() {
+class EditRecipeAbstractActivity : ActionBarActivity("医嘱提交") {
     private val mBinding: ActivityRecipeAbstractEditBinding by databind(R.layout.activity_recipe_abstract_edit)
     private val mViewModel: RecipeViewModel by viewModels()
 
@@ -44,13 +44,13 @@ class EditRecipeAbstractActivity : BaseActivity() {
                     recipeSuggestion.text.toString()
                 )).observe(this@EditRecipeAbstractActivity) {
                     it.doSuccess {
-                        ToastUtils.show(this@EditRecipeAbstractActivity, "${if (isSubmit) "上传" else "修改"}病历成功")
+                        ToastUtils.show(this@EditRecipeAbstractActivity, "${if (isSubmit) "上传" else "修改"}医嘱成功")
                         lifecycleScope.delayLaunch {
                             finish()
                         }
                     }
                     it.doFailure {
-                        ToastUtils.show(this@EditRecipeAbstractActivity, "${if (isSubmit) "上传" else "修改"}病历失败")
+                        ToastUtils.show(this@EditRecipeAbstractActivity, "${if (isSubmit) "上传" else "修改"}医嘱失败")
 
                     }
                 }
